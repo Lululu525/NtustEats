@@ -23,7 +23,7 @@ gh pr create -B feature/online-payment -H feature/student-complete -t "CR-07: �
 gh pr create -B feature/student-complete -H feature/noshow-correction -t "CR-08: 店家可更正未取餐" -F docs/change-requests/CR-08-noshow-correction.md
 echo "提醒：PR #1 合併後，到 PR #2 頁面把 base 改成 main（GitHub 通常會自動改），依序處理。"
 # Labels
-for l in "ai-proposed:FBCA04" "po-accepted:0E8A16" "sprint-1:1D76DB" "sprint-2:5319E7"; do
+for l in "ai-proposed:FBCA04" "po-accepted:0E8A16" "sprint-1:1D76DB" "sprint-2:5319E7" "sprint-3:B60205" "change-request:D93F0B"; do
   gh label create "${l%%:*}" --color "${l##*:}" -R "$OWNER/$REPO" --force
 done
 # Project 看板
@@ -34,7 +34,7 @@ python3 - "$OWNER/$REPO" "$OWNER" "$PNUM" <<'PY'
 import json,subprocess,sys
 repo,owner,pnum=sys.argv[1:]
 for s in json.load(open('docs/agile/stories.json')):
-    lab='ai-proposed,'+('sprint-1' if s['sprint']=='Sprint 1' else 'sprint-2')
+    lab='ai-proposed,'+{'Sprint 1':'sprint-1','Sprint 2':'sprint-2'}.get(s['sprint'],'sprint-3')+(',change-request' if 'cr' in s else '')
     body=s['body']+f"\n\n---\nEpic: {s['epic']}　Story Points: {s['points']}（AI 建議，待 Planning Poker 確認）\n\n- [ ] PO 接受（接受後移除 ai-proposed、加上 po-accepted）"
     url=subprocess.check_output(['gh','issue','create','-R',repo,'-t',f"{s['id']} {s['title']}",'-b',body,'-l',lab],text=True).strip()
     subprocess.run(['gh','project','item-add',pnum,'--owner',owner,'--url',url],check=True)
