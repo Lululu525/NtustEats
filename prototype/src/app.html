@@ -23,6 +23,22 @@ input,select,textarea{font:inherit}
 .topbar .logo{font-weight:800;letter-spacing:.3px}
 .topbar .logo b{color:#ff8fb3}
 .topbar .tag{font-size:12px;opacity:.7}
+.who{display:flex;align-items:center;gap:10px;margin-left:auto;font-size:13px}
+.who .me{opacity:.85;text-align:right;line-height:1.3}
+.who .me small{display:block;opacity:.7;font-size:11px}
+.who .out{padding:6px 12px;border-radius:999px;background:#38333a;color:#eee;font-size:13px}
+.mswitch{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:999px;background:#38333a;color:#eee;font-size:13px}
+.mswitch .track{width:34px;height:20px;border-radius:10px;background:#6b6470;position:relative;transition:.15s}
+.mswitch .track:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s}
+.mswitch.on{background:#ff8fb3;color:var(--ink);font-weight:700}
+.mswitch.on .track{background:var(--brand)}
+.mswitch.on .track:after{left:16px}
+.mform{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#fff;border-radius:12px;padding:14px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+@media (max-width:860px){.mform{grid-template-columns:1fr 1fr}}
+.mform .field input,.mform .field select{padding:8px 10px}
+table.t input.w{width:100%;padding:5px 6px;border:1px solid var(--line);border-radius:6px}
+.catbar{display:flex;gap:8px;align-items:center;margin:18px 0 8px}
+.catbar input{padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-weight:700}
 .seg{display:flex;background:#38333a;border-radius:999px;padding:3px;margin-left:auto}
 .seg button{padding:6px 14px;border-radius:999px;font-size:14px;color:#ddd}
 .seg button.on{background:#fff;color:var(--ink);font-weight:700}
@@ -247,17 +263,13 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 .clock input{padding:5px 6px;border:1px solid var(--line);border-radius:8px}
 .clock button{padding:5px 8px;border-radius:8px;background:var(--bg);font-size:12px}
 .clock .lbl{font-size:11px;color:var(--mute)}
-@media (max-width:520px){.topbar{padding:8px 10px;gap:8px}.topbar .tag{display:none}.seg button{padding:5px 10px;font-size:12px}.clock{right:8px;bottom:78px;padding:5px 9px;border-radius:10px}.clock b{font-size:13px}.clock button,.clock input,.clock .lbl{display:none}}
+@media (max-width:520px){.topbar{padding:8px 10px;gap:8px}.topbar .tag{display:none}.who .me{display:none}.mswitch{font-size:11px}.seg button{padding:5px 10px;font-size:12px}.clock{right:8px;bottom:78px;padding:5px 9px;border-radius:10px}.clock b{font-size:13px}.clock button,.clock input,.clock .lbl{display:none}}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <div><div class="logo">NTUST <b>Eats</b></div><div class="tag">台科大學餐線上點餐 · 需求原型（Sprint 1 Increment）</div></div>
-  <div class="seg" id="roleSeg">
-    <button data-role="student" class="on">學生端</button>
-    <button data-role="vendor">店家端</button>
-    <button data-role="admin">總務處</button>
-  </div>
+  <div><div class="logo">NTUST <b>Eats</b></div><div class="tag">台灣科技大學 學生餐廳 · 線上點餐（需求原型）</div></div>
+  <div class="who" id="who"></div>
 </div>
 
 <div class="stage" id="stage"></div>
@@ -287,18 +299,25 @@ let DB=load()||fresh();
 // session (per tab) — who is logged in, cart, current view
 const S={role:'student',user:null,lang:'zh',view:'home',storeId:null,cat:null,cart:[],sheet:null,vendorStore:'mala',vendorTab:'queue',lastSeen:{}};
 try{const u=sessionStorage.getItem('ntustEats.session'); if(u){Object.assign(S,JSON.parse(u)); S.sheet=null;}}catch(e){}
-function saveSession(){try{sessionStorage.setItem('ntustEats.session',JSON.stringify({user:S.user,cart:S.cart,lang:S.lang,role:S.role,vendorStore:S.vendorStore}));}catch(e){}}
+function saveSession(){try{sessionStorage.setItem('ntustEats.session',JSON.stringify({user:S.user,cart:S.cart,lang:S.lang,vendorStore:S.vendorStore,editMode:S.editMode}));}catch(e){}}
 window.addEventListener('storage',e=>{if(e.key===KEY){const d=load(); if(d){const before=snapshotStatuses(); DB=d; notifyChanges(before); render();}}});
 
 /* ================= helpers ================= */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const STORE_ICON={thai:'🍛',ramen:'🍜',mala:'🌶️',daka:'☕',daosui:'🥗'};
-const STORE_BG={thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6'};
-const stores=MENU.stores;
+const icon=sid=>{const s=storeById(sid); return (s&&s.icon)||STORE_ICON[sid]||'🍽️';};
+const bgc=sid=>({thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6'}[sid]||'#eef0f6');
+const MENU_SIG=MENU.version+':'+MENU.stores.map(s=>s.id+s.categories.reduce((a,c)=>a+c.items.length,0)).join(',');
+let stores=[]; let allItems={};
 const storeById=id=>stores.find(s=>s.id===id);
-const allItems={}; stores.forEach(s=>{s.categories.forEach(c=>c.items.forEach(it=>{allItems[it.id]={...it,store:s.id,cat:c.id};})); Object.values(s.addonGroups||{}).forEach(g=>g.items.forEach(it=>{allItems[it.id]={...it,store:s.id,addon:true};}));});
-function item(id){const it=allItems[id]; const o=DB.overrides[id]||{}; return {...it,...o};}
+function rebuildCatalog(){
+  if(!DB.catalog||DB.catalogSig!==MENU_SIG){DB.catalog=JSON.parse(JSON.stringify(MENU.stores)); DB.catalogSig=MENU_SIG; save();}
+  stores=DB.catalog; allItems={};
+  stores.forEach(s=>{s.categories.forEach(c=>c.items.forEach(it=>{allItems[it.id]={...it,store:s.id,cat:c.id};})); Object.values(s.addonGroups||{}).forEach(g=>g.items.forEach(it=>{allItems[it.id]={...it,store:s.id,addon:true};}));});
+  S.cart=S.cart.filter(l=>l.kind==='bowl'||allItems[l.id]);
+}
+function item(id){const it=allItems[id]||{name:'（已下架品項）',en:'',campus:0,off:0,tags:[]}; const o=DB.overrides[id]||{}; return {...it,...o};}
 function cfg(sid){const s=storeById(sid); return {prepMin:s.prepMin,slotCap:s.slotCap,...(DB.storeCfg[sid]||{})};}
 const priceType=()=>S.user&&S.user.type==='visitor'?'off':'campus';
 const P=it=>priceType()==='off'?it.off:it.campus;
@@ -382,19 +401,28 @@ function toast(msg,kind='',ms=2600){let t=$('#toast'); if(!t){t=document.createE
 
 /* ================= render: root ================= */
 let lastViewKey='';
+function currentRole(){if(S.user&&S.user.type==='vendor') return 'vendor'; if(S.user&&S.user.admin&&S.editMode) return 'manage'; return 'student';}
+let _rendering=false,_pending=false;
 function render(){
-  const vk=S.role+'|'+S.view+'|'+S.storeId+'|'+S.vendorTab+'|'+S.vendorStore+'|'+(S.sheet?S.sheet.type+(S.sheet.id||''):'');
+  if(_rendering){_pending=true; return;}
+  _rendering=true;
+  try{ _renderOuter(); } finally { _rendering=false; }
+  if(_pending){_pending=false; render();}
+}
+function _renderOuter(){
+  rebuildCatalog(); S.role=currentRole();
+  const vk=S.role+'|'+(S.mTab||'')+'|'+(S.mStore||'')+'|'+S.view+'|'+S.storeId+'|'+S.vendorTab+'|'+S.vendorStore+'|'+(S.sheet?S.sheet.type+(S.sheet.id||''):'');
   const keep=vk===lastViewKey; const sc={}; if(keep) document.querySelectorAll('.scroll,.sheet .bd').forEach((el,i)=>sc[i]=el.scrollTop); const wy=window.scrollY;
   S.anim=!keep; lastViewKey=vk;
   _render();
   if(keep){document.querySelectorAll('.scroll,.sheet .bd').forEach((el,i)=>{if(sc[i]!=null) el.scrollTop=sc[i];}); window.scrollTo(0,wy);}
 }
 function _render(){
-  document.querySelectorAll('#roleSeg button').forEach(b=>b.classList.toggle('on',b.dataset.role===S.role));
+  renderWho();
   const st=$('#stage');
   if(S.role==='student') st.innerHTML=`<div class="phone" id="phone">${renderStudent()}</div>`;
   else if(S.role==='vendor') st.innerHTML=`<div class="wide">${renderVendor()}</div>`;
-  else st.innerHTML=`<div class="wide">${renderAdmin()}</div>`;
+  else st.innerHTML=`<div class="wide">${renderManage()}</div>`;
   $('#clockNow').textContent=hm(minOf(now()));
   saveSession();
 }
@@ -421,7 +449,7 @@ const LEVEL={B:{name:'大學部',pre:'大'},M:{name:'碩士班',pre:'碩'},D:{na
 const DIRECTORY={
   'B11201116':{id:'B000000000',name:'陳庭瑜'},
   'M11407021':{id:'F000000004',name:'林家豪'},
-  'T10234':{id:'A000000009',name:'王美玲',unit:'總務處',title:'職員'}
+  'T10234':{id:'A000000009',name:'王美玲',unit:'總務處',title:'職員',admin:true}
 };
 function acadYear(d=new Date()){const y=d.getFullYear()-1911; return d.getMonth()>=7?y:y-1;}
 const CN=['','一','二','三','四','五','六','七','八','九'];
@@ -448,7 +476,8 @@ function renderLogin(){
   if(!mode) return `<div class="login">${head}
     <button class="choice" data-mode="member"><span class="ic">🎓</span><span><b>校內學生／教職員</b><small>以學號或教職員編號登入，享校內優惠價</small></span><span class="arr">›</span></button>
     <button class="choice" data-mode="visitor"><span class="ic">🧑‍💼</span><span><b>其他校外人士</b><small>以手機號碼登入，以校外販售價計</small></span><span class="arr">›</span></button>
-    <p class="note">泰刻・豬豬の拉麵屋・蔡姐麻辣燙・DAKA COFFEE・稻穗輕食</p>
+    <button class="choice" data-mode="vendor"><span class="ic">🏪</span><span><b>店家</b><small>選擇店家並輸入密碼，進入接單平板</small></span><span class="arr">›</span></button>
+    <p class="note">${stores.map(x=>esc(x.name)).join('・')}</p>
   </div>`;
   if(mode==='member') return `<div class="login">
     <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
@@ -458,7 +487,16 @@ function renderLogin(){
     <div class="field"><label for="ssoId">身分證字號</label><input id="ssoId" type="password" placeholder="例：A123456789" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
     ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
     <button class="btn pri" data-act="sso">登入</button>
-    <details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲）<br>以上皆為虛構資料。身分證字號只用來比對，不會被儲存。</details>
+    <details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者，可開啟編輯模式）<br>以上皆為虛構資料。身分證字號只用來比對，不會被儲存。</details>
+  </div>`;
+  if(mode==='vendor') return `<div class="login">
+    <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
+    <h2 style="font-size:24px">店家登入</h2>
+    <div class="field"><label for="vSel">店家</label><select id="vSel">${stores.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
+    <div class="field"><label for="vPw">密碼</label><input id="vPw" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="預設 0000"></div>
+    ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
+    <button class="btn pri" data-act="vendorLogin">登入</button>
+    <p class="note">原型：各店預設密碼 0000，登入後可在「時段與密碼」變更。</p>
   </div>`;
   return `<div class="login">
     <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
@@ -485,8 +523,8 @@ function memberLogin(){
   if(!rec||rec.id!==idn){S.loginErr='查無此帳號，或學號與身分證字號不符'; render(); return;}
   const u={id:'m-'+no,type:'member',no,name:rec.name,...(DB.users['m-'+no]||{})};
   if(info){u.role='student'; u.dept=info.dept; u.levelName=info.levelName; u.entry=info.entry; u.gradeLabel=info.gradeLabel;}
-  else {u.role='staff'; u.dept=rec.unit; u.gradeLabel=`${rec.unit} ${rec.title}`;}
-  S.user=u; S.loginNo=''; S.loginMode=null; S.view='home'; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）· 校內價`,'ok',3500);
+  else {u.role='staff'; u.dept=rec.unit; u.gradeLabel=`${rec.unit} ${rec.title}`; u.admin=!!rec.admin;}
+  S.user=u; S.loginNo=''; S.loginMode=null; S.view='home'; S.editMode=false; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）${u.admin?' · 右上角可開啟編輯模式':' · 校內價'}`,'ok',3500);
 }
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
 function renderHome(){
@@ -497,12 +535,12 @@ function renderHome(){
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
     ${stores.map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
       return `<button class="storecard" data-store="${s.id}">
-        <div class="em" style="background:${STORE_BG[s.id]}">${STORE_ICON[s.id]}</div>
+        <div class="em" style="background:${bgc(s.id)}">${icon(s.id)}</div>
         <div style="flex:1;min-width:0"><h3>${esc(s.name)}</h3><div class="en">${esc(s.en)}</div>
         <div class="meta"><span class="chip"><span class="dot" style="background:${open?'var(--ok)':'#bbb'}"></span>${open?T('營業中','Open'):T('休息中','Closed')}</span>
         <span class="chip">⏱ ${T('最早','Earliest')} ${earliestLabel(s)}</span><span class="chip">🧑‍🍳 ${T('排隊','Queue')} ${q}</span></div></div></button>`;}).join('')}
     <div class="sect-h">${T('營業時間','Opening hours')}</div>
-    ${stores.map(s=>`<div class="note">${STORE_ICON[s.id]} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
+    ${stores.map(s=>`<div class="note">${icon(s.id)} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
     ${storeById('daka').offline?`<p class="note">※ ${esc(storeById('daka').offline[0])}（I-21）</p>`:''}
   </div>`;
 }
@@ -510,13 +548,13 @@ function tagHtml(t){const cls=/VEGAN|素/.test(t)?'veg':/辣/.test(t)?'hot':/限
 function renderStore(){
   const s=storeById(S.storeId); const promos=s.promotions||[];
   const m=minOf(now());
-  return `<div class="appbar"><button class="iconbtn" data-go="home">←</button><div><h1>${STORE_ICON[s.id]} ${esc(s.name)}</h1><div class="sub">${esc(s.en)} · ${esc(s.open)}</div></div></div>
-  <div class="cats">${s.categories.map(c=>`<button data-jump="${c.id}">${esc(T(c.name,c.en))}</button>`).join('')}</div>
+  return `<div class="appbar"><button class="iconbtn" data-go="home">←</button><div><h1>${icon(s.id)} ${esc(s.name)}</h1><div class="sub">${esc(s.en)} · ${esc(s.open)}</div></div></div>
+  <div class="cats">${s.categories.filter(c=>c.items.length).map(c=>`<button data-jump="${c.id}">${esc(T(c.name,c.en))}</button>`).join('')}</div>
   <div class="scroll" id="menuScroll">
     ${s.builder?`<button class="builder-cta" data-act="bowl"><span class="em">🥣</span><div><b>${T('組合我的麻辣燙','Build my Mala bowl')}</b><span>${T('選湯底 → 火鍋料任選 4 個 → 加肉、加菜、加主食','Broth → any 4 hot-pot items → add meat, veg, noodles')}</span></div><span style="margin-left:auto;font-size:22px">›</span></button>`:''}
     ${s.singlePrice?`<div class="cat-note">此店校內外同價（菜單只有一種價格）${s.note?'；'+esc(s.note):''}</div>`:''}
     ${promos.map(p=>{const [h,mm]=p.before.split(':').map(Number); const live=m<h*60+mm; return `<div class="promo">🎁 <div><b>${esc(p.name)}</b><br>${live?'現在適用，結帳時自動附贈':'今日已過 '+p.before+'，明天早上再來'}</div></div>`;}).join('')}
-    ${s.categories.map(c=>`<div class="cat-h" id="cat-${c.id}"><h4>${esc(T(c.name,c.en))}</h4><span>${esc(S.lang==='zh'?c.en:c.name)}</span></div>
+    ${s.categories.filter(c=>c.items.length).map(c=>`<div class="cat-h" id="cat-${c.id}"><h4>${esc(T(c.name,c.en))}</h4><span>${esc(S.lang==='zh'?c.en:c.name)}</span></div>
       ${c.note?`<div class="cat-note">${esc(c.note)}</div>`:''}
       ${c.diy?`<div class="cat-note">此分類也可在上方「組合我的麻辣燙」中一次選好</div>`:''}
       ${c.items.map(x=>{const it=item(x.id); const p=P(it), other=priceType()==='off'?it.campus:it.off;
@@ -589,7 +627,7 @@ function renderCart(){
   let total=0;
   const html=sids.map(sid=>{const s=storeById(sid); const lines=g[sid]; const sub=lines.reduce((a,l)=>a+linePrice(l),0); total+=sub;
     const promos=promosFor(sid,lines);
-    return `<div class="cgroup"><h4><span>${STORE_ICON[sid]} ${esc(s.name)}</span><span>${money(sub)}</span></h4>
+    return `<div class="cgroup"><h4><span>${icon(sid)} ${esc(s.name)}</span><span>${money(sub)}</span></h4>
       ${lines.map(l=>`<div class="cline"><div class="x"><b>${esc(lineName(l))}</b> ×${l.qty}${lineDesc(l).map(d=>`<small>${esc(d)}</small>`).join('')}</div><div class="p">${money(linePrice(l))}</div><button class="btn ghost sm" data-del="${l.key}" title="刪除">✕</button></div>`).join('')}
       ${promos.map(p=>`<div class="gift">🎁 ${esc(p.promo.name)}（×${p.count}，結帳時選擇）</div>`).join('')}
     </div>`;}).join('');
@@ -613,7 +651,7 @@ function renderCheckout(){
     const sold=lines.filter(l=>l.kind==='item'&&(item(l.id).soldOut||(l.addons||[]).some(a=>item(a).soldOut)));
     if(sold.length) allOk=false;
     const promos=promosFor(sid,lines);
-    return `<div class="cgroup"><h4><span>${STORE_ICON[sid]} ${esc(s.name)}</span><span>${money(sub)}</span></h4>
+    return `<div class="cgroup"><h4><span>${icon(sid)} ${esc(s.name)}</span><span>${money(sub)}</span></h4>
       <div class="note">${lines.map(l=>esc(lineName(l))+'×'+l.qty).join('、')}</div>
       ${sold.length?`<div class="promo" style="background:var(--bad-bg);color:var(--bad)">⚠ ${sold.map(l=>esc(lineName(l))).join('、')} 已售完，請回購物車移除（FR-06）</div>`:''}
       ${promos.map(p=>{const r=p.promo.reward; if(r.choose){const v=S.gifts[sid+p.promo.id]||r.choose[0]; S.gifts[sid+p.promo.id]=v; return `<div class="promo">🎁 <div><b>${esc(p.promo.name)}</b> ×${p.count}<br>贈品口味：${r.choose.map(c=>`<button class="chip ${v===c?'price':''}" data-gift="${sid+p.promo.id}" data-v="${esc(c)}">${esc(c)}</button>`).join(' ')}</div></div>`;} return `<div class="promo">🎁 <div><b>${esc(p.promo.name)}</b> ×${p.count}<br>贈品：${esc(r.fixed)}</div></div>`;}).join('')}
@@ -647,7 +685,7 @@ function submitOrders(){
     const lines=g[sid].map(l=>({...l,name:lineName(l),desc:lineDesc(l),price:linePrice(l)}));
     const gifts=promosFor(sid,g[sid],at).map(p=>({name:p.promo.reward.choose?(S.gifts[sid+p.promo.id]||p.promo.reward.choose[0]):p.promo.reward.fixed,qty:p.count,promo:p.promo.name}));
     DB.seq=(DB.seq||100)+1;
-    const prefix={thai:'T',ramen:'R',mala:'M',daka:'D',daosui:'H'}[sid]||'X';
+    const prefix=storeById(sid).prefix||{thai:'T',ramen:'R',mala:'M',daka:'D',daosui:'H'}[sid]||'X';
     const o={id:rid(),no:prefix+String(DB.seq).slice(-3),token:rid(),store:sid,user:S.user.id,userName:S.user.name,priceType:priceType(),
       lines,gifts,total:lines.reduce((a,l)=>a+l.price,0),slot:S.pick[sid],day:today(),status:'SUBMITTED',note,submittedAt:at.toISOString(),history:[{s:'SUBMITTED',at:hm(minOf(at))}]};
     DB.orders.push(o); created.push(o);
@@ -666,7 +704,7 @@ function renderOrders(){
   return `<div class="appbar"><h1>${T('我的訂單','My orders')}</h1><span class="chip" style="margin-left:auto">開「店家端」分頁可即時看到狀態變化</span></div>
   <div class="scroll">${mine.map(o=>{const s=storeById(o.store); const idx=steps.indexOf(o.status); const live=idx>=0;
     return `<div class="ocard">
-      <div class="top"><div><div class="note">${STORE_ICON[o.store]} ${esc(s.name)} · 取餐 ${hm(o.slot)}–${hm(o.slot+10)}</div><div class="no">${o.no}</div></div>
+      <div class="top"><div><div class="note">${icon(o.store)} ${esc(s.name)} · 取餐 ${hm(o.slot)}–${hm(o.slot+10)}</div><div class="no">${o.no}</div></div>
         <div class="st"><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span></div></div>
       ${live?`<div class="timeline">${steps.map((x,i)=>`<div class="${i<=idx?'done':''}">${ST_LABEL[x]}</div>`).join('')}</div>`:''}
       ${o.status==='REJECTED'?`<div class="promo" style="background:var(--bad-bg);color:var(--bad)">店家拒絕原因：${esc(o.rejectReason||'')}</div>`:''}
@@ -693,9 +731,8 @@ function renderMe(){
 /* ================= vendor ================= */
 function renderVendor(){
   const sid=S.vendorStore, s=storeById(sid);
-  const tabs=[['queue','訂單佇列'],['menu','菜單與售完'],['settings','時段設定']];
-  return `<div class="vwrap"><div class="vhead"><span style="font-size:28px">${STORE_ICON[sid]}</span><div><h2>${esc(s.name)} · 店家平板</h2><div class="note">${esc(s.open)} · 現在 ${hm(minOf(now()))}</div></div>
-    <select id="vStore">${stores.map(x=>`<option value="${x.id}" ${x.id===sid?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
+  const tabs=[['queue','訂單佇列'],['menu','菜單與售完'],['settings','時段與密碼']];
+  return `<div class="vwrap"><div class="vhead"><span style="font-size:28px">${icon(sid)}</span><div><h2>${esc(s.name)} · 店家平板</h2><div class="note">${esc(s.open)} · 現在 ${hm(minOf(now()))}</div></div>
     <div class="vtabs">${tabs.map(([k,l])=>`<button class="${S.vendorTab===k?'on':''}" data-vtab="${k}">${l}</button>`).join('')}</div></div>
     <div class="vbody">${S.vendorTab==='queue'?renderQueue(sid):S.vendorTab==='menu'?renderMenuAdmin(sid):renderSettings(sid)}</div></div>`;
 }
@@ -735,29 +772,30 @@ function renderSettings(sid){
     <div class="stat"><span>每 10 分鐘時段上限（筆）</span><input class="p" style="font-size:22px;width:90px;padding:6px;border:1px solid var(--line);border-radius:8px" id="cfgCap" value="${c.slotCap}" inputmode="numeric"></div>
     <div class="stat"><span>營業時間</span><b style="font-size:16px">${esc(storeById(sid).open)}</b></div>
     <div class="stat"><span>&nbsp;</span><button class="btn pri sm" data-act="saveCfg">儲存設定</button></div></div>
+  <div class="sect-h">變更店家登入密碼</div>
+  <div class="vtool"><input id="newPw" type="password" placeholder="新密碼（4～12 碼）" maxlength="12"><button class="btn sec sm" data-act="changePw">更新密碼</button><span class="note">預設密碼為 0000，建議第一次登入後更改</span></div>
   <div class="sect-h">接下來的時段（FR-12、FR-13）</div>
   <table class="t heat"><tr><th>時段</th>${sl.map(x=>`<th>${hm(x.t)}</th>`).join('')}</tr><tr><td>已訂／上限</td>${sl.map(x=>`<td class="c" style="color:${x.full?'var(--bad)':'inherit'}">${x.used}/${x.cap}</td>`).join('')}</tr></table>
   <p class="note">提示：把上限改成 1，再用學生端連續下兩筆同時段的單，就能看到「已滿」與搶名額的處理。</p>`;
 }
 
 /* ================= admin ================= */
-function renderAdmin(){
+function renderReport(){
   const os=DB.orders.filter(o=>o.day===today());
   const cnt=st=>os.filter(o=>o.status===st).length;
   const rev=os.filter(o=>o.status==='PICKED_UP').reduce((a,o)=>a+o.total,0);
   const slots=[...new Set(os.map(o=>o.slot))].sort((a,b)=>a-b);
   const max=Math.max(1,...stores.flatMap(s=>slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length)));
-  return `<div class="vwrap"><div class="vhead"><span style="font-size:28px">📊</span><div><h2>總務處 · 訂單報表</h2><div class="note">今日 ${today()} · FR-22、FR-23</div></div>
-    <button class="btn sec sm" style="margin-left:auto" data-act="csv">⬇ 匯出／複製 CSV</button></div>
-  <div class="vbody">
+  return `<div class="vtool"><span class="note">今日 ${today()} · FR-22、FR-23</span><button class="btn sec sm" style="margin-left:auto" data-act="csv">⬇ 匯出／複製 CSV</button></div>
+  <div>
     <div class="cards3"><div class="stat"><b>${os.length}</b><span>今日訂單</span></div><div class="stat"><b>${cnt('PICKED_UP')}</b><span>已取餐</span></div>
       <div class="stat"><b>${cnt('CANCELLED')+cnt('REJECTED')}</b><span>取消／拒絕</span></div><div class="stat"><b>${cnt('NO_SHOW')}</b><span>未取餐（放鳥）</span></div></div>
     <div class="sect-h">各店 × 取餐時段 訂單數（尖峰熱度）</div>
     ${slots.length?`<table class="t heat"><tr><th>店家</th>${slots.map(t=>`<th>${hm(t)}</th>`).join('')}<th>合計</th></tr>
-      ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${STORE_ICON[s.id]} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(214,51,108,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table>`
-      :'<div class="empty">今日尚無訂單。到「學生端」下幾筆單再回來看。</div>'}
+      ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${icon(s.id)} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(214,51,108,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table>`
+      :'<div class="empty">今日尚無訂單。關閉編輯模式下幾筆單，或請店家接單後再回來看。</div>'}
     <div class="sect-h">已取餐營業額（參考）</div><div class="stat" style="max-width:240px"><b>${money(rev)}</b><span>現場收款合計</span></div>
-  </div></div>`;
+  </div>`;
 }
 function exportCsv(){
   const rows=[['day','order_no','store','slot','status','price_type','total','submitted_at']].concat(DB.orders.map(o=>[o.day,o.no,storeById(o.store).name,hm(o.slot),o.status,o.priceType,o.total,o.submittedAt]));
@@ -765,6 +803,89 @@ function exportCsv(){
   try{const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='ntust-eats-orders.csv'; document.body.appendChild(a); a.click(); a.remove();}catch(e){}
   try{navigator.clipboard.writeText(csv).then(()=>toast('已下載 CSV，並複製到剪貼簿（可直接貼到 Excel）','ok',4000),()=>toast('已嘗試下載 CSV（若沒有出現，請用本機開啟 prototype/index.html）'));}
   catch(e){toast('已嘗試下載 CSV');}
+}
+
+/* ================= 管理者編輯模式 ================= */
+function renderWho(){
+  const w=$('#who'); if(!w) return;
+  if(!S.user){w.innerHTML=''; return;}
+  const u=S.user;
+  const label=u.type==='vendor'?`${esc(u.name)}<small>店家平板</small>`:`${esc(u.name)}<small>${esc(u.gradeLabel||(u.type==='visitor'?'校外人士':''))}</small>`;
+  w.innerHTML=`<span class="me">${label}</span>${u.admin?`<button class="mswitch ${S.editMode?'on':''}" data-act="editmode" aria-pressed="${!!S.editMode}"><span class="track"></span>編輯模式</button>`:''}<button class="out" data-act="logout">登出</button>`;
+}
+const OPEN_RE=/^\s*\d{2}:\d{2}-\d{2}:\d{2}(\s*,\s*\d{2}:\d{2}-\d{2}:\d{2})*\s*$/;
+function renderManage(){
+  const tabs=[['stores','店家管理'],['menu','菜單設定'],['report','訂單報表']]; S.mTab=S.mTab||'stores';
+  return `<div class="vwrap"><div class="vhead"><span style="font-size:28px">🛠️</span><div><h2>總務處 · 編輯模式</h2><div class="note">新增店家、設定菜單與價格；關閉右上角「編輯模式」即回到一般點餐畫面</div></div>
+    <div class="vtabs">${tabs.map(([k,l])=>`<button class="${S.mTab===k?'on':''}" data-mtab="${k}">${l}</button>`).join('')}</div></div>
+    <div class="vbody">${S.mTab==='stores'?renderStoreAdmin():S.mTab==='menu'?renderMenuEditor():renderReport()}</div></div>`;
+}
+function renderStoreAdmin(){
+  const pw=DB.storePw||{};
+  return `<div class="sect-h">新增店家</div>
+  <div class="mform">
+    <div class="field"><label>店名</label><input id="nsName" placeholder="例：七都燒臘"></div>
+    <div class="field"><label>英文名稱</label><input id="nsEn" placeholder="例：Cantonese BBQ"></div>
+    <div class="field"><label>圖示（emoji）</label><input id="nsIcon" value="🍽️" maxlength="4"></div>
+    <div class="field"><label>營業時間</label><input id="nsOpen" value="11:00-14:00, 17:00-19:30"></div>
+    <div class="field"><label>價格模式</label><select id="nsMode"><option value="dual">分校內價／校外價</option><option value="single">單一價格</option></select></div>
+    <div class="field"><label>備餐時間（分）</label><input id="nsPrep" value="10" inputmode="numeric"></div>
+    <div class="field"><label>每時段上限（筆）</label><input id="nsCap" value="15" inputmode="numeric"></div>
+    <div class="field"><label>初始密碼</label><input id="nsPw" value="0000" maxlength="12"></div>
+    <div class="field" style="grid-column:1/-1"><button class="btn pri" data-act="addStore">＋ 新增店家</button></div>
+  </div>
+  <div class="sect-h">現有店家（${stores.length}）· 直接修改欄位即儲存</div>
+  <table class="t"><tr><th style="width:44px"></th><th>店名</th><th>英文名稱</th><th>營業時間</th><th style="width:70px">備餐</th><th style="width:70px">上限</th><th style="width:90px">價格</th><th style="width:60px">品項</th><th style="width:150px">登入密碼</th><th style="width:110px"></th></tr>
+  ${stores.map(st=>{const c=cfg(st.id); const n=st.categories.reduce((a,x)=>a+x.items.length,0); return `<tr>
+    <td style="font-size:22px">${icon(st.id)}</td>
+    <td><input class="w" data-sf="${st.id}" data-k="name" value="${esc(st.name)}"></td>
+    <td><input class="w" data-sf="${st.id}" data-k="en" value="${esc(st.en)}"></td>
+    <td><input class="w" data-sf="${st.id}" data-k="open" value="${esc(st.open)}"></td>
+    <td><input class="w" data-sf="${st.id}" data-k="prepMin" value="${c.prepMin}" inputmode="numeric"></td>
+    <td><input class="w" data-sf="${st.id}" data-k="slotCap" value="${c.slotCap}" inputmode="numeric"></td>
+    <td>${st.singlePrice?'單一價格':'校內／校外'}</td><td>${n}</td>
+    <td>${pw[st.id]&&pw[st.id]!=='0000'?'已自訂':'預設 0000'} <button class="btn ghost sm" data-resetpw="${st.id}">重設</button></td>
+    <td><button class="btn sec sm" data-editmenu="${st.id}">菜單設定 →</button></td></tr>`;}).join('')}</table>
+  <p class="note">營業時間格式：HH:MM-HH:MM，多個時段用逗號分隔。店家用「店家」入口、選店名並輸入密碼登入。</p>`;
+}
+function renderMenuEditor(){
+  S.mStore=S.mStore&&storeById(S.mStore)?S.mStore:stores[0].id;
+  const st=storeById(S.mStore), single=!!st.singlePrice;
+  return `<div class="vtool"><label class="note" for="mStore">店家</label><select id="mStore" style="padding:8px 10px;border-radius:10px;border:1px solid var(--line);font-weight:700">${stores.map(x=>`<option value="${x.id}" ${x.id===st.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select>
+    <span class="note">${single?'此店為單一價格':'校外價須 ≥ 校內價；差距過大會以黃色提醒（FR-10）'}</span></div>
+  ${st.categories.map(c=>`<div class="catbar"><input data-catf="${c.id}" data-k="name" value="${esc(c.name)}" aria-label="分類名稱"><input data-catf="${c.id}" data-k="en" value="${esc(c.en||'')}" placeholder="英文分類名" aria-label="英文分類名稱" style="font-weight:400">
+      <span class="note">${c.items.length} 項</span><button class="btn ghost sm" data-delcat="${c.id}" style="margin-left:auto">${S.delArm==='c'+c.id?'⚠ 再按一次刪除整個分類':'刪除分類'}</button></div>
+    <table class="t"><tr><th>品名</th><th>英文名稱</th><th style="width:80px">${single?'價格':'校內價'}</th>${single?'':'<th style="width:80px">校外價</th>'}<th style="width:150px">標籤（逗號分隔）</th><th style="width:70px"></th></tr>
+    ${c.items.map(x=>{const it=item(x.id); const w=single?'':priceWarn(it.campus,it.off); return `<tr class="${w?'warnrow':''}">
+      <td><input class="w" data-itf="${x.id}" data-k="name" value="${esc(x.name)}">${w?`<div class="note">⚠ ${esc(w)}</div>`:''}</td>
+      <td><input class="w" data-itf="${x.id}" data-k="en" value="${esc(x.en||'')}"></td>
+      <td><input class="w" data-itf="${x.id}" data-k="campus" value="${it.campus}" inputmode="numeric"></td>
+      ${single?'':`<td><input class="w" data-itf="${x.id}" data-k="off" value="${it.off}" inputmode="numeric"></td>`}
+      <td><input class="w" data-itf="${x.id}" data-k="tags" value="${esc((x.tags||[]).join(', '))}"></td>
+      <td><button class="btn ghost sm" data-delitem="${x.id}">${S.delArm==='i'+x.id?'確定?':'刪除'}</button></td></tr>`;}).join('')}
+    <tr><td><input class="w" id="ni-name-${c.id}" placeholder="新品名"></td><td><input class="w" id="ni-en-${c.id}" placeholder="English name"></td>
+      <td><input class="w" id="ni-c-${c.id}" placeholder="${single?'價格':'校內'}" inputmode="numeric"></td>${single?'':`<td><input class="w" id="ni-o-${c.id}" placeholder="校外" inputmode="numeric"></td>`}
+      <td><input class="w" id="ni-t-${c.id}" placeholder="VEGAN, 辣"></td><td><button class="btn pri sm" data-additem="${c.id}">新增</button></td></tr>
+    </table>`).join('')}
+  <div class="catbar"><input id="ncName" placeholder="新分類名稱，例：飲料"><input id="ncEn" placeholder="English" style="font-weight:400"><button class="btn sec sm" data-act="addCat">＋ 新增分類</button></div>`;
+}
+function catOf(st,cid){return st.categories.find(c=>c.id===cid);}
+function findCatalogItem(id){for(const st of stores) for(const c of st.categories){const it=c.items.find(x=>x.id===id); if(it) return {st,c,it};} return null;}
+function newId(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function addStore(){
+  const v=id=>($('#'+id).value||'').trim();
+  const name=v('nsName'), en=v('nsEn')||name, open=v('nsOpen'), prep=parseInt(v('nsPrep'),10), cap=parseInt(v('nsCap'),10), pw=v('nsPw')||'0000';
+  if(!name){toast('請輸入店名','bad');return;}
+  if(stores.some(x=>x.name===name)){toast('已有同名店家','bad');return;}
+  if(!OPEN_RE.test(open)){toast('營業時間格式應為 11:00-14:00, 17:00-19:30','bad');return;}
+  if(!(prep>=0&&prep<=60&&cap>=1&&cap<=99)){toast('備餐時間或時段上限不合理','bad');return;}
+  if(!/^\S{4,12}$/.test(pw)){toast('密碼需 4～12 碼','bad');return;}
+  const used=new Set(stores.map(x=>x.prefix||{thai:'T',ramen:'R',mala:'M',daka:'D',daosui:'H'}[x.id]));
+  const prefix=[...'ABCEFGJKLNPQSUVWXYZ'].find(ch=>!used.has(ch))||'X';
+  const id=newId('st');
+  DB.catalog.push({id,name,en,icon:v('nsIcon')||'🍽️',open,prepMin:prep,slotCap:cap,prefix,singlePrice:$('#nsMode').value==='single',
+    categories:[{id:newId('c'),name:'主餐',en:'Main',items:[]}]});
+  DB.storePw=DB.storePw||{}; DB.storePw[id]=pw; save(); S.mStore=id; S.mTab='menu'; render(); toast(`已新增「${name}」，接著設定菜單`,'ok');
 }
 
 /* ================= actions ================= */
@@ -788,7 +909,15 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('button,[data-act],.overlay'); if(!t) return;
   const d=t.dataset;
   if(t.classList.contains('overlay')&&e.target!==t) return;
-  if(d.role){S.role=d.role; render(); return;}
+  if(d.mtab){S.mTab=d.mtab; render(); return;}
+  if(d.editmenu){S.mStore=d.editmenu; S.mTab='menu'; render(); return;}
+  if(d.resetpw){DB.storePw=DB.storePw||{}; DB.storePw[d.resetpw]='0000'; save(); render(); toast('已重設為 0000'); return;}
+  if(d.delitem){if(S.delArm!=='i'+d.delitem){S.delArm='i'+d.delitem; render(); return;} const f=findCatalogItem(d.delitem); if(f){f.c.items=f.c.items.filter(x=>x.id!==d.delitem); delete DB.overrides[d.delitem]; save();} S.delArm=null; render(); toast('已刪除品項'); return;}
+  if(d.delcat){if(S.delArm!=='c'+d.delcat){S.delArm='c'+d.delcat; render(); return;} const st=storeById(S.mStore); if(st.categories.length<=1){toast('至少要保留一個分類','bad'); S.delArm=null; render(); return;} st.categories=st.categories.filter(c=>c.id!==d.delcat); save(); S.delArm=null; render(); toast('已刪除分類'); return;}
+  if(d.additem){const cid=d.additem, st=storeById(S.mStore), c=catOf(st,cid); const g=k=>{const el=document.getElementById(`ni-${k}-${cid}`); return el?el.value.trim():'';};
+    const name=g('name'), cp=parseInt(g('c'),10), op=st.singlePrice?cp:parseInt(g('o')||g('c'),10);
+    if(!name){toast('請輸入品名','bad');return;} if(!(cp>0)){toast('請輸入價格','bad');return;} if(!st.singlePrice&&!(op>=cp)){toast('校外價不得低於校內價（FR-10）','bad');return;}
+    c.items.push({id:newId(st.id+'-'),name,en:g('en')||name,campus:cp,off:op,tags:g('t')?g('t').split(/[,，、]\s*/).filter(Boolean):[]}); save(); render(); const w=st.singlePrice?'':priceWarn(cp,op); w?toast('⚠ 已新增，但'+w,'bad',4500):toast(`已新增「${name}」，學生端立即可點`,'ok'); return;}
   if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||null; S.loginErr=''; render(); return;}
   if(d.clock){ if(d.clock==='real'){DB.clockOffsetMin=null;} else {const [h,m]=d.clock.split(':').map(Number); DB.clockOffsetMin=h*60+m;} save(); render(); return; }
   if(d.go){S.view=d.go; S.sheet=null; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
@@ -816,7 +945,12 @@ document.addEventListener('click',e=>{
   switch(d.act){
     case 'sso': memberLogin(); break;
     case 'visitor':{const ph=$('#vPhone').value.replace(/\D/g,''); if(!/^09\d{8}$/.test(ph)){S.loginErr='手機號碼格式不正確（09 開頭共 10 碼）'; render(); return;} S.loginErr=''; S.loginMode=null; S.user={id:'v-'+ph,type:'visitor',phone:ph,name:'訪客'+ph.slice(-3),...(DB.users['v-'+ph]||{})}; S.view='home'; render(); toast('訪客登入：以校外價計','ok'); break;}
-    case 'logout': S.user=null; S.cart=[]; S.view='home'; render(); break;
+    case 'logout': S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
+    case 'editmode': S.editMode=!S.editMode; S.view='home'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
+    case 'addStore': addStore(); break;
+    case 'addCat':{const n=($('#ncName').value||'').trim(); if(!n){toast('請輸入分類名稱','bad');return;} storeById(S.mStore).categories.push({id:newId('c'),name:n,en:($('#ncEn').value||'').trim()||n,items:[]}); save(); render(); toast('已新增分類','ok'); break;}
+    case 'changePw':{const v=($('#newPw').value||'').trim(); if(!/^\S{4,12}$/.test(v)){toast('密碼需 4～12 碼','bad');return;} DB.storePw=DB.storePw||{}; DB.storePw[S.vendorStore]=v; save(); render(); toast('密碼已更新','ok'); break;}
+    case 'vendorLogin':{const sid=$('#vSel').value; S.vSel=sid; const _x=0, pw=($('#vPw').value||''); const ok=((DB.storePw||{})[sid]||'0000')===pw; if(!ok){S.loginErr='密碼錯誤'; render(); return;} const st=storeById(sid); S.user={id:'s-'+sid,type:'vendor',store:sid,name:st.name}; S.vendorStore=sid; S.vendorTab='queue'; S.loginMode=null; S.loginErr=''; render(); toast(`${st.name} 已登入`,'ok'); break;}
     case 'lang': S.lang=S.lang==='zh'?'en':'zh'; render(); break;
     case 'reset': if(!S.resetArm){S.resetArm=true; render(); setTimeout(()=>{S.resetArm=false;},4000);} else {S.resetArm=false; DB=fresh(); save(); S.cart=[]; render(); toast('已清除');} break;
     case 'close': S.sheet=null; render(); break;
@@ -834,7 +968,21 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='ssoNo'){const h=document.getElementById('noHint'); if(h) h.innerHTML=idHint(e.target.value.trim());}});
 document.addEventListener('change',e=>{
   const t=e.target;
-  if(t.id==='vStore'){S.vendorStore=t.value; render(); return;}
+  if(t.id==='vSel'){S.vSel=t.value; return;}
+  if(t.id==='mStore'){S.mStore=t.value; render(); return;}
+  if(t.dataset.sf){const st=storeById(t.dataset.sf), k=t.dataset.k, v=t.value.trim();
+    if(k==='open'&&!OPEN_RE.test(v)){toast('營業時間格式應為 11:00-14:00, 17:00-19:30','bad'); render(); return;}
+    if(k==='prepMin'||k==='slotCap'){const n=parseInt(v,10); if(!(n>=(k==='slotCap'?1:0)&&n<=99)){toast('數值不合理','bad'); render(); return;} DB.storeCfg[st.id]={...cfg(st.id),[k]:n};}
+    else { if(!v){toast('不可空白','bad'); render(); return;} st[k]=v; }
+    save(); render(); toast('已儲存','ok'); return;}
+  if(t.dataset.catf){const c=catOf(storeById(S.mStore),t.dataset.catf); const v=t.value.trim(); if(!v&&t.dataset.k==='name'){toast('分類名稱不可空白','bad'); render(); return;} c[t.dataset.k]=v; save(); render(); toast('已儲存','ok'); return;}
+  if(t.dataset.itf){const f=findCatalogItem(t.dataset.itf); if(!f) return; const k=t.dataset.k, v=t.value.trim(), it=f.it, single=!!f.st.singlePrice;
+    if(k==='campus'||k==='off'){const n=parseInt(v,10); if(!(n>0)){toast('價格須為正整數','bad'); render(); return;}
+      const c=k==='campus'?n:item(it.id).campus, o=single?c:(k==='off'?n:item(it.id).off); if(o<c){toast('校外價不得低於校內價（FR-10）','bad'); render(); return;}
+      it.campus=c; it.off=o; if(DB.overrides[it.id]){delete DB.overrides[it.id].campus; delete DB.overrides[it.id].off;}
+      save(); render(); const w=single?'':priceWarn(c,o); w?toast('⚠ 已儲存，但'+w,'bad',4500):toast('價格已更新','ok'); return;}
+    if(k==='tags') it.tags=v?v.split(/[,，、]\s*/).filter(Boolean):[]; else { if(!v&&k==='name'){toast('品名不可空白','bad'); render(); return;} it[k]=v; }
+    save(); render(); toast('已儲存','ok'); return;}
   if(t.id==='clockInput'&&t.value){const [h,m]=t.value.split(':').map(Number); DB.clockOffsetMin=h*60+m; save(); render(); return;}
   if(t.dataset.pc){const id=t.dataset.pc, k=t.dataset.k, v=parseInt(t.value,10); const it=item(id); if(!(v>0)){toast('價格須為正整數','bad'); render(); return;}
     const c=k==='campus'?v:it.campus, o=k==='off'?v:it.off;
@@ -844,6 +992,7 @@ document.addEventListener('change',e=>{
 });
 // periodic refresh (clock + no-show timing), keeps tabs in sync even without storage events
 setInterval(()=>{const before=snapshotStatuses(); const d=load(); if(d){DB=d;} notifyChanges(before); if(!S.sheet && !(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))) render(); else $('#clockNow').textContent=hm(minOf(now()));},5000);
+rebuildCatalog();
 render();
 </script>
 </body>
