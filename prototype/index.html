@@ -2793,7 +2793,7 @@ function notifyChanges(before){
   if(S.role!=='student'||!S.user) return;
   DB.orders.filter(o=>o.user===S.user.id).forEach(o=>{
     if(before[o.id]&&before[o.id]!==o.status){
-      if(o.status==='READY') toast(`🔔 訂單 ${o.no}（${storeById(o.store).name}）可取餐了！`,'ok',5000);
+      if(o.status==='READY') toast(`🔔 訂單 ${o.no}（${storeById(o.store).name}）可取餐了！取餐後記得按「完成訂單」`,'ok',5000);
       else if(o.status==='ACCEPTED') toast(`訂單 ${o.no} 店家已接單，製作中`);
       else if(o.status==='REJECTED') toast(`訂單 ${o.no} 被店家拒絕：${o.rejectReason||''}`,'bad',5000);
       else if(o.status==='NO_SHOW') toast(`訂單 ${o.no} 已標記為未取餐`,'bad');
@@ -2947,6 +2947,7 @@ function renderHome(){
   return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
     ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
+    ${blockBanner()}
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
     ${stores.map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
       return `<button class="storecard" data-store="${s.id}">
@@ -3059,7 +3060,8 @@ function renderCart(){
   return `<div class="appbar"><h1>${T('購物車','Cart')}</h1><span class="chip" style="margin-left:auto">${sids.length} 家店 → ${sids.length} 筆訂單</span></div>
   <div class="scroll">${html}
     <div class="cgroup"><div class="sum"><b>合計</b><b>${money(total)}</b></div><p class="note" style="margin:6px 0 0">💳 本系統僅提供線上付款：LINE Pay 或校園帳戶扣款（可至校內儲值機儲值）。不提供外送（C-2）。</p></div>
-    <button class="btn pri" style="width:100%" data-go="checkout">選擇取餐時段 →</button>
+    ${blockBanner()}
+    <button class="btn pri" style="width:100%" ${openOrders().length?'disabled':'data-go="checkout"'}>${openOrders().length?'請先完成上一筆訂單':'選擇取餐時段 →'}</button>
   </div>`;
 }
 
@@ -3085,16 +3087,20 @@ function renderCheckout(){
       :`<div class="promo" style="background:var(--bad-bg);color:var(--bad)">今日已無可選時段（營業時間 ${esc(s.open)}）</div>`}
     </div>`;}).join('');
   if(susp) allOk=false;
+  if(openOrders().length) allOk=false;
   return `<div class="appbar"><button class="iconbtn" data-go="cart">←</button><h1>選擇取餐時段</h1></div>
   <div class="scroll">
+    ${blockBanner()}
     ${susp?`<div class="promo" style="background:var(--bad-bg);color:var(--bad)">⛔ 你的帳號因 30 天內 2 次未取餐，線上點餐暫停至 ${new Date(susp).toLocaleDateString()}（FR-21）</div>`:''}
     ${html}
     <div class="cgroup"><div class="field"><label>備註（選填）</label><input id="note" placeholder="例：不要香菜、少辣" maxlength="40" value="${esc(S.note||'')}"></div></div>
     ${payBlock(total)}
-    <button class="btn pri" style="width:100%" data-act="submit" ${allOk&&payOk(total)?'':'disabled'}>${!allOk?'請為每家店選擇取餐時段':!payOk(total)?'請選擇可用的付款方式':`付款 ${money(total)} 並送出 ${sids.length} 筆訂單`}</button>
+    <button class="btn pri" style="width:100%" data-act="submit" ${allOk&&payOk(total)?'':'disabled'}>${openOrders().length?'請先完成上一筆訂單':!allOk?'請為每家店選擇取餐時段':!payOk(total)?'請選擇可用的付款方式':`付款 ${money(total)} 並送出 ${sids.length} 筆訂單`}</button>
     <p class="note">送出時系統會再確認一次時段名額；若剛好被別人搶走，會請你改選（FR-13）。</p>
   </div>`;
 }
+function openOrders(){return S.user?DB.orders.filter(o=>o.user===S.user.id&&['SUBMITTED','ACCEPTED','READY'].includes(o.status)):[];}
+function blockBanner(){const op=openOrders(); if(!op.length) return ''; return `<div class="promo" style="background:#e8f2fc;color:var(--brand-d)">🔒 <div>你還有未完成的訂單 <b>${op.map(o=>o.no).join('、')}</b>。取餐後請在「我的訂單」按 <b>完成訂單</b>，才能再點下一餐。<br><button class="btn pri sm" style="margin-top:6px" data-go="orders">前往我的訂單</button></div></div>`;}
 function isMember(){return S.user&&S.user.type==='member';}
 function payBlock(total){
   const mem=isMember(); const bal=mem?wallet(S.user.id).bal:0, short=mem&&bal<total;
@@ -3108,6 +3114,7 @@ function payBlock(total){
 }
 function payOk(total){ if(S.pay==='wallet') return isMember()&&wallet(S.user.id).bal>=total; return S.pay==='linepay'; }
 function startPayment(){
+  if(openOrders().length){toast('請先完成上一筆訂單，才能再點下一餐','bad'); render(); return;}
   const g=cartByStore(); const total=Object.values(g).flat().reduce((a,l)=>a+linePrice(l),0);
   S.note=($('#note')||{}).value||'';
   if(!isMember()){const ph=(($('#payPhone')||{}).value||'').replace(/\D/g,''); S.payPhone=ph; if(!/^09\d{8}$/.test(ph)){toast('請輸入正確的手機號碼（09 開頭共 10 碼）','bad'); render(); return;}}
@@ -3118,6 +3125,7 @@ function startPayment(){
 function submitOrders(){
   const g=cartByStore(); const at=now(); const note=S.note||'';
   if(userSusp()){toast('帳號停權中','bad');return;}
+  if(openOrders().length){toast('請先完成上一筆訂單，才能再點下一餐','bad'); render(); return;}
   // re-check capacity & sold out (simulated transaction)
   DB=load()||DB;
   for(const sid of Object.keys(g)){
@@ -3145,7 +3153,7 @@ function submitOrders(){
 }
 
 /* ---------- orders ---------- */
-const ST_LABEL={SUBMITTED:'已送出',ACCEPTED:'製作中',READY:'可取餐',PICKED_UP:'已取餐',CANCELLED:'已取消',REJECTED:'被拒絕',NO_SHOW:'未取餐'};
+const ST_LABEL={SUBMITTED:'已送出',ACCEPTED:'製作中',READY:'可取餐',PICKED_UP:'已完成',CANCELLED:'已取消',REJECTED:'被拒絕',NO_SHOW:'未取餐'};
 function qrSvg(text){try{const q=qrcode(0,'M'); q.addData(text); q.make(); return q.createSvgTag({cellSize:3,margin:2,scalable:true});}catch(e){return '<svg></svg>';}}
 function renderOrders(){
   const mine=DB.orders.filter(o=>o.user===S.user.id).sort((a,b)=>b.submittedAt.localeCompare(a.submittedAt));
@@ -3165,6 +3173,7 @@ function renderOrders(){
       ${o.refunded?`<div class="promo" style="background:var(--ok-bg);color:var(--ok)">已退款 ${money(o.total)} 至${o.payment.method==='wallet'?'校園帳戶':' LINE Pay'}</div>`:''}
       ${o.status==='SUBMITTED'?`<button class="btn bad sm" style="margin-top:10px" data-cancel="${o.id}">取消訂單（店家接單前可取消並全額退款）</button>`:''}
       ${o.status==='ACCEPTED'?`<p class="note">店家已接單，無法線上取消；如有需要請直接聯絡店家（FR-19）。</p>`:''}
+      ${o.status==='READY'?`<div class="promo" style="background:${o.handedOver?'var(--ok-bg)':'#e8f2fc'};color:${o.handedOver?'var(--ok)':'var(--brand-d)'};margin-top:10px">${o.handedOver?'✅ 店家已交付餐點，請按下方「完成訂單」':'🔔 餐點已完成，請到櫃台出示 QR Code 取餐；拿到餐點後按「完成訂單」'}</div><button class="btn pri" style="width:100%;margin-top:8px" data-done="${o.id}">✓ 我已取餐，完成訂單</button>`:''}
     </div>`;}).join('')}</div>`;
 }
 function userSusp(){const u=(DB.users||{})[S.user.id]||{}; return u.suspendedUntil&&new Date(u.suspendedUntil)>now()?u.suspendedUntil:null;}
@@ -3208,7 +3217,7 @@ function renderQueue(sid){
   <div class="kcols">
     ${col('SUBMITTED','🆕 新訂單',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="ACCEPTED">接單</button><button class="btn bad sm" data-reject="${o.id}" data-r="售完">拒絕：售完</button><button class="btn bad sm" data-reject="${o.id}" data-r="店內忙不過來">拒絕：忙不過來</button>`)}
     ${col('ACCEPTED','🔥 製作中',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="READY">完成，通知取餐</button>`)}
-    ${col('READY','✅ 可取餐',o=>`<button class="btn pri sm" data-vs="${o.id}" data-to="PICKED_UP">已取餐</button><button class="btn bad sm" data-vs="${o.id}" data-to="NO_SHOW">未取餐</button>`)}
+    ${col('READY','✅ 可取餐',o=>o.handedOver?`<span class="chip" style="background:var(--ok-bg);color:var(--ok)">已交付，等學生按完成</span>`:`<button class="btn pri sm" data-handover="${o.id}">交付餐點</button><button class="btn bad sm" data-vs="${o.id}" data-to="NO_SHOW">未取餐</button>`)}
   </div>
   ${done.length?`<div class="sect-h">今日已結束（${done.length}）</div>${done.map(o=>`<div class="mrow"><div class="x"><b>${o.no} · ${hm(o.slot)}</b><small>${esc(o.lines.map(l=>l.name).join('、'))}</small></div><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span><b>${money(o.total)}</b></div>`).join('')}`:''}
   <button class="btn sec sm" style="width:100%;margin-top:10px" data-act="noshowcheck">⏰ 執行放鳥檢查（排程器模擬）</button>`;
@@ -3354,9 +3363,10 @@ function applyNoShow(uid){
   const u=DB.users[uid]||{}; const n=DB.orders.filter(o=>o.user===uid&&o.status==='NO_SHOW').length;
   if(n>=2){const d=now(); d.setDate(d.getDate()+14); u.suspendedUntil=d.toISOString(); DB.users[uid]=u; if(S.user&&S.user.id===uid) S.user.suspendedUntil=u.suspendedUntil;}
 }
+function handOver(id){DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o) return; o.handedOver=true; (o.history=o.history||[]).push({s:'HANDED_OVER',at:hm(minOf(now()))}); save(); render();}
 function noShowCheck(){
   const m=minOf(now()); let n=0;
-  DB.orders.forEach(o=>{if(o.status==='READY'&&o.day===today()&&m>o.slot+10+30){o.status='NO_SHOW'; n++; applyNoShow(o.user);}});
+  DB.orders.forEach(o=>{if(o.status==='READY'&&!o.handedOver&&o.day===today()&&m>o.slot+10+30){o.status='NO_SHOW'; n++; applyNoShow(o.user);}});
   save(); render(); toast(n?`已標記 ${n} 筆未取餐`:'沒有逾時未取的訂單（時段結束 +30 分才算）');
 }
 
@@ -3366,6 +3376,8 @@ document.addEventListener('click',e=>{
   if(t.classList.contains('overlay')&&e.target!==t) return;
   if(d.mtab){S.mTab=d.mtab; render(); return;}
   if(d.qseg){S.qSeg=d.qseg; render(); return;}
+  if(d.done){const o=DB.orders.find(x=>x.id===d.done); if(o&&o.status==='READY'){setStatus(o.id,'PICKED_UP'); toast(`訂單 ${o.no} 已完成，可以點下一餐了`,'ok');} return;}
+  if(d.handover){handOver(d.handover); toast('已標記交付，等學生在 App 按完成'); return;}
   if(d.pay){if(t.classList.contains('dis')){toast('校園帳戶餘額不足，請至校內儲值機儲值或改用 LINE Pay','bad',4000); return;} S.note=($('#note')||{}).value||S.note; if($('#payPhone')) S.payPhone=$('#payPhone').value; S.pay=d.pay; render(); return;}
   if(d.topup){walletTx(S.user.id,Number(d.topup),'校內儲值機儲值'); save(); render(); toast(`已儲值 ${money(Number(d.topup))}`,'ok'); return;}
   if(d.editmenu){S.mStore=d.editmenu; S.mTab='menu'; render(); return;}
@@ -3421,7 +3433,7 @@ document.addEventListener('click',e=>{
     case 'addBowl': S.cart.push({key:rid().slice(0,8),store:'mala',kind:'bowl',qty:sh.qty,broth:sh.broth,pick4:sh.usePick4?[...sh.pick4]:[],extras:{...sh.extras}}); S.sheet=null; render(); toast('已加入組合麻辣燙','ok'); break;
     case 'submit': startPayment(); break;
     case 'lpConfirm': submitOrders(); break;
-    case 'find':{const no=($('#findNo').value||'').trim().toUpperCase(); const o=DB.orders.find(x=>x.no===no&&x.store===S.vendorStore&&x.day===today()); if(!o) toast('找不到這個號碼（或不是本店訂單）','bad'); else if(o.status==='READY'){setStatus(o.id,'PICKED_UP'); toast(`${o.no} 核對成功，已線上付款，直接交付餐點`,'ok',4000);} else toast(`${o.no} 目前狀態：${ST_LABEL[o.status]}`); break;}
+    case 'find':{const no=($('#findNo').value||'').trim().toUpperCase(); const o=DB.orders.find(x=>x.no===no&&x.store===S.vendorStore&&x.day===today()); if(!o) toast('找不到這個號碼（或不是本店訂單）','bad'); else if(o.status==='READY'){handOver(o.id); toast(`${o.no} 核對成功（已線上付款），請交付餐點；學生會在 App 按完成`,'ok',4500);} else toast(`${o.no} 目前狀態：${ST_LABEL[o.status]}`); break;}
     case 'noshowcheck': noShowCheck(); break;
     case 'saveCfg':{const p=parseInt($('#cfgPrep').value,10), c=parseInt($('#cfgCap').value,10); if(!(p>=0&&p<=60&&c>=1&&c<=99)){toast('數值不合理','bad');return;} DB.storeCfg[S.vendorStore]={prepMin:p,slotCap:c}; save(); render(); toast('已儲存','ok'); break;}
     case 'csv': exportCsv(); break;
