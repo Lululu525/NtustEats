@@ -2,7 +2,7 @@
 
 **Waterfall + AI ｜ Agile + AI ｜（加分）AI-Agent Method** — 範圍：至 Requirement Analysis 階段
 
-校內四家餐廳（泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE）的線上點餐：師生上課前先點、選 10 分鐘取餐時段、下課出示 QR Code 現場付款取餐；店家以平板接單；總務處看尖峰報表。
+校內餐廳（泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE；稻穗輕食見 CR-01）的線上點餐：師生上課前先點、選 10 分鐘取餐時段、下課出示 QR Code 現場付款取餐；店家以平板接單；總務處看尖峰報表。
 
 ## 需求原型（可操作）
 直接用瀏覽器開啟 [`prototype/index.html`](prototype/index.html)（不需安裝）。開啟 GitHub Pages 後網址為 `https://<owner>.github.io/<repo>/prototype/`。

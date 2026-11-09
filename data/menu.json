@@ -1,6 +1,6 @@
 {
  "version": "2026-11",
- "source": "各店紙本菜單（校內優惠價／校外販售價）",
+ "source": "各店紙本菜單（校內優惠價／校外販售價）；稻穗輕食取自 iCHEF 線上菜單（單一價格）",
  "stores": [
   {
    "id": "thai",
@@ -2258,6 +2258,245 @@
    ],
    "offline": [
     "寄杯卡（美式 850／拿鐵 1100／冷泡茶 600）：現場辦理"
+   ]
+  },
+  {
+   "id": "daosui",
+   "name": "稻穗輕食",
+   "en": "Dao Sui Healthy Meal",
+   "open": "10:30-14:30, 16:30-19:30",
+   "prepMin": 8,
+   "slotCap": 15,
+   "source": "https://shop.ichefpos.com/store/iLZsEOQ9/ordering",
+   "singlePrice": true,
+   "note": "休息時間 14:30–16:30；晚餐結束時間 19:30 為假設，待店家確認",
+   "categories": [
+    {
+     "id": "bento",
+     "name": "餐盒類",
+     "en": "Bento",
+     "note": "10:30 開始供應；熱量為店家標示",
+     "items": [
+      {
+       "name": "低溫舒肥雞胸肉健康餐盒",
+       "en": "Sous Vide Chicken Breast Bento",
+       "campus": 145,
+       "off": 145,
+       "tags": [],
+       "kcal": 500,
+       "id": "daosui-001"
+      },
+      {
+       "name": "義式香料野菇健康餐盒",
+       "en": "Italian Herb Mushroom Bento",
+       "campus": 108,
+       "off": 108,
+       "tags": [],
+       "kcal": 453,
+       "id": "daosui-002"
+      },
+      {
+       "name": "蔥薑佐白旗片健康餐盒",
+       "en": "Scallion & Ginger White Fish Fillet Bento",
+       "campus": 108,
+       "off": 108,
+       "tags": [],
+       "kcal": 580,
+       "id": "daosui-003"
+      },
+      {
+       "name": "低溫火烤嫩肩牛排健康餐盒",
+       "en": "Seared Tender Shoulder Steak Bento",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "kcal": 519,
+       "id": "daosui-004"
+      },
+      {
+       "name": "蒔蘿檸檬挪威鮭魚健康餐盒",
+       "en": "Dill Lemon Norwegian Salmon Bento",
+       "campus": 160,
+       "off": 160,
+       "tags": [],
+       "kcal": 594,
+       "id": "daosui-005"
+      },
+      {
+       "name": "風味手撕雞餐盒",
+       "en": "Shredded Chicken Bento",
+       "campus": 103,
+       "off": 103,
+       "tags": [],
+       "kcal": 500,
+       "id": "daosui-006"
+      },
+      {
+       "name": "風味牛五花餐盒",
+       "en": "Beef Belly Bento",
+       "campus": 103,
+       "off": 103,
+       "tags": [],
+       "kcal": 719,
+       "id": "daosui-007"
+      },
+      {
+       "name": "普羅旺斯海鱸魚餐盒",
+       "en": "Provence-Style Sea Bass Bento",
+       "campus": 120,
+       "off": 120,
+       "tags": [],
+       "kcal": 519,
+       "id": "daosui-008"
+      },
+      {
+       "name": "炙燒挪威鯖魚餐盒",
+       "en": "Grilled Norwegian Mackerel Bento",
+       "campus": 140,
+       "off": 140,
+       "tags": [],
+       "kcal": 792,
+       "id": "daosui-009"
+      },
+      {
+       "name": "炙燒雞腿排餐盒",
+       "en": "Grilled Chicken Thigh Bento",
+       "campus": 117,
+       "off": 117,
+       "tags": [],
+       "kcal": 743,
+       "id": "daosui-010"
+      },
+      {
+       "name": "高鈣吻仔魚餐盒",
+       "en": "High-Calcium Whitebait Bento",
+       "campus": 130,
+       "off": 130,
+       "tags": [],
+       "kcal": 482,
+       "id": "daosui-011"
+      }
+     ]
+    },
+    {
+     "id": "extra",
+     "name": "加點菜單",
+     "en": "Add-ons & Sides",
+     "items": [
+      {
+       "name": "單點黑紫米飯",
+       "en": "Black Purple Rice",
+       "campus": 12,
+       "off": 12,
+       "tags": [],
+       "id": "daosui-012"
+      },
+      {
+       "name": "單點水煮蛋",
+       "en": "Boiled Egg",
+       "campus": 12,
+       "off": 12,
+       "tags": [],
+       "id": "daosui-013"
+      },
+      {
+       "name": "單點泡菜",
+       "en": "Kimchi",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "daosui-014"
+      },
+      {
+       "name": "單點當日時蔬",
+       "en": "Vegetable of the Day",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "daosui-015"
+      },
+      {
+       "name": "單點手撕雞",
+       "en": "Shredded Chicken",
+       "campus": 55,
+       "off": 55,
+       "tags": [],
+       "id": "daosui-016"
+      },
+      {
+       "name": "單點義式野菇",
+       "en": "Italian Mushrooms",
+       "campus": 45,
+       "off": 45,
+       "tags": [],
+       "id": "daosui-017"
+      },
+      {
+       "name": "單點牛五花",
+       "en": "Beef Belly",
+       "campus": 60,
+       "off": 60,
+       "tags": [],
+       "id": "daosui-018"
+      },
+      {
+       "name": "椒鹽白旗片",
+       "en": "Salt & Pepper White Fish Fillet",
+       "campus": 70,
+       "off": 70,
+       "tags": [],
+       "id": "daosui-019"
+      },
+      {
+       "name": "單點嫩肩牛排",
+       "en": "Tender Shoulder Steak",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "daosui-020"
+      },
+      {
+       "name": "單點挪威鮭魚",
+       "en": "Norwegian Salmon",
+       "campus": 105,
+       "off": 105,
+       "tags": [],
+       "id": "daosui-021"
+      },
+      {
+       "name": "單點普羅旺斯海鱸魚",
+       "en": "Provence-Style Sea Bass",
+       "campus": 85,
+       "off": 85,
+       "tags": [],
+       "id": "daosui-022"
+      },
+      {
+       "name": "單點低溫雞胸肉",
+       "en": "Sous Vide Chicken Breast",
+       "campus": 70,
+       "off": 70,
+       "tags": [],
+       "id": "daosui-023"
+      },
+      {
+       "name": "單點炙燒挪威鯖魚",
+       "en": "Grilled Norwegian Mackerel",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "daosui-024"
+      },
+      {
+       "name": "單點碳烤雞腿排",
+       "en": "Charcoal-Grilled Chicken Thigh",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "daosui-025"
+      }
+     ]
+    }
    ]
   }
  ]

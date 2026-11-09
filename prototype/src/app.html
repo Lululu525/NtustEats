@@ -100,7 +100,7 @@ input,select,textarea{font:inherit}
 .item .pr .alt{display:block;font-size:11px;color:var(--mute)}
 .item.sold{opacity:.45}
 .item.sold .pr b{font-size:13px;color:var(--bad)}
-.addplus{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-size:20px;line-height:30px;text-align:center;margin-top:6px;display:inline-block}
+.addplus{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-size:20px;line-height:30px;text-align:center;margin:6px 0 0 auto;display:block}
 .builder-cta{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:14px;border-radius:var(--r);background:var(--ink);color:#fff;margin:6px 0 4px}
 .builder-cta .em{font-size:30px}
 .builder-cta b{font-size:16px}
@@ -281,8 +281,8 @@ window.addEventListener('storage',e=>{if(e.key===KEY){const d=load(); if(d){cons
 /* ================= helpers ================= */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const STORE_ICON={thai:'🍛',ramen:'🍜',mala:'🌶️',daka:'☕'};
-const STORE_BG={thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df'};
+const STORE_ICON={thai:'🍛',ramen:'🍜',mala:'🌶️',daka:'☕',daosui:'🥗'};
+const STORE_BG={thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6'};
 const stores=MENU.stores;
 const storeById=id=>stores.find(s=>s.id===id);
 const allItems={}; stores.forEach(s=>{s.categories.forEach(c=>c.items.forEach(it=>{allItems[it.id]={...it,store:s.id,cat:c.id};})); Object.values(s.addonGroups||{}).forEach(g=>g.items.forEach(it=>{allItems[it.id]={...it,store:s.id,addon:true};}));});
@@ -405,7 +405,7 @@ function renderLogin(){
   return `<div class="login">
     <div style="font-size:44px">🍱</div>
     <h2>上課前先點好，<br>下課直接拿。</h2>
-    <p>NTUST Eats 整合泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE 的線上點餐。</p>
+    <p>NTUST Eats 整合泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE、稻穗輕食的線上點餐。</p>
     <div class="field"><label>學號／教職員編號</label><input id="ssoNo" placeholder="例：B11234567" value="B11234567"></div>
     <div class="field"><label>姓名</label><input id="ssoName" placeholder="姓名" value="王小明"></div>
     <button class="btn pri" data-act="sso">🎓 學校帳號登入（SSO 模擬）· 校內價</button>
@@ -441,13 +441,14 @@ function renderStore(){
   <div class="cats">${s.categories.map(c=>`<button data-jump="${c.id}">${esc(T(c.name,c.en))}</button>`).join('')}</div>
   <div class="scroll" id="menuScroll">
     ${s.builder?`<button class="builder-cta" data-act="bowl"><span class="em">🥣</span><div><b>${T('組合我的麻辣燙','Build my Mala bowl')}</b><span>${T('選湯底 → 火鍋料任選 4 個 → 加肉、加菜、加主食','Broth → any 4 hot-pot items → add meat, veg, noodles')}</span></div><span style="margin-left:auto;font-size:22px">›</span></button>`:''}
+    ${s.singlePrice?`<div class="cat-note">此店校內外同價（菜單只有一種價格）${s.note?'；'+esc(s.note):''}</div>`:''}
     ${promos.map(p=>{const [h,mm]=p.before.split(':').map(Number); const live=m<h*60+mm; return `<div class="promo">🎁 <div><b>${esc(p.name)}</b><br>${live?'現在適用，結帳時自動附贈':'今日已過 '+p.before+'，明天早上再來'}</div></div>`;}).join('')}
     ${s.categories.map(c=>`<div class="cat-h" id="cat-${c.id}"><h4>${esc(T(c.name,c.en))}</h4><span>${esc(S.lang==='zh'?c.en:c.name)}</span></div>
       ${c.note?`<div class="cat-note">${esc(c.note)}</div>`:''}
       ${c.diy?`<div class="cat-note">此分類也可在上方「組合我的麻辣燙」中一次選好</div>`:''}
       ${c.items.map(x=>{const it=item(x.id); const p=P(it), other=priceType()==='off'?it.campus:it.off;
         return `<button class="item ${it.soldOut?'sold':''}" data-item="${it.id}" ${it.soldOut?'disabled':''}>
-          <div style="flex:1;min-width:0"><div class="nm">${esc(T(it.name,it.en))}</div><div class="en">${esc(S.lang==='zh'?it.en:it.name)}</div>
+          <div style="flex:1;min-width:0"><div class="nm">${esc(T(it.name,it.en))}</div><div class="en">${esc(S.lang==='zh'?it.en:it.name)}${it.kcal?` · 約 ${it.kcal} 大卡`:''}</div>
           ${it.tags.length?`<div class="tags">${it.tags.map(tagHtml).join('')}</div>`:''}</div>
           <div class="pr">${it.soldOut?'<b>售完</b>':`<b>${money(p)}</b>${other!==p?`<span class="alt">${priceType()==='off'?'校內價':'校外價'} ${money(other)}</span>`:''}<span class="addplus">＋</span>`}</div></button>`;}).join('')}`).join('')}
     <div style="height:30px"></div>
@@ -573,7 +574,7 @@ function submitOrders(){
     const lines=g[sid].map(l=>({...l,name:lineName(l),desc:lineDesc(l),price:linePrice(l)}));
     const gifts=promosFor(sid,g[sid],at).map(p=>({name:p.promo.reward.choose?(S.gifts[sid+p.promo.id]||p.promo.reward.choose[0]):p.promo.reward.fixed,qty:p.count,promo:p.promo.name}));
     DB.seq=(DB.seq||100)+1;
-    const prefix={thai:'T',ramen:'R',mala:'M',daka:'D'}[sid];
+    const prefix={thai:'T',ramen:'R',mala:'M',daka:'D',daosui:'H'}[sid]||'X';
     const o={id:rid(),no:prefix+String(DB.seq).slice(-3),token:rid(),store:sid,user:S.user.id,userName:S.user.name,priceType:priceType(),
       lines,gifts,total:lines.reduce((a,l)=>a+l.price,0),slot:S.pick[sid],day:today(),status:'SUBMITTED',note,submittedAt:at.toISOString(),history:[{s:'SUBMITTED',at:hm(minOf(at))}]};
     DB.orders.push(o); created.push(o);
