@@ -5,7 +5,7 @@
 set -euo pipefail
 OWNER=${1:?owner}; REPO=${2:-ntust-eats}
 gh repo create "$OWNER/$REPO" --public --source=. --remote=origin --push
-for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui; do
+for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui feature/login-identity; do
   git push -u origin "$b"
 done
 # 審查用 PR（依序合併；每個 PR 需由「非作者」的組員 Approve 後再 Merge）
@@ -14,6 +14,7 @@ gh pr create -B review/01-clarify-ambiguous -H review/02-add-missing -t "SRS rev
 gh pr create -B review/02-add-missing -H review/03-remove-ai-invented -t "SRS review #3: 移除 AI 自行加入的需求 (v0.4)" -F docs/waterfall/pr-bodies/03.md
 gh pr create -B review/03-remove-ai-invented -H docs/agile-prototype-ai -t "Agile backlog + 需求原型 + AI 使用紀錄" -F docs/waterfall/pr-bodies/04.md
 gh pr create -B docs/agile-prototype-ai -H feature/add-daosui -t "CR-01: 新增店家 稻穗輕食" -F docs/change-requests/CR-01-add-daosui.md
+gh pr create -B feature/add-daosui -H feature/login-identity -t "CR-02: 登入畫面與身分辨識" -F docs/change-requests/CR-02-login-identity.md
 echo "提醒：PR #1 合併後，到 PR #2 頁面把 base 改成 main（GitHub 通常會自動改），依序處理。"
 # Labels
 for l in "ai-proposed:FBCA04" "po-accepted:0E8A16" "sprint-1:1D76DB" "sprint-2:5319E7"; do
