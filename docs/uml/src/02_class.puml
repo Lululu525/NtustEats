@@ -84,19 +84,6 @@ class Report {
   +byStoreAndSlot()
   +exportCsv(): File
 }
-class Payment {
-  method: PayMethod
-  amount: int
-  +charge()
-  +refund()
-}
-class Delivery {
-  address: String
-  fee: int
-}
-class Recommendation {
-  +suggest(customer): MenuItem[]
-}
 enum OrderStatus {
   SUBMITTED
   ACCEPTED
@@ -126,8 +113,5 @@ Customer "1" -- "0..*" Order : places
 Order "0..*" --> "1" Store
 Order "0..*" --> "1" PickupSlot
 Customer "1" -- "0..1" Suspension
-Order "1" -- "0..1" Payment
-Order "1" -- "0..1" Delivery
-Recommendation ..> MenuItem
 Admin ..> Report
 @enduml
