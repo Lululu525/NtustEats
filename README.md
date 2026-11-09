@@ -5,7 +5,7 @@
 校內餐廳（泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE；稻穗輕食見 CR-01）的線上點餐：師生上課前先點、選 10 分鐘取餐時段、下課出示 QR Code 現場付款取餐；店家以平板接單；總務處看尖峰報表。
 
 ## 需求原型（可操作）
-直接用瀏覽器開啟 [`prototype/index.html`](prototype/index.html)（不需安裝）。開啟 GitHub Pages 後網址為 `https://<owner>.github.io/<repo>/prototype/`。
+直接用瀏覽器開啟 [`prototype/index.html`](prototype/index.html)。開啟 GitHub Pages 後網址為 `https://<owner>.github.io/<repo>/prototype/`，用手機開啟可「加入主畫面」安裝成 App（PWA）。
 - 學生端：選身分（校內價／校外價）→ 四家店菜單 → 組合麻辣燙、加購、DAKA 早上優惠 → 跨店購物車 → 選時段 → 訂單號碼與 QR
 - 店家端：訂單佇列（接單／完成／已取餐／拒絕）、一鍵售完、時段容量
 - 右下角「Demo 時鐘」可調整時間，測試 10:00 前優惠與時段計算
