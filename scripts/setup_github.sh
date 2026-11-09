@@ -5,7 +5,7 @@
 set -euo pipefail
 OWNER=${1:?owner}; REPO=${2:-ntust-eats}
 gh repo create "$OWNER/$REPO" --public --source=. --remote=origin --push
-for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui feature/login-identity feature/roles-admin-edit feature/pwa-app feature/brand-cover feature/online-payment feature/student-complete; do
+for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui feature/login-identity feature/roles-admin-edit feature/pwa-app feature/brand-cover feature/online-payment feature/student-complete feature/noshow-correction; do
   git push -u origin "$b"
 done
 # 審查用 PR（依序合併；每個 PR 需由「非作者」的組員 Approve 後再 Merge）
@@ -20,6 +20,7 @@ gh pr create -B feature/roles-admin-edit -H feature/pwa-app -t "CR-04: 可安裝
 gh pr create -B feature/pwa-app -H feature/brand-cover -t "CR-05: 校徽色系、學生餐廳 icon、封面改版" -F docs/change-requests/CR-05-brand-cover.md
 gh pr create -B feature/brand-cover -H feature/online-payment -t "CR-06: 線上付款（LINE Pay／校園帳戶）、校外人士免登入" -F docs/change-requests/CR-06-online-payment.md
 gh pr create -B feature/online-payment -H feature/student-complete -t "CR-07: 學生按完成訂單、未完成不能點下一餐" -F docs/change-requests/CR-07-student-complete.md
+gh pr create -B feature/student-complete -H feature/noshow-correction -t "CR-08: 店家可更正未取餐" -F docs/change-requests/CR-08-noshow-correction.md
 echo "提醒：PR #1 合併後，到 PR #2 頁面把 base 改成 main（GitHub 通常會自動改），依序處理。"
 # Labels
 for l in "ai-proposed:FBCA04" "po-accepted:0E8A16" "sprint-1:1D76DB" "sprint-2:5319E7"; do
