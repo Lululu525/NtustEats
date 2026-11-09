@@ -1,0 +1,44 @@
+@startuml
+!include _style.iuml
+left to right direction
+title NTUST Eats — Use Case Diagram
+actor "顧客\nCustomer" as V
+actor "校內師生\nMember\n(校內價)" as M
+actor "校外訪客\nVisitor\n(校外價)" as VI
+actor "店家人員\nVendorStaff" as S
+actor "管理者\nAdmin" as A
+actor "排程器\nScheduler" as T <<system>>
+actor "校園 SSO" as SSO <<external>>
+M -|> V
+VI -|> V
+rectangle "NTUST Eats" {
+  usecase "UC-01 登入／註冊" as UC1
+  usecase "UC-02 瀏覽菜單" as UC2
+  usecase "UC-03 組合麻辣燙" as UC3
+  usecase "UC-04 下單（跨店、選時段）" as UC4
+  usecase "UC-05 查看／取消訂單" as UC5
+  usecase "UC-06 取餐核對" as UC6
+  usecase "UC-07 維護菜單／售完" as UC7
+  usecase "UC-08 處理訂單佇列" as UC8
+  usecase "UC-09 設定時段容量與促銷" as UC9
+  usecase "UC-10 管理店家" as UC10
+  usecase "UC-11 報表／匯出" as UC11
+  usecase "UC-12 放鳥處理" as UC12
+  usecase "套用加購與促銷" as PROMO
+}
+V --> UC1
+V --> UC2
+V --> UC3
+V --> UC4
+V --> UC5
+S --> UC6
+S --> UC7
+S --> UC8
+S --> UC9
+A --> UC10
+A --> UC11
+T --> UC12
+UC1 --> SSO
+UC4 ..> PROMO : <<include>>
+UC3 ..> UC4 : <<extend>>\n選了麻辣燙
+@enduml

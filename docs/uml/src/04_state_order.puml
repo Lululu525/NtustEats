@@ -1,0 +1,14 @@
+@startuml
+!include _style.iuml
+title NTUST Eats — State Machine: Order
+[*] --> SUBMITTED : 送出
+SUBMITTED --> ACCEPTED : 店家接單
+SUBMITTED --> REJECTED : 店家拒絕
+SUBMITTED --> CANCELLED : 學生取消
+ACCEPTED --> CANCELLED : 學生取消
+ACCEPTED --> READY : 製作完成 / 通知學生
+READY --> PICKED_UP : 取餐
+PICKED_UP --> [*]
+CANCELLED --> [*]
+REJECTED --> [*]
+@enduml

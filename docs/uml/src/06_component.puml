@@ -1,0 +1,36 @@
+@startuml
+!include _style.iuml
+title NTUST Eats — Component / Context Diagram
+actor "師生／訪客" as U
+actor "店家人員" as SV
+actor "管理者" as AD
+node "使用者裝置" {
+  [學生 PWA] as PWA
+  [店家平板 Web] as VEN
+  [管理後台 Web] as ADM
+}
+node "雲端容器" {
+  [API Server (REST)] as API
+  [排程器\n放鳥判定] as JOB
+  [通知模組] as NOTI
+  database "PostgreSQL\n菜單・訂單・時段" as DB
+}
+cloud "外部系統" {
+  [校園 SSO (OIDC)] as SSO
+  [Web Push Service] as PUSH
+  [簡訊驗證碼] as SMS
+}
+U --> PWA
+SV --> VEN
+AD --> ADM
+PWA --> API
+VEN --> API
+ADM --> API
+API --> DB
+JOB --> DB
+API --> NOTI
+JOB --> NOTI
+NOTI --> PUSH
+API --> SSO
+API --> SMS : 訪客註冊
+@enduml

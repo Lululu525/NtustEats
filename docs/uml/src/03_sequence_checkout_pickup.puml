@@ -1,0 +1,38 @@
+@startuml
+!include _style.iuml
+title NTUST Eats — Sequence: 跨店結帳與取餐 (UC-04, UC-06, UC-08)
+autonumber
+actor 學生 as S
+participant "PWA" as UI
+participant "API Server" as API
+database "PostgreSQL" as DB
+participant "通知模組" as N
+actor 店家 as V
+S -> UI : 購物車（麻辣燙 + DAKA）→ 結帳
+UI -> API : GET /slots?stores=mala,daka
+API --> UI : 各店可選時段（未滿、≥ 現在＋備餐時間）
+S -> UI : 麻辣燙 12:10、DAKA 12:10
+UI -> API : POST /checkout {lines, slots}
+API -> DB : 檢查停權、售完、價格身分
+loop 每家店
+  API -> DB : BEGIN; SELECT slot FOR UPDATE
+  alt booked < capacity
+    API -> DB : booked++；INSERT order (SUBMITTED)；套用加購／促銷
+    API -> DB : COMMIT
+  else 時段已滿
+    API -> DB : ROLLBACK
+    API --> UI : 409 該時段已滿，請改選
+  end
+end
+API --> UI : 201 [訂單 A102 麻辣燙, 訂單 B215 DAKA]
+API -> N : 通知店家新訂單
+N -> V : 平板出現新訂單
+V -> API : PATCH /orders/A102 ACCEPTED
+V -> API : PATCH /orders/A102 READY
+API -> N : 推播給學生
+N -> S : 「A102 可取餐」(≤ 10 秒)
+S -> V : 出示 QR Code / 報號碼
+V -> API : POST /pickups {token}
+API -> DB : status = PICKED_UP
+V -> S : 交付餐點、現場收款
+@enduml

@@ -1,0 +1,2264 @@
+{
+ "version": "2026-11",
+ "source": "各店紙本菜單（校內優惠價／校外販售價）",
+ "stores": [
+  {
+   "id": "thai",
+   "name": "泰刻",
+   "en": "Thai Express",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 10,
+   "slotCap": 15,
+   "categories": [
+    {
+     "id": "box",
+     "name": "主餐便當",
+     "en": "Main Rice Boxes",
+     "note": "所有便當皆含兩款時令配菜與香米",
+     "items": [
+      {
+       "name": "打拋豬肉飯便當",
+       "en": "Thai Basil Minced Pork Rice Box",
+       "campus": 125,
+       "off": 135,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "thai_soup",
+       "id": "thai-001"
+      },
+      {
+       "name": "椰汁綠咖哩雞肉便當",
+       "en": "Thai Green Curry Chicken Rice Box",
+       "campus": 125,
+       "off": 135,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "thai_soup",
+       "id": "thai-002"
+      },
+      {
+       "name": "泰式咖哩牛肉便當",
+       "en": "Thai Curry Beef Rice Box",
+       "campus": 125,
+       "off": 135,
+       "tags": [],
+       "addonGroup": "thai_soup",
+       "id": "thai-003"
+      },
+      {
+       "name": "泰式咖哩雞肉便當",
+       "en": "Thai Curry Chicken Rice Box",
+       "campus": 125,
+       "off": 135,
+       "tags": [],
+       "addonGroup": "thai_soup",
+       "id": "thai-004"
+      },
+      {
+       "name": "泰式椒麻雞便當",
+       "en": "Thai Pepper Crisp Fried Chicken Rice Box",
+       "campus": 125,
+       "off": 135,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "thai_soup",
+       "id": "thai-005"
+      }
+     ]
+    },
+    {
+     "id": "campus",
+     "name": "校園限定與蔬食",
+     "en": "Campus Exclusive & Vegetarian",
+     "items": [
+      {
+       "name": "泰國打拋豬肉飯（校園特惠版）",
+       "en": "Special Edition Thai Basil Minced Pork Rice",
+       "campus": 60,
+       "off": 70,
+       "tags": [
+        "辣",
+        "校園限定"
+       ],
+       "id": "thai-006"
+      },
+      {
+       "name": "台科大限定泰式炒飯",
+       "en": "NTUST Exclusive Thai Fried Rice",
+       "campus": 100,
+       "off": 110,
+       "tags": [
+        "校園限定"
+       ],
+       "addonGroup": "thai_soup",
+       "id": "thai-007"
+      },
+      {
+       "name": "時蔬豆腐蔬食便當",
+       "en": "Stir-Fried Veggie & Tofu Rice Box",
+       "campus": 110,
+       "off": 120,
+       "tags": [
+        "VEGAN"
+       ],
+       "addonGroup": "thai_soup",
+       "id": "thai-008"
+      }
+     ]
+    },
+    {
+     "id": "soup",
+     "name": "招牌湯品",
+     "en": "Main Soup",
+     "items": [
+      {
+       "name": "泰式酸辣海鮮湯（附一碗飯）",
+       "en": "Thai Tom Yum Seafood Soup (with Rice)",
+       "campus": 125,
+       "off": 135,
+       "tags": [
+        "辣"
+       ],
+       "id": "thai-009"
+      }
+     ]
+    },
+    {
+     "id": "side",
+     "name": "配菜與點心",
+     "en": "Side Dishes & Appetizers",
+     "items": [
+      {
+       "name": "椒麻炸豆腐",
+       "en": "Crispy Fried Tofu with Pepper Sauce",
+       "campus": 60,
+       "off": 70,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "thai-010"
+      },
+      {
+       "name": "泰式炸春捲",
+       "en": "Thai Crispy Spring Rolls",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "thai-011"
+      },
+      {
+       "name": "金錢蝦餅",
+       "en": "Thai Prawn Cakes",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "thai-012"
+      },
+      {
+       "name": "辣炒高麗菜",
+       "en": "Stir-Fried Spicy Cabbage",
+       "campus": 80,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "thai-013"
+      },
+      {
+       "name": "辣炒空心菜",
+       "en": "Stir-Fried Spicy Water Spinach",
+       "campus": 80,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "thai-014"
+      },
+      {
+       "name": "涼拌青木瓜絲",
+       "en": "Refreshing Thai Papaya Salad",
+       "campus": 80,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "thai-015"
+      },
+      {
+       "name": "涼拌大薄片",
+       "en": "Thai Spicy Cold Pork Scraping",
+       "campus": 80,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "thai-016"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "thai_soup": {
+     "name": "加購",
+     "items": [
+      {
+       "name": "精緻小碗酸辣湯",
+       "en": "Small Tom Yum Soup (add-on)",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "thai-a01"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ramen",
+   "name": "豬豬の拉麵屋",
+   "en": "Japanese Ramen",
+   "open": "11:00-14:00, 17:00-20:00",
+   "prepMin": 12,
+   "slotCap": 12,
+   "categories": [
+    {
+     "id": "ramen",
+     "name": "拉麵",
+     "en": "Ramen",
+     "items": [
+      {
+       "name": "炙燒兩片叉燒醬油拉麵",
+       "en": "Shoyu Ramen with 2 Seared Chashu",
+       "campus": 99,
+       "off": 139,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-001"
+      },
+      {
+       "name": "炙燒兩片叉燒豚骨拉麵",
+       "en": "Tonkotsu Ramen with 2 Seared Chashu",
+       "campus": 109,
+       "off": 159,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-002"
+      },
+      {
+       "name": "炙燒兩片叉燒味噌拉麵",
+       "en": "Miso Ramen with 2 Seared Chashu",
+       "campus": 109,
+       "off": 159,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-003"
+      },
+      {
+       "name": "炙燒兩片叉燒地獄拉麵（超級辣）",
+       "en": "Hell Ramen with 2 Seared Chashu (Extra Spicy)",
+       "campus": 129,
+       "off": 179,
+       "tags": [
+        "大辣"
+       ],
+       "addonGroup": "ramen_add",
+       "id": "ramen-004"
+      },
+      {
+       "name": "炙燒兩片叉燒青花椒拉麵（香麻小辣）",
+       "en": "Green Sichuan Pepper Ramen (Mild Spicy)",
+       "campus": 129,
+       "off": 179,
+       "tags": [
+        "小辣"
+       ],
+       "addonGroup": "ramen_add",
+       "id": "ramen-005"
+      },
+      {
+       "name": "炙燒兩片叉燒地獄醬油拉麵（超級辣）",
+       "en": "Hell Shoyu Ramen (Extra Spicy)",
+       "campus": 119,
+       "off": 179,
+       "tags": [
+        "大辣"
+       ],
+       "addonGroup": "ramen_add",
+       "id": "ramen-006"
+      },
+      {
+       "name": "炙燒兩片叉燒青花椒醬油拉麵（香麻小辣）",
+       "en": "Green Sichuan Pepper Shoyu Ramen (Mild Spicy)",
+       "campus": 119,
+       "off": 179,
+       "tags": [
+        "小辣"
+       ],
+       "addonGroup": "ramen_add",
+       "id": "ramen-007"
+      },
+      {
+       "name": "乾麵",
+       "en": "Dry Noodles",
+       "campus": 60,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-008"
+      }
+     ]
+    },
+    {
+     "id": "curry",
+     "name": "咖哩飯",
+     "en": "Curry Rice",
+     "items": [
+      {
+       "name": "咖哩飯",
+       "en": "Japanese Curry Rice",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-009"
+      },
+      {
+       "name": "炙燒叉燒肉兩片咖哩飯",
+       "en": "Curry Rice with 2 Seared Char Siu",
+       "campus": 109,
+       "off": 159,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-010"
+      },
+      {
+       "name": "小肉豆咖哩飯",
+       "en": "Curry Rice with Mini Sausages",
+       "campus": 109,
+       "off": 159,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-011"
+      },
+      {
+       "name": "雞排咖哩飯",
+       "en": "Chicken Cutlet Curry Rice",
+       "campus": 109,
+       "off": 219,
+       "tags": [],
+       "addonGroup": "ramen_add",
+       "id": "ramen-012"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "ramen_add": {
+     "name": "加購",
+     "items": [
+      {
+       "name": "加購 雞排一片",
+       "en": "Add Chicken Cutlet",
+       "campus": 49,
+       "off": 49,
+       "tags": [],
+       "id": "ramen-a01"
+      },
+      {
+       "name": "加購 小肉豆一盤",
+       "en": "Add Mini Sausages",
+       "campus": 49,
+       "off": 49,
+       "tags": [],
+       "id": "ramen-a02"
+      },
+      {
+       "name": "加購 豆腐6個",
+       "en": "Add 6 Fried Tofu",
+       "campus": 49,
+       "off": 49,
+       "tags": [],
+       "id": "ramen-a03"
+      },
+      {
+       "name": "加購 炙燒叉燒肉一片",
+       "en": "Add 1 Seared Chashu",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "ramen-a04"
+      },
+      {
+       "name": "加購 糖心蛋半顆",
+       "en": "Add Half Soft-Boiled Egg",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "ramen-a05"
+      },
+      {
+       "name": "單點加麵",
+       "en": "Extra Noodles",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "ramen-a06"
+      },
+      {
+       "name": "單點粗麵Q的",
+       "en": "Extra Thick Chewy Noodles",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "ramen-a07"
+      },
+      {
+       "name": "軟麵換成粗麵Q的",
+       "en": "Upgrade to Thick Noodles",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "ramen-a08"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "mala",
+   "name": "蔡姐麻辣燙",
+   "en": "Mala Tang",
+   "open": "11:00-14:00, 16:30-20:00",
+   "prepMin": 10,
+   "slotCap": 15,
+   "builder": {
+    "broths": [
+     [
+      "麻辣",
+      "Spicy Mala",
+      [
+       "辣"
+      ]
+     ],
+     [
+      "藥膳湯（可素食）",
+      "Herbal Broth",
+      [
+       "可素"
+      ]
+     ],
+     [
+      "柴魚",
+      "Bonito Broth",
+      []
+     ],
+     [
+      "乾拌沙茶",
+      "Dry Shacha Sauce",
+      []
+     ]
+    ],
+    "pick4": {
+     "name": "火鍋料任選4個",
+     "en": "Any 4 Hot Pot Ingredients",
+     "campus": 25,
+     "off": 30,
+     "choices": [
+      {
+       "name": "小貢丸",
+       "en": "Mini Pork Meatballs"
+      },
+      {
+       "name": "魚餃",
+       "en": "Fish Dumplings"
+      },
+      {
+       "name": "燕餃",
+       "en": "Pork Dumplings"
+      },
+      {
+       "name": "蟹肉棒",
+       "en": "Crab Stick"
+      },
+      {
+       "name": "魚卵捲",
+       "en": "Fish Roe Roll"
+      },
+      {
+       "name": "水晶餃",
+       "en": "Crystal Dumplings"
+      },
+      {
+       "name": "魚蛋",
+       "en": "Fish Balls"
+      },
+      {
+       "name": "魚豆腐",
+       "en": "Fish Tofu"
+      },
+      {
+       "name": "鑫鑫腸",
+       "en": "Mini Sausage"
+      },
+      {
+       "name": "蛋餃",
+       "en": "Egg Dumplings"
+      },
+      {
+       "name": "蒟蒻",
+       "en": "Konjac"
+      },
+      {
+       "name": "三角油豆腐",
+       "en": "Triangle Fried Tofu"
+      },
+      {
+       "name": "凍豆腐",
+       "en": "Frozen Tofu"
+      },
+      {
+       "name": "蛋白",
+       "en": "Egg White"
+      },
+      {
+       "name": "蝦球",
+       "en": "Shrimp Balls"
+      }
+     ]
+    }
+   },
+   "categories": [
+    {
+     "id": "set",
+     "name": "套餐",
+     "en": "Set Meals",
+     "note": "含固定火鍋料：蛋餃、貢丸、魚豆腐、鑫鑫腸；時蔬以現場為主",
+     "items": [
+      {
+       "name": "招牌套餐（王子麵、火鍋料、時蔬）",
+       "en": "Signature Set",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-001"
+      },
+      {
+       "name": "飽飽套餐（王子麵×2、火鍋料、時蔬）",
+       "en": "Hearty Set",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-002"
+      },
+      {
+       "name": "豬肉套餐（王子麵、豬肉片、火鍋料、時蔬）",
+       "en": "Pork Set",
+       "campus": 100,
+       "off": 120,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-003"
+      },
+      {
+       "name": "雞肉套餐（王子麵、雞肉、火鍋料、時蔬）",
+       "en": "Chicken Set",
+       "campus": 100,
+       "off": 120,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-004"
+      },
+      {
+       "name": "鴨血套餐（王子麵、鴨血、火鍋料、時蔬）",
+       "en": "Duck Blood Set",
+       "campus": 95,
+       "off": 115,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-005"
+      },
+      {
+       "name": "牛肉套餐（王子麵、牛肉片、火鍋料、時蔬）",
+       "en": "Beef Set",
+       "campus": 105,
+       "off": 120,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-006"
+      },
+      {
+       "name": "菇菇套餐（王子麵、金針菇、秀珍菇、杏鮑菇）",
+       "en": "Mushroom Set",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-007"
+      },
+      {
+       "name": "雞胸肉套餐（王子麵、雞胸肉、時蔬）",
+       "en": "Chicken Breast Set",
+       "campus": 100,
+       "off": 115,
+       "tags": [],
+       "needsBroth": true,
+       "id": "mala-008"
+      },
+      {
+       "name": "紅油抄手＋貢丸海帶湯",
+       "en": "Chili Oil Wonton Set",
+       "campus": 90,
+       "off": 100,
+       "tags": [
+        "辣"
+       ],
+       "id": "mala-009"
+      }
+     ]
+    },
+    {
+     "id": "staple",
+     "name": "主食",
+     "en": "Noodles & Rice",
+     "diy": true,
+     "items": [
+      {
+       "name": "王子麵",
+       "en": "Prince Instant Noodles",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-010"
+      },
+      {
+       "name": "冬粉",
+       "en": "Glass Noodles",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-011"
+      },
+      {
+       "name": "蒸煮麵",
+       "en": "Cooked Egg Noodles",
+       "campus": 20,
+       "off": 25,
+       "tags": [],
+       "id": "mala-012"
+      },
+      {
+       "name": "鍋燒麵",
+       "en": "Pot Noodles",
+       "campus": 20,
+       "off": 25,
+       "tags": [],
+       "id": "mala-013"
+      },
+      {
+       "name": "白飯",
+       "en": "Steamed Rice",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-014"
+      },
+      {
+       "name": "烏龍麵",
+       "en": "Udon Noodles",
+       "campus": 30,
+       "off": 35,
+       "tags": [],
+       "id": "mala-015"
+      }
+     ]
+    },
+    {
+     "id": "meat",
+     "name": "肉類",
+     "en": "Meat",
+     "diy": true,
+     "items": [
+      {
+       "name": "豬肉片（4片）",
+       "en": "Sliced Pork (4)",
+       "campus": 35,
+       "off": 40,
+       "tags": [],
+       "id": "mala-016"
+      },
+      {
+       "name": "雞腿肉（4個）",
+       "en": "Chicken Thigh (4)",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "mala-017"
+      },
+      {
+       "name": "雞胗（3個）",
+       "en": "Chicken Gizzards (3)",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-018"
+      },
+      {
+       "name": "雞心（4個）",
+       "en": "Chicken Hearts (4)",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-019"
+      },
+      {
+       "name": "牛肉片（4片）",
+       "en": "Sliced Beef (4)",
+       "campus": 40,
+       "off": 45,
+       "tags": [],
+       "id": "mala-020"
+      },
+      {
+       "name": "德式香腸（1根）",
+       "en": "German Sausage",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-021"
+      },
+      {
+       "name": "麻辣鴨血（4個）",
+       "en": "Spicy Duck Blood Curd (4)",
+       "campus": 30,
+       "off": 35,
+       "tags": [
+        "辣"
+       ],
+       "id": "mala-022"
+      },
+      {
+       "name": "雞胸肉",
+       "en": "Chicken Breast",
+       "campus": 60,
+       "off": 65,
+       "tags": [],
+       "id": "mala-023"
+      }
+     ]
+    },
+    {
+     "id": "veg",
+     "name": "季節時蔬",
+     "en": "Vegetables",
+     "diy": true,
+     "note": "以現場供應為主",
+     "items": [
+      {
+       "name": "青江菜",
+       "en": "Bok Choy",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-024"
+      },
+      {
+       "name": "金針菇",
+       "en": "Enoki Mushrooms",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-025"
+      },
+      {
+       "name": "大陸妹",
+       "en": "A-Choy Lettuce",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-026"
+      },
+      {
+       "name": "小白菜",
+       "en": "Baby Bok Choy",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-027"
+      },
+      {
+       "name": "花椰菜",
+       "en": "Broccoli",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-028"
+      },
+      {
+       "name": "玉米筍",
+       "en": "Baby Corn",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-029"
+      },
+      {
+       "name": "洋蔥",
+       "en": "Onion",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-030"
+      },
+      {
+       "name": "水蓮",
+       "en": "Water Snowflake",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-031"
+      },
+      {
+       "name": "豆芽菜",
+       "en": "Bean Sprouts",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-032"
+      },
+      {
+       "name": "黑木耳",
+       "en": "Black Fungus",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-033"
+      },
+      {
+       "name": "娃娃菜",
+       "en": "Napa Cabbage",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-034"
+      },
+      {
+       "name": "高麗菜",
+       "en": "Cabbage",
+       "campus": 25,
+       "off": 30,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-035"
+      }
+     ]
+    },
+    {
+     "id": "hotpot",
+     "name": "火鍋料",
+     "en": "Hot Pot Ingredients",
+     "diy": true,
+     "items": [
+      {
+       "name": "甜不辣",
+       "en": "Tempura Fish Cake",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-036"
+      },
+      {
+       "name": "大貢丸",
+       "en": "Large Pork Meatball",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-037"
+      },
+      {
+       "name": "三絲丸",
+       "en": "Three-Flavor Meatball",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-038"
+      },
+      {
+       "name": "魚包蛋",
+       "en": "Fish Ball with Egg",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-039"
+      },
+      {
+       "name": "魚香卷",
+       "en": "Fish Roll",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-040"
+      },
+      {
+       "name": "百葉豆腐",
+       "en": "Hundred-Layer Tofu",
+       "campus": 20,
+       "off": 25,
+       "tags": [],
+       "id": "mala-041"
+      },
+      {
+       "name": "芋籤",
+       "en": "Taro Stick",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-042"
+      },
+      {
+       "name": "米血糕（半個）",
+       "en": "Pork Blood Rice Cake (Half)",
+       "campus": 10,
+       "off": 20,
+       "tags": [],
+       "id": "mala-043"
+      },
+      {
+       "name": "海帶",
+       "en": "Kelp",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-044"
+      },
+      {
+       "name": "素雞",
+       "en": "Vegetarian Chicken",
+       "campus": 20,
+       "off": 25,
+       "tags": [
+        "素"
+       ],
+       "id": "mala-045"
+      },
+      {
+       "name": "水煮蛋",
+       "en": "Boiled Egg",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-046"
+      },
+      {
+       "name": "滷蛋",
+       "en": "Braised Egg",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-047"
+      },
+      {
+       "name": "炸豆皮",
+       "en": "Fried Bean Curd Sheet",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-048"
+      },
+      {
+       "name": "大豆乾",
+       "en": "Large Firm Tofu",
+       "campus": 20,
+       "off": 25,
+       "tags": [],
+       "id": "mala-049"
+      },
+      {
+       "name": "大豆皮",
+       "en": "Large Bean Curd Sheet",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-050"
+      },
+      {
+       "name": "魚板燒",
+       "en": "Grilled Fish Cake",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-051"
+      },
+      {
+       "name": "花枝丸",
+       "en": "Cuttlefish Balls",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-052"
+      }
+     ]
+    },
+    {
+     "id": "oden",
+     "name": "關東煮",
+     "en": "Oden",
+     "items": [
+      {
+       "name": "魚蛋（3顆）",
+       "en": "Fish Balls (3)",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-053"
+      },
+      {
+       "name": "白蘿蔔",
+       "en": "White Radish",
+       "campus": 20,
+       "off": 25,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-054"
+      },
+      {
+       "name": "香菇",
+       "en": "Shiitake Mushroom",
+       "campus": 20,
+       "off": 25,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-055"
+      },
+      {
+       "name": "高麗菜卷",
+       "en": "Cabbage Roll",
+       "campus": 20,
+       "off": 25,
+       "tags": [],
+       "id": "mala-056"
+      },
+      {
+       "name": "魚卵福袋",
+       "en": "Fish Roe Tofu Pouch",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-057"
+      },
+      {
+       "name": "黑輪",
+       "en": "Oden Fish Cake",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-058"
+      },
+      {
+       "name": "米血糕",
+       "en": "Pork Blood Rice Cake",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-059"
+      },
+      {
+       "name": "玉米",
+       "en": "Corn",
+       "campus": 10,
+       "off": 15,
+       "tags": [
+        "VEGAN"
+       ],
+       "id": "mala-060"
+      },
+      {
+       "name": "魚豆腐",
+       "en": "Fish Tofu",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-061"
+      },
+      {
+       "name": "蘭花干",
+       "en": "Braised Firm Tofu",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "mala-062"
+      },
+      {
+       "name": "百葉豆腐",
+       "en": "Thousand-Layer Tofu",
+       "campus": 20,
+       "off": 25,
+       "tags": [],
+       "id": "mala-063"
+      },
+      {
+       "name": "海帶",
+       "en": "Kelp",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-064"
+      },
+      {
+       "name": "甜不辣",
+       "en": "Tempura Fish Cake",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "mala-065"
+      },
+      {
+       "name": "大貢丸（1個）",
+       "en": "Large Pork Meatball (1)",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "mala-066"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "daka",
+   "name": "DAKA COFFEE",
+   "en": "Coffee",
+   "open": "07:30-19:00",
+   "prepMin": 5,
+   "slotCap": 20,
+   "categories": [
+    {
+     "id": "coffee",
+     "name": "咖啡系列",
+     "en": "Coffee",
+     "items": [
+      {
+       "name": "美式咖啡（大）",
+       "en": "Large Americano",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "id": "daka-001"
+      },
+      {
+       "name": "美式咖啡（小）",
+       "en": "Small Americano",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "id": "daka-002"
+      },
+      {
+       "name": "拿鐵咖啡（大）",
+       "en": "Large Caffè Latte",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-003"
+      },
+      {
+       "name": "拿鐵咖啡（小）",
+       "en": "Small Caffè Latte",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-004"
+      },
+      {
+       "name": "卡布奇諾（大）",
+       "en": "Large Cappuccino",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-005"
+      },
+      {
+       "name": "卡布奇諾（小）",
+       "en": "Small Cappuccino",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-006"
+      },
+      {
+       "name": "椰奶拿鐵（大）",
+       "en": "Large Coconut Milk Latte",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-007"
+      },
+      {
+       "name": "椰奶拿鐵（小）",
+       "en": "Small Coconut Milk Latte",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-008"
+      },
+      {
+       "name": "榛果拿鐵（大）",
+       "en": "Large Hazelnut Latte",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-009"
+      },
+      {
+       "name": "榛果拿鐵（小）",
+       "en": "Small Hazelnut Latte",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "daka-010"
+      },
+      {
+       "name": "海鹽焦糖拿鐵（大）",
+       "en": "Large Sea Salt Caramel Latte",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-011"
+      },
+      {
+       "name": "海鹽焦糖拿鐵（小）",
+       "en": "Small Sea Salt Caramel Latte",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-012"
+      },
+      {
+       "name": "西西里檸檬咖啡（大）",
+       "en": "Large Sicilian Lemon Coffee",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-013"
+      },
+      {
+       "name": "西西里檸檬咖啡（小）",
+       "en": "Small Sicilian Lemon Coffee",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-014"
+      },
+      {
+       "name": "燕麥拿鐵（大）",
+       "en": "Large Oat Milk Latte",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-015"
+      },
+      {
+       "name": "燕麥拿鐵（小）",
+       "en": "Small Oat Milk Latte",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-016"
+      },
+      {
+       "name": "黑糖拿鐵（大）",
+       "en": "Large Brown Sugar Latte",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-017"
+      },
+      {
+       "name": "黑糖拿鐵（小）",
+       "en": "Small Brown Sugar Latte",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-018"
+      },
+      {
+       "name": "招奶咖啡（大）",
+       "en": "Large Signature Milk Coffee",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "id": "daka-019"
+      },
+      {
+       "name": "招奶咖啡（小）",
+       "en": "Small Signature Milk Coffee",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "id": "daka-020"
+      },
+      {
+       "name": "巧克力拿鐵",
+       "en": "Chocolate Latte",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-021"
+      },
+      {
+       "name": "抹茶拿鐵",
+       "en": "Matcha Latte",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-022"
+      }
+     ]
+    },
+    {
+     "id": "pour",
+     "name": "精品手沖",
+     "en": "Specialty Pour-Over",
+     "items": [
+      {
+       "name": "黃金曼巴",
+       "en": "Mandheling Brazil",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "daka-023"
+      },
+      {
+       "name": "耶加雪夫",
+       "en": "Yirgacheffe",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-024"
+      },
+      {
+       "name": "西達摩",
+       "en": "Ethiopia Sidamo",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-025"
+      },
+      {
+       "name": "藍山",
+       "en": "Blue Mountain",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-026"
+      },
+      {
+       "name": "花神",
+       "en": "La Flor del",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-027"
+      },
+      {
+       "name": "黃金曼特寧",
+       "en": "Golden Mandheling",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-028"
+      },
+      {
+       "name": "蜂鳥",
+       "en": "Hummingbird",
+       "campus": 117,
+       "off": 130,
+       "tags": [],
+       "id": "daka-029"
+      },
+      {
+       "name": "巴拿馬",
+       "en": "Panama",
+       "campus": 144,
+       "off": 160,
+       "tags": [],
+       "id": "daka-030"
+      }
+     ]
+    },
+    {
+     "id": "tea",
+     "name": "茶系列",
+     "en": "Tea",
+     "items": [
+      {
+       "name": "水果茶（大）",
+       "en": "Large Fresh Fruit Tea",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-031"
+      },
+      {
+       "name": "南非國寶綠茶（特大）",
+       "en": "XL Rooibos Green Tea",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-032"
+      },
+      {
+       "name": "蜂蜜翡翠（大）",
+       "en": "Large Honey Green Tea",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-033"
+      },
+      {
+       "name": "檸檬綠茶（大）",
+       "en": "Large Lemon Green Tea",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-034"
+      },
+      {
+       "name": "百香綠茶QQ（大）",
+       "en": "Large Passion Fruit Green Tea w/ Jelly",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-035"
+      },
+      {
+       "name": "柚香綠茶（大）",
+       "en": "Large Pomelo Green Tea",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-036"
+      },
+      {
+       "name": "烏瓦紅茶（特大）",
+       "en": "XL Uva Black Tea",
+       "campus": 36,
+       "off": 40,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-037"
+      },
+      {
+       "name": "四季春茶（特大）",
+       "en": "XL Four Seasons Spring Tea",
+       "campus": 36,
+       "off": 40,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-038"
+      },
+      {
+       "name": "台灣蕎麥茶（特大）",
+       "en": "XL Taiwanese Buckwheat Tea",
+       "campus": 36,
+       "off": 40,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-039"
+      },
+      {
+       "name": "貴妃紅茶（特大）",
+       "en": "XL Guifei Black Tea",
+       "campus": 36,
+       "off": 40,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-040"
+      },
+      {
+       "name": "極品香片（特大）",
+       "en": "XL Premium Jasmine Green Tea",
+       "campus": 36,
+       "off": 40,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-041"
+      },
+      {
+       "name": "焦糖紅茶（大）",
+       "en": "Large Caramel Black Tea",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-042"
+      },
+      {
+       "name": "焦糖鮮奶茶（大）",
+       "en": "Large Caramel Milk Tea",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-043"
+      },
+      {
+       "name": "珍珠奶茶（大）",
+       "en": "Large Pearl Milk Tea",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-044"
+      },
+      {
+       "name": "琥珀烏龍（特大）",
+       "en": "XL Amber Oolong",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-045"
+      },
+      {
+       "name": "極品鮮奶茶（大）",
+       "en": "Large Premium Milk Tea",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-046"
+      },
+      {
+       "name": "多多綠（大）",
+       "en": "Large Yakult Green Tea",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-047"
+      },
+      {
+       "name": "茉莉金萱凍飲（大）",
+       "en": "Large Jasmine Jin Xuan Jelly",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-048"
+      },
+      {
+       "name": "愛玉檸檬（大）",
+       "en": "Large Aiyu Lemon",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-049"
+      },
+      {
+       "name": "芒果金萱凍飲（大）",
+       "en": "Large Mango Jin Xuan Jelly",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-050"
+      },
+      {
+       "name": "台灣金萱茶（特大）",
+       "en": "XL Taiwanese Jin Xuan Tea",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "topping",
+       "id": "daka-051"
+      }
+     ]
+    },
+    {
+     "id": "spark",
+     "name": "氣泡飲",
+     "en": "Sparkling",
+     "items": [
+      {
+       "name": "葡萄柚氣泡飲",
+       "en": "Grapefruit Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-052"
+      },
+      {
+       "name": "薑汁氣泡飲",
+       "en": "Ginger Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-053"
+      },
+      {
+       "name": "芭樂氣泡飲",
+       "en": "Guava Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-054"
+      },
+      {
+       "name": "芒果氣泡飲",
+       "en": "Mango Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-055"
+      },
+      {
+       "name": "血橙氣泡飲",
+       "en": "Blood Orange Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-056"
+      },
+      {
+       "name": "桃子氣泡飲",
+       "en": "Peach Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-057"
+      },
+      {
+       "name": "檸檬氣泡飲",
+       "en": "Lemon Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-058"
+      },
+      {
+       "name": "沙士氣泡飲",
+       "en": "Sarsaparilla Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-059"
+      },
+      {
+       "name": "百香果氣泡飲",
+       "en": "Passion Fruit Sparkling Drink",
+       "campus": 135,
+       "off": 150,
+       "tags": [],
+       "id": "daka-060"
+      }
+     ]
+    },
+    {
+     "id": "juice",
+     "name": "大苑子無添加果汁",
+     "en": "Dayuanzi Pure Juice",
+     "items": [
+      {
+       "name": "芭樂檸檬",
+       "en": "Guava Lemon",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "id": "daka-061"
+      },
+      {
+       "name": "六顆柳丁",
+       "en": "Six Oranges",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "id": "daka-062"
+      },
+      {
+       "name": "蜂蜜檸檬",
+       "en": "Honey Lemon",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "id": "daka-063"
+      },
+      {
+       "name": "蘋果蜜桃",
+       "en": "Apple Peach",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "id": "daka-064"
+      }
+     ]
+    },
+    {
+     "id": "toast",
+     "name": "厚片與吐司",
+     "en": "Toast",
+     "items": [
+      {
+       "name": "花生厚片",
+       "en": "Peanut Butter Thick Toast",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "id": "daka-065"
+      },
+      {
+       "name": "草莓厚片",
+       "en": "Strawberry Thick Toast",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "id": "daka-066"
+      },
+      {
+       "name": "奶酥厚片",
+       "en": "Milk Butter Thick Toast",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "id": "daka-067"
+      },
+      {
+       "name": "巧克力厚片",
+       "en": "Chocolate Thick Toast",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "id": "daka-068"
+      },
+      {
+       "name": "花生培根蛋",
+       "en": "Peanut Butter, Bacon & Egg Toast",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "daka-069"
+      },
+      {
+       "name": "燻雞起司蛋",
+       "en": "Smoked Chicken, Cheese & Egg Toast",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "daka-070"
+      },
+      {
+       "name": "鮪魚起司蛋",
+       "en": "Tuna, Cheese & Egg Toast",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "daka-071"
+      },
+      {
+       "name": "蔬食起司蛋",
+       "en": "Vegetarian, Cheese & Egg Toast",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "daka-072"
+      },
+      {
+       "name": "火腿起司蛋",
+       "en": "Ham, Cheese & Egg Toast",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "daka-073"
+      },
+      {
+       "name": "司康",
+       "en": "Scone",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "id": "daka-074"
+      },
+      {
+       "name": "司康買四送一（5個）",
+       "en": "Buy 4 Get 1 Free – Scones",
+       "campus": 300,
+       "off": 300,
+       "tags": [],
+       "id": "daka-075"
+      }
+     ]
+    },
+    {
+     "id": "press",
+     "name": "熱壓系列",
+     "en": "Grilled Toast",
+     "items": [
+      {
+       "name": "塔香火腿起司蛋",
+       "en": "Basil, Ham, Cheese & Egg",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "promoTag": "hotpress",
+       "id": "daka-076"
+      },
+      {
+       "name": "熱壓鮪魚起司蛋",
+       "en": "Tuna, Cheese & Egg",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "promoTag": "hotpress",
+       "id": "daka-077"
+      },
+      {
+       "name": "培根花生起司蛋",
+       "en": "Bacon, Peanut, Cheese & Egg",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "promoTag": "hotpress",
+       "id": "daka-078"
+      },
+      {
+       "name": "肉鬆馬鈴薯泥",
+       "en": "Pork Floss & Mashed Potato",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "promoTag": "hotpress",
+       "id": "daka-079"
+      },
+      {
+       "name": "熱壓燻雞起司蛋",
+       "en": "Smoked Chicken, Cheese & Egg",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "promoTag": "hotpress",
+       "id": "daka-080"
+      },
+      {
+       "name": "德式香腸起司蛋",
+       "en": "German Sausage, Cheese & Egg",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "promoTag": "hotpress",
+       "id": "daka-081"
+      }
+     ]
+    },
+    {
+     "id": "fried",
+     "name": "炸物與熱狗",
+     "en": "Fried Snacks",
+     "items": [
+      {
+       "name": "原味薯條",
+       "en": "Classic French Fries",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "daka-082"
+      },
+      {
+       "name": "椒鹽薯條",
+       "en": "Salt & Pepper Fries",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-083"
+      },
+      {
+       "name": "蜂蜜芥末薯條",
+       "en": "Honey Mustard Fries",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-084"
+      },
+      {
+       "name": "洋蔥圈",
+       "en": "Onion Rings",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-085"
+      },
+      {
+       "name": "雞米花",
+       "en": "Popcorn Chicken",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-086"
+      },
+      {
+       "name": "雞塊",
+       "en": "Chicken Nuggets",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-087"
+      },
+      {
+       "name": "檸檬雞柳條",
+       "en": "Lemon Chicken Tenders",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-088"
+      },
+      {
+       "name": "紐澳良雞翅",
+       "en": "New Orleans Chicken Wings",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-089"
+      },
+      {
+       "name": "綜合炸物",
+       "en": "Mixed Fried Platter",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-090"
+      },
+      {
+       "name": "牛肉捲",
+       "en": "Beef Wrap",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "id": "daka-091"
+      },
+      {
+       "name": "雞肉捲",
+       "en": "Chicken Wrap",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "id": "daka-092"
+      },
+      {
+       "name": "薯條起司熱狗",
+       "en": "Fries & Cheese Hot Dog",
+       "campus": 108,
+       "off": 120,
+       "tags": [],
+       "id": "daka-093"
+      },
+      {
+       "name": "原味起司熱狗",
+       "en": "Classic Cheese Hot Dog",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "daka-094"
+      },
+      {
+       "name": "德式香腸熱狗",
+       "en": "German Sausage Hot Dog",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-095"
+      }
+     ]
+    },
+    {
+     "id": "combo",
+     "name": "套餐",
+     "en": "Combo Sets",
+     "items": [
+      {
+       "name": "台科大套餐A－熱壓吐司＋純茶",
+       "en": "NTUST Set A – Grilled Toast + Plain Tea",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "daka-096"
+      },
+      {
+       "name": "套餐B－司康＋純茶飲",
+       "en": "Set B – Scone + Plain Tea",
+       "campus": 100,
+       "off": 100,
+       "tags": [],
+       "id": "daka-097"
+      },
+      {
+       "name": "套餐C－司康＋美式咖啡（小）",
+       "en": "Set C – Scone + Small Americano",
+       "campus": 120,
+       "off": 120,
+       "tags": [],
+       "id": "daka-098"
+      },
+      {
+       "name": "花生培根蛋套餐",
+       "en": "Peanut Butter, Bacon & Egg Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-099"
+      },
+      {
+       "name": "燻雞起司蛋套餐",
+       "en": "Smoked Chicken, Cheese & Egg Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-100"
+      },
+      {
+       "name": "鮪魚起司蛋套餐",
+       "en": "Tuna, Cheese & Egg Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-101"
+      },
+      {
+       "name": "蔬食起司蛋套餐",
+       "en": "Vegetarian, Cheese & Egg Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-102"
+      },
+      {
+       "name": "火腿起司蛋套餐",
+       "en": "Ham, Cheese & Egg Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-103"
+      },
+      {
+       "name": "原味薯條套餐",
+       "en": "Classic French Fries Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-104"
+      },
+      {
+       "name": "椒鹽薯條套餐",
+       "en": "Salt & Pepper Fries Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-105"
+      },
+      {
+       "name": "蜂蜜芥末薯條套餐",
+       "en": "Honey Mustard Fries Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-106"
+      },
+      {
+       "name": "洋蔥圈套餐",
+       "en": "Onion Rings Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-107"
+      },
+      {
+       "name": "雞米花套餐",
+       "en": "Popcorn Chicken Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-108"
+      },
+      {
+       "name": "雞塊套餐",
+       "en": "Chicken Nuggets Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-109"
+      },
+      {
+       "name": "檸檬雞柳條套餐",
+       "en": "Lemon Chicken Tenders Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-110"
+      },
+      {
+       "name": "紐澳良雞翅套餐",
+       "en": "New Orleans Chicken Wings Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-111"
+      },
+      {
+       "name": "薯條起司熱狗套餐",
+       "en": "Fries & Cheese Hot Dog Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-112"
+      },
+      {
+       "name": "原味起司熱狗套餐",
+       "en": "Classic Cheese Hot Dog Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-113"
+      },
+      {
+       "name": "德式香腸熱狗套餐",
+       "en": "German Sausage Hot Dog Set",
+       "campus": 150,
+       "off": 150,
+       "tags": [],
+       "id": "daka-114"
+      }
+     ]
+    },
+    {
+     "id": "ice",
+     "name": "冰淇淋",
+     "en": "Ice Cream",
+     "items": [
+      {
+       "name": "冰淇淋（杯裝／甜筒）",
+       "en": "Ice Cream – Cup / Cone",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "choice": {
+        "name": "口味",
+        "options": [
+         "香草",
+         "草莓",
+         "薄荷",
+         "巧克力",
+         "焦糖布丁",
+         "瑞士巧克力"
+        ]
+       },
+       "id": "daka-115"
+      },
+      {
+       "name": "抹茶紅豆冰淇淋",
+       "en": "Matcha Red Bean Ice Cream",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "daka-116"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "topping": {
+     "name": "加料",
+     "items": [
+      {
+       "name": "珍珠",
+       "en": "Tapioca Pearls",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "daka-a01"
+      },
+      {
+       "name": "椰果",
+       "en": "Coconut Jelly",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "daka-a02"
+      },
+      {
+       "name": "茶凍",
+       "en": "Tea Jelly",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "daka-a03"
+      }
+     ]
+    }
+   },
+   "promotions": [
+    {
+     "id": "am-toast",
+     "name": "早上10:00前買美式或鮮奶茶，送厚片一份",
+     "before": "10:00",
+     "triggerMatch": [
+      "美式咖啡",
+      "鮮奶茶"
+     ],
+     "reward": {
+      "choose": [
+       "花生厚片",
+       "奶酥厚片",
+       "草莓厚片"
+      ]
+     }
+    },
+    {
+     "id": "am-tea",
+     "name": "早上10:00前買熱壓土司，送烏瓦紅茶一杯",
+     "before": "10:00",
+     "triggerPromoTag": "hotpress",
+     "reward": {
+      "fixed": "烏瓦紅茶（特大）"
+     }
+    }
+   ],
+   "offline": [
+    "寄杯卡（美式 850／拿鐵 1100／冷泡茶 600）：現場辦理"
+   ]
+  }
+ ]
+}

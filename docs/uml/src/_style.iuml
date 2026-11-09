@@ -1,0 +1,22 @@
+skinparam defaultFontName "Noto Sans CJK TC"
+skinparam shadowing false
+skinparam dpi 150
+skinparam ArrowColor #3A4A5A
+skinparam BorderColor #3A4A5A
+skinparam ActorBorderColor #3A4A5A
+skinparam UsecaseBackgroundColor #EAF4EC
+skinparam UsecaseBorderColor #2E7D4F
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassHeaderBackgroundColor #EAF4EC
+skinparam ClassBorderColor #2E7D4F
+skinparam PackageBorderColor #8A9AA8
+skinparam StateBackgroundColor #EAF4EC
+skinparam StateBorderColor #2E7D4F
+skinparam ActivityBackgroundColor #EAF4EC
+skinparam ActivityBorderColor #2E7D4F
+skinparam ParticipantBackgroundColor #EAF4EC
+skinparam ParticipantBorderColor #2E7D4F
+skinparam ComponentBackgroundColor #EAF4EC
+skinparam ComponentBorderColor #2E7D4F
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227

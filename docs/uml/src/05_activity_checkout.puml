@@ -1,0 +1,40 @@
+@startuml
+!include _style.iuml
+title NTUST Eats — Activity: 結帳與選取餐時段 (UC-04)
+|學生|
+start
+:購物車（可多家店）→ 按「結帳」;
+|系統|
+if (帳號停權中?) then (是)
+  :顯示停權到期日;
+  stop
+else (否)
+endif
+if (有品項已售完?) then (是)
+  :標示售完品項，請學生移除;
+  stop
+else (否)
+endif
+:依店家拆成多筆訂單;
+:套用加購限制與時段促銷;
+:每筆列出可選時段\n(≥ 現在＋備餐時間、未滿、營業中);
+|學生|
+:每家店各選一個時段;
+:確認金額（現場付款）;
+|系統|
+if (時段仍有名額?) then (是)
+  :建立訂單、名額 +1;
+  :產生 4 碼號碼與 QR Code;
+  fork
+    :通知店家;
+  fork again
+    :顯示訂單頁;
+  end fork
+  stop
+else (否)
+  :提示時段已滿;
+  |學生|
+  :改選時段;
+  stop
+endif
+@enduml
