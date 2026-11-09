@@ -5,7 +5,7 @@
 set -euo pipefail
 OWNER=${1:?owner}; REPO=${2:-ntust-eats}
 gh repo create "$OWNER/$REPO" --public --source=. --remote=origin --push
-for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui feature/login-identity feature/roles-admin-edit feature/pwa-app; do
+for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui feature/login-identity feature/roles-admin-edit feature/pwa-app feature/brand-cover; do
   git push -u origin "$b"
 done
 # 審查用 PR（依序合併；每個 PR 需由「非作者」的組員 Approve 後再 Merge）
@@ -17,6 +17,7 @@ gh pr create -B docs/agile-prototype-ai -H feature/add-daosui -t "CR-01: 新增�
 gh pr create -B feature/add-daosui -H feature/login-identity -t "CR-02: 登入畫面與身分辨識" -F docs/change-requests/CR-02-login-identity.md
 gh pr create -B feature/login-identity -H feature/roles-admin-edit -t "CR-03: 身分分流、店家登入、管理者編輯模式" -F docs/change-requests/CR-03-roles-admin-edit.md
 gh pr create -B feature/roles-admin-edit -H feature/pwa-app -t "CR-04: 可安裝 App（PWA）與全 App 化介面" -F docs/change-requests/CR-04-pwa-app.md
+gh pr create -B feature/pwa-app -H feature/brand-cover -t "CR-05: 校徽色系、學生餐廳 icon、封面改版" -F docs/change-requests/CR-05-brand-cover.md
 echo "提醒：PR #1 合併後，到 PR #2 頁面把 base 改成 main（GitHub 通常會自動改），依序處理。"
 # Labels
 for l in "ai-proposed:FBCA04" "po-accepted:0E8A16" "sprint-1:1D76DB" "sprint-2:5319E7"; do
