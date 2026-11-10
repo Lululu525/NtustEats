@@ -2797,6 +2797,7 @@ function notifyChanges(before){
       else if(o.status==='ACCEPTED') toast(`訂單 ${o.no} 店家已接單，製作中`);
       else if(o.status==='REJECTED') toast(`訂單 ${o.no} 被店家拒絕：${o.rejectReason||''}`,'bad',5000);
       else if(o.status==='NO_SHOW') toast(`訂單 ${o.no} 已標記為未取餐`,'bad');
+      else if(o.status==='READY'&&before[o.id]==='NO_SHOW') toast(`店家已更正訂單 ${o.no} 為已交付，請按「完成訂單」`,'ok',5000);
     }
   });
 }
@@ -3173,7 +3174,7 @@ function renderOrders(){
       ${o.refunded?`<div class="promo" style="background:var(--ok-bg);color:var(--ok)">已退款 ${money(o.total)} 至${o.payment.method==='wallet'?'校園帳戶':' LINE Pay'}</div>`:''}
       ${o.status==='SUBMITTED'?`<button class="btn bad sm" style="margin-top:10px" data-cancel="${o.id}">取消訂單（店家接單前可取消並全額退款）</button>`:''}
       ${o.status==='ACCEPTED'?`<p class="note">店家已接單，無法線上取消；如有需要請直接聯絡店家（FR-19）。</p>`:''}
-      ${o.status==='READY'?`<div class="promo" style="background:${o.handedOver?'var(--ok-bg)':'#e8f2fc'};color:${o.handedOver?'var(--ok)':'var(--brand-d)'};margin-top:10px">${o.handedOver?'✅ 店家已交付餐點，請按下方「完成訂單」':'🔔 餐點已完成，請到櫃台出示 QR Code 取餐；拿到餐點後按「完成訂單」'}</div><button class="btn pri" style="width:100%;margin-top:8px" data-done="${o.id}">✓ 我已取餐，完成訂單</button>`:''}
+      ${o.status==='READY'?`<div class="promo" style="background:${o.handedOver?'var(--ok-bg)':'#e8f2fc'};color:${o.handedOver?'var(--ok)':'var(--brand-d)'};margin-top:10px">${o.handedOver?(o.corrected?'✅ 店家已更正：你有來取餐，請按下方「完成訂單」':'✅ 店家已交付餐點，請按下方「完成訂單」'):'🔔 餐點已完成，請到櫃台出示 QR Code 取餐；拿到餐點後按「完成訂單」'}</div><button class="btn pri" style="width:100%;margin-top:8px" data-done="${o.id}">✓ 我已取餐，完成訂單</button>`:''}
     </div>`;}).join('')}</div>`;
 }
 function userSusp(){const u=(DB.users||{})[S.user.id]||{}; return u.suspendedUntil&&new Date(u.suspendedUntil)>now()?u.suspendedUntil:null;}
@@ -3219,7 +3220,8 @@ function renderQueue(sid){
     ${col('ACCEPTED','🔥 製作中',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="READY">完成，通知取餐</button>`)}
     ${col('READY','✅ 可取餐',o=>o.handedOver?`<span class="chip" style="background:var(--ok-bg);color:var(--ok)">已交付，等學生按完成</span>`:`<button class="btn pri sm" data-handover="${o.id}">交付餐點</button><button class="btn bad sm" data-vs="${o.id}" data-to="NO_SHOW">未取餐</button>`)}
   </div>
-  ${done.length?`<div class="sect-h">今日已結束（${done.length}）</div>${done.map(o=>`<div class="mrow"><div class="x"><b>${o.no} · ${hm(o.slot)}</b><small>${esc(o.lines.map(l=>l.name).join('、'))}</small></div><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span><b>${money(o.total)}</b></div>`).join('')}`:''}
+  ${done.length?`<div class="sect-h">今日已結束（${done.length}）</div>${done.map(o=>`<div class="mrow" style="flex-wrap:wrap"><div class="x"><b>${o.no} · ${hm(o.slot)}</b><small>${esc(o.lines.map(l=>l.name).join('、'))}${o.corrected?' · 已更正':''}</small></div><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span><b>${money(o.total)}</b>
+      ${o.status==='NO_SHOW'?`<div style="flex-basis:100%;display:flex;gap:8px;align-items:center;margin-top:6px"><span class="note" style="flex:1">學生晚到但有來拿？</span><button class="btn sec sm" data-unnoshow="${o.id}">${S.unArm===o.id?'確定更正（取消放鳥紀錄）':'更正為已交付'}</button></div>`:''}</div>`).join('')}`:''}
   <button class="btn sec sm" style="width:100%;margin-top:10px" data-act="noshowcheck">⏰ 執行放鳥檢查（排程器模擬）</button>`;
 }
 const maskName=n=>!n?'':n.length<=1?n:n.length===2?n[0]+'○':n[0]+'○'.repeat(n.length-2)+n[n.length-1];
@@ -3363,6 +3365,14 @@ function applyNoShow(uid){
   const u=DB.users[uid]||{}; const n=DB.orders.filter(o=>o.user===uid&&o.status==='NO_SHOW').length;
   if(n>=2){const d=now(); d.setDate(d.getDate()+14); u.suspendedUntil=d.toISOString(); DB.users[uid]=u; if(S.user&&S.user.id===uid) S.user.suspendedUntil=u.suspendedUntil;}
 }
+function correctNoShow(id){
+  DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o||o.status!=='NO_SHOW') return;
+  o.status='READY'; o.handedOver=true; o.corrected=true; (o.history=o.history||[]).push({s:'NO_SHOW_CORRECTED',at:hm(minOf(now()))});
+  // 重新計算停權：撤銷因這筆放鳥造成的停權
+  const u=DB.users[o.user]; const n=DB.orders.filter(x=>x.user===o.user&&x.status==='NO_SHOW').length;
+  if(u&&n<2&&u.suspendedUntil){delete u.suspendedUntil;}
+  save(); render();
+}
 function handOver(id){DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o) return; o.handedOver=true; (o.history=o.history||[]).push({s:'HANDED_OVER',at:hm(minOf(now()))}); save(); render();}
 function noShowCheck(){
   const m=minOf(now()); let n=0;
@@ -3377,6 +3387,7 @@ document.addEventListener('click',e=>{
   if(d.mtab){S.mTab=d.mtab; render(); return;}
   if(d.qseg){S.qSeg=d.qseg; render(); return;}
   if(d.done){const o=DB.orders.find(x=>x.id===d.done); if(o&&o.status==='READY'){setStatus(o.id,'PICKED_UP'); toast(`訂單 ${o.no} 已完成，可以點下一餐了`,'ok');} return;}
+  if(d.unnoshow){if(S.unArm!==d.unnoshow){S.unArm=d.unnoshow; render(); return;} S.unArm=null; correctNoShow(d.unnoshow); toast('已更正為「已交付」，放鳥紀錄已撤銷；學生按完成即可','ok',4000); return;}
   if(d.handover){handOver(d.handover); toast('已標記交付，等學生在 App 按完成'); return;}
   if(d.pay){if(t.classList.contains('dis')){toast('校園帳戶餘額不足，請至校內儲值機儲值或改用 LINE Pay','bad',4000); return;} S.note=($('#note')||{}).value||S.note; if($('#payPhone')) S.payPhone=$('#payPhone').value; S.pay=d.pay; render(); return;}
   if(d.topup){walletTx(S.user.id,Number(d.topup),'校內儲值機儲值'); save(); render(); toast(`已儲值 ${money(Number(d.topup))}`,'ok'); return;}

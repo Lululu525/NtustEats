@@ -126,5 +126,77 @@
   "points": 3,
   "sprint": "Sprint 2",
   "body": "**As a** 總務處承辦 **I want** 看各店每 10 分鐘的訂單量並匯出 **so that** 做餐廳評鑑與座位規劃。"
+ },
+ {
+  "id": "US-17",
+  "title": "新增店家 稻穗輕食",
+  "epic": "E2",
+  "points": 2,
+  "sprint": "Sprint 3",
+  "cr": "CR-01",
+  "body": "**As a** 學生 **I want** 在系統看到稻穗輕食的菜單 **so that** 多一個輕食選擇。\n- **AC1** Given 進入首頁，Then 看到 5 家店（含稻穗輕食），菜單與 iChef 線上菜單一致。"
+ },
+ {
+  "id": "US-18",
+  "title": "學號＋身分證字號登入並帶出姓名系級",
+  "epic": "E1",
+  "points": 5,
+  "sprint": "Sprint 3",
+  "cr": "CR-02",
+  "body": "**As a** 校內學生/教職員 **I want** 用學號（或教職員編號）＋身分證字號登入 **so that** 系統自動帶出我的姓名與系級。\n- **AC1** Given 輸入 B11201116 / B000000000，Then 顯示「陳庭瑜・工業管理系」。\n- **AC2** Given 身分證檢查碼錯誤，Then 顯示錯誤且不登入。"
+ },
+ {
+  "id": "US-19",
+  "title": "封面分流與店家登入、管理者編輯模式",
+  "epic": "E5",
+  "points": 5,
+  "sprint": "Sprint 3",
+  "cr": "CR-03",
+  "body": "**As a** 店家/總務處 **I want** 封面就選身分；店家用下拉選店＋密碼登入，管理者可切換編輯模式 **so that** 各角色只看到自己的功能。\n- **AC1** Given 店家選「泰刻」輸入 0000，Then 進入泰刻訂單頁。\n- **AC2** Given 總務處登入並打開編輯模式，Then 可新增店家與菜單。"
+ },
+ {
+  "id": "US-20",
+  "title": "可安裝 App（PWA）",
+  "epic": "E5",
+  "points": 3,
+  "sprint": "Sprint 3",
+  "cr": "CR-04",
+  "body": "**As a** 使用者 **I want** 把系統加到手機桌面 **so that** 像 App 一樣使用。\n- **AC1** Given 用手機瀏覽器開啟，Then 可「加入主畫面」並以全螢幕開啟。"
+ },
+ {
+  "id": "US-21",
+  "title": "校徽色系與學生餐廳封面",
+  "epic": "E5",
+  "points": 2,
+  "sprint": "Sprint 3",
+  "cr": "CR-05",
+  "body": "**As a** 使用者 **I want** 看到台科大校徽藍與學生餐廳 icon **so that** 一眼認出是學校官方系統。\n- **AC1** Then 主色為校徽藍 #005eb8，封面顯示「國立臺灣科技大學 學生餐廳」。"
+ },
+ {
+  "id": "US-22",
+  "title": "線上付款與校園帳戶餘額",
+  "epic": "E3",
+  "points": 8,
+  "sprint": "Sprint 3",
+  "cr": "CR-06",
+  "body": "**As a** 學生 **I want** 用 LINE Pay 或校園帳戶扣款，並看到帳戶餘額 **so that** 不用現場付錢。\n- **AC1** Given 校園帳戶餘額不足，Then 不能選扣款並提示到儲值機儲值。\n- **AC2** Given 訂單被取消或拒絕，Then 自動退款到原付款方式。\n- **AC3** Given 校外人士，Then 付款時輸入手機號碼即可，不需登入。"
+ },
+ {
+  "id": "US-23",
+  "title": "學生按完成訂單，未完成不能點下一餐",
+  "epic": "E3",
+  "points": 3,
+  "sprint": "Sprint 3",
+  "cr": "CR-07",
+  "body": "**As a** 學生 **I want** 拿到餐後自己按「完成訂單」 **so that** 訂單狀態正確。\n- **AC1** Given 有未完成訂單，Then 結帳按鈕停用並提示先完成。\n- **AC2** Given 店家已交付，When 學生按完成，Then 訂單變「已完成」且可再點餐。"
+ },
+ {
+  "id": "US-24",
+  "title": "店家更正未取餐",
+  "epic": "E4",
+  "points": 3,
+  "sprint": "Sprint 3",
+  "cr": "CR-08",
+  "body": "**As a** 店家 **I want** 把誤標的「未取餐」更正為「已交付」 **so that** 晚到但有拿餐的學生不會被記放鳥。\n- **AC1** Given 訂單為未取餐，When 店家按兩次確認更正，Then 訂單回到已交付、放鳥紀錄撤銷、停權重算。\n- **AC2** Then 學生收到通知並可按完成訂單。"
  }
 ]
