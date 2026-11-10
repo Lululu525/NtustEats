@@ -2696,6 +2696,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const STORE_ICON={thai:'🍛',ramen:'🍜',mala:'🌶️',daka:'☕',daosui:'🥗'};
 const icon=sid=>{const s=storeById(sid); return (s&&s.icon)||STORE_ICON[sid]||'🍽️';};
 const bgc=sid=>({thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6',wenzhou:'#fff1dc',opa:'#fdeccc',coldnoodle:'#e6f2fb',lightfood:'#e8f5e2',bear:'#fbe8d5',korean:'#fbe2e2'}[sid]||'#eef0f6');
+const AREA_INFO={'第一餐廳（學生活動中心）':{short:'第一餐廳',en:'Student Activity Center',emoji:'🏫'},'第二教學大樓餐廳（T2）':{short:'第二教學大樓餐廳',en:'T2 Cafeteria',emoji:'🏢'}};
 const AREA_OTHER='其他校內餐廳';
 const areaOf=s=>s.area||AREA_OTHER;
 function areaList(){const a=[]; stores.forEach(s=>{if(!a.includes(areaOf(s))) a.push(areaOf(s));}); return a.sort((x,y)=>(x===AREA_OTHER)-(y===AREA_OTHER));}
@@ -2904,8 +2905,12 @@ function renderLogin(){
     lead='校外人士（訪客、廠商）<b>不需登入</b>，直接開始點餐，所有品項以<b>校外販售價</b>計算；<b>付款時再輸入手機號碼</b>，以 LINE Pay 付款。';
     rows=`<div class="cv-hint"></div>`;
   } else {
-    lead='店家請選擇店名並輸入密碼，登入後進入接單畫面。';
-    rows=`<div class="cv-row"><label for="vSel">店家</label><select id="vSel">${stores.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
+    lead='店家請先選餐廳、再選店名並輸入密碼，登入後進入接單畫面。';
+    {const halls=areaList(); if(!S.vHall||!halls.includes(S.vHall)) S.vHall=(S.vSel&&storeById(S.vSel)&&areaOf(storeById(S.vSel)))||halls[0];
+     const hs=stores.filter(x=>areaOf(x)===S.vHall); if(!hs.some(x=>x.id===S.vSel)) S.vSel=hs[0]&&hs[0].id;
+    rows=`<div class="cv-row"><label for="vHall">餐廳</label><select id="vHall">${halls.map(a=>`<option value="${esc(a)}" ${S.vHall===a?'selected':''}>${(AREA_INFO[a]||{}).emoji||'🍽️'} ${esc((AREA_INFO[a]||{short:a}).short)}</option>`).join('')}</select></div>
+    <div class="cv-row"><label for="vSel">店家</label><select id="vSel">${hs.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>`;}
+    rows+=`
       <div class="cv-row"><label for="vPw">密碼</label><input id="vPw" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="請輸入密碼"></div><div class="cv-hint"></div>`;
     forgot='<button class="btn sec" data-act="forgot">忘記密碼？</button>';
   }
@@ -2948,7 +2953,6 @@ function memberLogin(){
   S.user=u; S.loginNo=''; S.loginMode=null; S.area=null; S.view='hall'; S.editMode=false; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）${u.admin?' · 右上角可開啟編輯模式':' · 校內價'}`,'ok',3500);
 }
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
-const AREA_INFO={'第一餐廳（學生活動中心）':{short:'第一餐廳',en:'Student Activity Center',emoji:'🏫'},'第二教學大樓餐廳（T2）':{short:'第二教學大樓餐廳',en:'T2 Cafeteria',emoji:'🏢'}};
 function renderHall(){
   const pt=priceType();
   return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('要去哪個餐廳？','Which cafeteria?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
@@ -3477,6 +3481,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='ssoNo'){const h=document.getElementById('noHint'); if(h) h.innerHTML=idHint(e.target.value.trim());}});
 document.addEventListener('change',e=>{
   const t=e.target;
+  if(t.id==='vHall'){S.vHall=t.value; S.vSel=null; render(); return;}
   if(t.id==='vSel'){S.vSel=t.value; return;}
   if(t.id==='mStore'){S.mStore=t.value; render(); return;}
   if(t.dataset.sf){const st=storeById(t.dataset.sf), k=t.dataset.k, v=t.value.trim();
