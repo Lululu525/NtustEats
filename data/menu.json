@@ -7034,38 +7034,30 @@
      "id": "noodleset",
      "name": "麵食套餐",
      "en": "Noodle Combo Meals",
+     "note": "A～C 號餐校內外同價（店家確認）",
      "items": [
       {
        "name": "A號餐 40元麵類＋豆漿",
        "en": "Combo A: 40 NTD Noodles + Soy Milk",
        "campus": 60,
-       "off": 65,
-       "tags": [
-        "價格待確認"
-       ],
-       "verify": "校外價看不清楚",
+       "off": 60,
+       "tags": [],
        "id": "bafang-034"
       },
       {
        "name": "B號餐 40元麵類＋湯類",
        "en": "Combo B: 40 NTD Noodles + Soup",
        "campus": 70,
-       "off": 75,
-       "tags": [
-        "價格待確認"
-       ],
-       "verify": "校外價看不清楚",
+       "off": 70,
+       "tags": [],
        "id": "bafang-035"
       },
       {
        "name": "C號餐 50元麵類＋豆漿",
        "en": "Combo C: 50 NTD Noodles + Soy Milk",
        "campus": 70,
-       "off": 75,
-       "tags": [
-        "價格待確認"
-       ],
-       "verify": "校外價看不清楚",
+       "off": 70,
+       "tags": [],
        "id": "bafang-036"
       },
       {
@@ -7095,6 +7087,7 @@
      "id": "rice",
      "name": "便當",
      "en": "Rice",
+     "note": "校外價＝校內價＋10 元（店家確認）；烤雞腿飯、油雞腿飯菜單印 120",
      "items": [
       {
        "name": "筍絲控肉飯",
@@ -7109,17 +7102,14 @@
        "en": "Poached Pork with Garlic Sauce Rice",
        "campus": 95,
        "off": 105,
-       "tags": [
-        "價格待確認"
-       ],
-       "verify": "校外價被反光遮住",
+       "tags": [],
        "id": "jitong-002"
       },
       {
        "name": "四菜飯",
        "en": "Four-Vegetable Rice",
        "campus": 55,
-       "off": 55,
+       "off": 65,
        "tags": [],
        "id": "jitong-003"
       },
@@ -7128,10 +7118,7 @@
        "en": "Braised Pork Rice",
        "campus": 70,
        "off": 80,
-       "tags": [
-        "價格待確認"
-       ],
-       "verify": "校外價被反光遮住",
+       "tags": [],
        "id": "jitong-004"
       },
       {
@@ -7178,7 +7165,7 @@
        "name": "香腸飯",
        "en": "Taiwanese Sausage Rice",
        "campus": 85,
-       "off": 85,
+       "off": 95,
        "tags": [],
        "id": "jitong-010"
       },
@@ -7355,11 +7342,8 @@
        "en": "Set 10: Scallion Pancake + Chicken Wrap + Black Tea",
        "campus": 85,
        "off": 95,
-       "tags": [
-        "價格待確認"
-       ],
+       "tags": [],
        "addonGroup": "tj_drink",
-       "verify": "校外價被反光遮住",
        "id": "tianjin-012"
       },
       {
