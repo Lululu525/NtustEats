@@ -74,12 +74,12 @@
 
 ---
 
-## 4. 需求變更流程（CR-01～CR-08）
+## 4. 需求變更流程（CR-01～CR-09）
 
 每次需求方看完 Demo 提出修改，都照同一流程：
 
 1. 寫 `docs/change-requests/CR-xx-*.md`：背景、變更內容、**建議修改的需求編號**、**待決定事項**（與原需求衝突的地方標 ⚠）
-2. 在看板建立對應 Story（US-17～US-24，label `change-request`）
+2. 在看板建立對應 Story（US-17～US-25，label `change-request`）
 3. 開分支 `feature/<名稱>` 實作 → 測試 → PR，描述貼 CR 內容
 4. 組員審查並決定「待決定事項」→ 把結論寫回 SRS 的變更紀錄
 

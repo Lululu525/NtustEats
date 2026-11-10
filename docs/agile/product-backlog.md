@@ -120,7 +120,7 @@ AI 建議拆為 US-03（瀏覽）、US-04（組合麻辣燙）、US-06（跨店�
 ## Sprint 2（預定）
 US-02、US-05、US-10、US-11、US-12、US-13、US-14、US-15、US-16 = 24 pts
 
-## Sprint 3（需求變更 CR-01～CR-08）
+## Sprint 3（需求變更 CR-01～CR-09）
 
 需求方在 Sprint Review 看原型後提出的變更，每一項先寫 CR 文件 → 轉成 User Story → PO 接受後排入 Sprint 3。
 
