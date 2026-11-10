@@ -74,6 +74,6 @@ US-24 店家更正未取餐,Story,"**As a** 店家 **I want** 把誤標的「未
 - **AC2** Then 學生收到通知並可按完成訂單。",3,E4,Sprint 3,ai-proposed change-request
 US-25 登入後選餐廳；新增兩個餐廳 12 家店,Story,"**As a** 學生 **I want** 登入後先選要去第一餐廳還是第二教學大樓餐廳，再看那裡的店家 **so that** 我不用在 17 家店裡找。
 - **AC1** Given 登入成功，Then 先看到「要去哪個餐廳？」兩張卡片，顯示店數與營業中家數。
-- **AC2** Given 選了第一餐廳，Then 只看到該餐廳 9 家店，可按「切換餐廳」。
+- **AC2** Given 選了第一餐廳，Then 只看到該餐廳 10 家店，可按「切換餐廳」。
 - **AC3** Given 新增的 12 家店，Then 菜單與現場菜單一致；看不清楚的價格標「價格待確認」。
 - **AC4** Given 購物車有兩個餐廳的店，Then 可以一起結帳、各店分別選時段。",8,E2,Sprint 3,ai-proposed change-request
