@@ -4,7 +4,9 @@
 # 用法：bash scripts/setup_github.sh <owner> <repo-name>
 set -euo pipefail
 OWNER=${1:?owner}; REPO=${2:-ntust-eats}
-gh repo create "$OWNER/$REPO" --public --source=. --remote=origin --push
+gh repo create "$OWNER/$REPO" --public --source=. --remote=origin
+git push -u origin main
+git push -u origin gh-pages   # 已建置好的原型，給 GitHub Pages 用
 for b in review/01-clarify-ambiguous review/02-add-missing review/03-remove-ai-invented docs/agile-prototype-ai feature/add-daosui feature/login-identity feature/roles-admin-edit feature/pwa-app feature/brand-cover feature/online-payment feature/student-complete feature/noshow-correction; do
   git push -u origin "$b"
 done
@@ -41,5 +43,5 @@ for s in json.load(open('docs/agile/stories.json')):
     print(url)
 PY
 echo "完成。到 Project 設定 Board 版面，欄位：AI Proposed / Backlog / To Do / In Progress / In Review / Done"
-# （選用）開啟 GitHub Pages，PR 合併到 main 後原型網址為 https://<owner>.github.io/<repo>/prototype/
-gh api -X POST "repos/$OWNER/$REPO/pages" -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1 && echo "GitHub Pages 已開啟" || echo "GitHub Pages 請到 Settings → Pages 手動開啟"
+# 開啟 GitHub Pages（gh-pages 分支根目錄），原型網址：https://<owner>.github.io/<repo>/
+gh api -X POST "repos/$OWNER/$REPO/pages" -f "source[branch]=gh-pages" -f "source[path]=/" >/dev/null 2>&1 && echo "GitHub Pages 已開啟：https://$OWNER.github.io/$REPO/" || echo "GitHub Pages 請到 Settings → Pages 手動開啟（Branch: gh-pages / root）"

@@ -67,7 +67,7 @@
 |---|---|
 | 3-1 | 原始碼在 `prototype/src/app.html`，菜單資料在 `data/menu.json` |
 | 3-2 | 建置：`python3 scripts/build_prototype.py` → 產生單一檔案 `prototype/index.html` |
-| 3-3 | 發佈 Demo：repo **Settings → Pages → Source: Deploy from a branch → main /prototype**（腳本已自動設定），網址 `https://<帳號>.github.io/ntust-eats/` |
+| 3-3 | 發佈 Demo：repo **Settings → Pages → Source: Deploy from a branch → gh-pages / (root)**（腳本已自動設定；原型更新後重新建置並推到 gh-pages），網址 `https://<帳號>.github.io/ntust-eats/` |
 | 3-4 | 手機打開網址 → 分享 → 「加入主畫面」即可當 App 使用（PWA） |
 
 **Demo 測試帳號：** 學生 `B11201116 / B000000000`、`M11407021 / F000000004`；總務處 `T10234 / A000000009`；店家任選、密碼 `0000`。
