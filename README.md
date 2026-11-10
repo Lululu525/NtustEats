@@ -83,7 +83,7 @@
 | 訪談與菜單 | [`docs/interview-notes.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/interview-notes.md)、[`data/menu.json`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/data/menu.json) |
 | Waterfall + AI | [`SRS.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/waterfall/SRS.md)、[`review-log.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/waterfall/review-log.md)、審查歷程見 [PR #1～#3](https://github.com/Lululu525/NtustEats/pulls) |
 | Agile + AI | [`product-backlog.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/agile/product-backlog.md)、User Story 見 [Issues](https://github.com/Lululu525/NtustEats/issues) |
-| 需求變更 | [`docs/change-requests/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/change-requests)（CR-01～09，PR #5～#13） |
+| 需求變更 | [`docs/change-requests/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/change-requests)（CR-01～09，PR #5～#12 與 #37） |
 | UML | [`docs/uml/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/uml) |
 | AI 使用紀錄 | [`docs/ai/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/ai) |
 | 操作手冊（GitHub／Jira） | [`GUIDE-github-jira.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/GUIDE-github-jira.md) |
