@@ -407,7 +407,10 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const STORE_ICON={thai:'🍛',ramen:'🍜',mala:'🌶️',daka:'☕',daosui:'🥗'};
 const icon=sid=>{const s=storeById(sid); return (s&&s.icon)||STORE_ICON[sid]||'🍽️';};
-const bgc=sid=>({thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6'}[sid]||'#eef0f6');
+const bgc=sid=>({thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6',wenzhou:'#fff1dc',opa:'#fdeccc',coldnoodle:'#e6f2fb',lightfood:'#e8f5e2',bear:'#fbe8d5',korean:'#fbe2e2'}[sid]||'#eef0f6');
+const AREA_OTHER='其他校內餐廳';
+const areaOf=s=>s.area||AREA_OTHER;
+function areaList(){const a=[]; stores.forEach(s=>{if(!a.includes(areaOf(s))) a.push(areaOf(s));}); return a.sort((x,y)=>(x===AREA_OTHER)-(y===AREA_OTHER));}
 const MENU_SIG=MENU.version+':'+MENU.stores.map(s=>s.id+s.categories.reduce((a,c)=>a+c.items.length,0)).join(',');
 let stores=[]; let allItems={};
 const storeById=id=>stores.find(s=>s.id===id);
@@ -662,12 +665,13 @@ function renderHome(){
   <div class="scroll">
     ${blockBanner()}
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
-    ${stores.map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
+    ${areaList().length>1?`<div class="chips" style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px">${['all',...areaList()].map(a=>`<button class="pill ${ (S.area||'all')===a?'on':''}" data-area="${esc(a)}" style="${(S.area||'all')===a?'background:var(--brand);color:#fff;border:1px solid var(--brand)':'background:#fff;color:var(--brand);border:1px solid var(--peach-d)'}">${a==='all'?'全部 '+stores.length+' 家':esc(a.replace('（學生活動中心）',''))+' '+stores.filter(x=>areaOf(x)===a).length+' 家'}</button>`).join('')}</div>`:''}
+    ${areaList().filter(a=>(S.area||'all')==='all'||S.area===a).map(a=>`<div class="sect-h">${esc(a)}</div>`+stores.filter(s=>areaOf(s)===a).map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
       return `<button class="storecard" data-store="${s.id}">
         <div class="em" style="background:${bgc(s.id)}">${icon(s.id)}</div>
         <div style="flex:1;min-width:0"><h3>${esc(s.name)}</h3><div class="en">${esc(s.en)}</div>
         <div class="meta"><span class="chip"><span class="dot" style="background:${open?'var(--ok)':'#bbb'}"></span>${open?T('營業中','Open'):T('休息中','Closed')}</span>
-        <span class="chip">⏱ ${T('最早','Earliest')} ${earliestLabel(s)}</span><span class="chip">🧑‍🍳 ${T('排隊','Queue')} ${q}</span></div></div></button>`;}).join('')}
+        <span class="chip">⏱ ${T('最早','Earliest')} ${earliestLabel(s)}</span><span class="chip">🧑‍🍳 ${T('排隊','Queue')} ${q}</span></div></div></button>`;}).join('')).join('')}
     <div class="sect-h">${T('營業時間','Opening hours')}</div>
     ${stores.map(s=>`<div class="note">${icon(s.id)} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
     ${storeById('daka').offline?`<p class="note">※ ${esc(storeById('daka').offline[0])}（I-21）</p>`:''}
@@ -681,7 +685,7 @@ function renderStore(){
   <div class="cats">${s.categories.filter(c=>c.items.length).map(c=>`<button data-jump="${c.id}">${esc(T(c.name,c.en))}</button>`).join('')}</div>
   <div class="scroll" id="menuScroll">
     ${s.builder?`<button class="builder-cta" data-act="bowl"><span class="em">🥣</span><div><b>${T('組合我的麻辣燙','Build my Mala bowl')}</b><span>${T('選湯底 → 火鍋料任選 4 個 → 加肉、加菜、加主食','Broth → any 4 hot-pot items → add meat, veg, noodles')}</span></div><span style="margin-left:auto;font-size:22px">›</span></button>`:''}
-    ${s.singlePrice?`<div class="cat-note">此店校內外同價（菜單只有一種價格）${s.note?'；'+esc(s.note):''}</div>`:''}
+    ${s.singlePrice?`<div class="cat-note">此店校內外同價（菜單只有一種價格）${s.note?'；'+esc(s.note):''}</div>`:(s.note?`<div class="cat-note">${esc(s.note)}</div>`:'')}
     ${promos.map(p=>{const [h,mm]=p.before.split(':').map(Number); const live=m<h*60+mm; return `<div class="promo">🎁 <div><b>${esc(p.name)}</b><br>${live?'現在適用，結帳時自動附贈':'今日已過 '+p.before+'，明天早上再來'}</div></div>`;}).join('')}
     ${s.categories.filter(c=>c.items.length).map(c=>`<div class="cat-h" id="cat-${c.id}"><h4>${esc(T(c.name,c.en))}</h4><span>${esc(S.lang==='zh'?c.en:c.name)}</span></div>
       ${c.note?`<div class="cat-note">${esc(c.note)}</div>`:''}
@@ -1114,6 +1118,7 @@ document.addEventListener('click',e=>{
   if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||'member'; S.loginErr=''; render(); return;}
   if(d.clock){ if(d.clock==='real'){DB.clockOffsetMin=null;} else {const [h,m]=d.clock.split(':').map(Number); DB.clockOffsetMin=h*60+m;} save(); render(); return; }
   if(d.go){S.view=d.go; S.sheet=null; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
+  if(d.area){S.area=d.area==="all"?null:d.area; render(); return;}
   if(d.store){S.storeId=d.store; S.view='store'; render(); return;}
   if(d.jump){const el=document.getElementById('cat-'+d.jump); const sc=$('#menuScroll'); if(el&&sc) sc.scrollTo({top:el.offsetTop-sc.offsetTop-6,behavior:'smooth'}); document.querySelectorAll('.cats button').forEach(b=>b.classList.toggle('on',b===t)); return;}
   if(d.item){openItem(d.item); return;}
