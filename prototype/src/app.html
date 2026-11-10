@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>台科大學生餐廳 · NTUST Eats</title>
-<meta name="theme-color" content="#d6336c">
+<meta name="theme-color" content="#005eb8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -15,14 +15,14 @@
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <style>
 :root{
-  --ink:#1d1b1e; --ink2:#55505a; --mute:#8b8590; --line:#ebe5e8; --bg:#faf7f8; --card:#fff;
-  --brand:#d6336c; --brand-d:#a51d4f; --peach:#fbe3dc; --peach-d:#f3c9bd;
+  --ink:#14212e; --ink2:#4a5563; --mute:#7f8a97; --line:#e3e9f0; --bg:#f5f8fb; --card:#fff;
+  --brand:#005eb8; --brand-d:#004a93; --peach:#e8f2fc; --peach-d:#bde6fd;
   --ok:#2f8f5b; --ok-bg:#e6f4ec; --warn:#b7791f; --warn-bg:#fdf3e1; --bad:#c53030; --bad-bg:#fde8e8;
-  --r:14px; --sh:0 1px 2px rgba(30,20,30,.06),0 4px 14px rgba(30,20,30,.06);
+  --r:14px; --sh:0 1px 2px rgba(10,25,45,.06),0 4px 14px rgba(10,25,45,.06);
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#e9e3e6;-webkit-font-smoothing:antialiased}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#e3eaf2;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 input,select,textarea{font:inherit}
 .hidden{display:none!important}
@@ -30,16 +30,16 @@ input,select,textarea{font:inherit}
 /* ---------- top bar (demo role switch) ---------- */
 .topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:10px 18px;background:var(--ink);color:#fff}
 .topbar .logo{font-weight:800;letter-spacing:.3px}
-.topbar .logo b{color:#ff8fb3}
+.topbar .logo b{color:#bde6fd}
 .topbar .tag{font-size:12px;opacity:.7}
 .who{display:flex;align-items:center;gap:10px;margin-left:auto;font-size:13px}
 .who .me{opacity:.85;text-align:right;line-height:1.3}
 .who .me small{display:block;opacity:.7;font-size:11px}
-.who .out{padding:6px 12px;border-radius:999px;background:#38333a;color:#eee;font-size:13px}
-.mswitch{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:999px;background:#38333a;color:#eee;font-size:13px}
-.mswitch .track{width:34px;height:20px;border-radius:10px;background:#6b6470;position:relative;transition:.15s}
+.who .out{padding:6px 12px;border-radius:999px;background:#2a3644;color:#eee;font-size:13px}
+.mswitch{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:999px;background:#2a3644;color:#eee;font-size:13px}
+.mswitch .track{width:34px;height:20px;border-radius:10px;background:#5b6775;position:relative;transition:.15s}
 .mswitch .track:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s}
-.mswitch.on{background:#ff8fb3;color:var(--ink);font-weight:700}
+.mswitch.on{background:#bde6fd;color:var(--ink);font-weight:700}
 .mswitch.on .track{background:var(--brand)}
 .mswitch.on .track:after{left:16px}
 .mform{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#fff;border-radius:12px;padding:14px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -48,13 +48,13 @@ input,select,textarea{font:inherit}
 table.t input.w{width:100%;padding:5px 6px;border:1px solid var(--line);border-radius:6px}
 .catbar{display:flex;gap:8px;align-items:center;margin:18px 0 8px}
 .catbar input{padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-weight:700}
-.seg{display:flex;background:#38333a;border-radius:999px;padding:3px;margin-left:auto}
+.seg{display:flex;background:#2a3644;border-radius:999px;padding:3px;margin-left:auto}
 .seg button{padding:6px 14px;border-radius:999px;font-size:14px;color:#ddd}
 .seg button.on{background:#fff;color:var(--ink);font-weight:700}
 
 /* ---------- layout ---------- */
 .stage{display:flex;justify-content:center;min-height:100vh;min-height:100dvh}
-.phone{width:100%;max-width:480px;height:100vh;height:100dvh;background:var(--bg);position:relative;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 40px rgba(40,10,30,.12)}
+.phone{width:100%;max-width:480px;height:100vh;height:100dvh;background:var(--bg);position:relative;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 40px rgba(10,30,60,.12)}
 .phone.tab{max-width:1024px}
 @media (max-width:520px){.phone{box-shadow:none}}
 .wide{width:100%;max-width:1180px}
@@ -84,7 +84,7 @@ table.t input.w{width:100%;padding:5px 6px;border:1px solid var(--line);border-r
 .field input:focus,.field textarea:focus{border-color:var(--brand)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:14px;font-weight:700;font-size:15px}
 .btn.pri{background:var(--brand);color:#fff}
-.btn.pri:disabled{background:#e3b8c8;cursor:not-allowed}
+.btn.pri:disabled{background:#9fc3e6;cursor:not-allowed}
 .btn.sec{background:#fff;border:1px solid var(--line)}
 .btn.ghost{color:var(--brand)}
 .btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
@@ -129,7 +129,7 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .item .nm{font-weight:700;font-size:15px;line-height:1.35}
 .item .en{font-size:12px;color:var(--mute);margin-top:2px}
 .item .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
-.tg{font-size:11px;padding:2px 7px;border-radius:6px;background:#f2eef0;color:var(--ink2)}
+.tg{font-size:11px;padding:2px 7px;border-radius:6px;background:#eef2f6;color:var(--ink2)}
 .tg.veg{background:var(--ok-bg);color:var(--ok)}
 .tg.hot{background:var(--bad-bg);color:var(--bad)}
 .tg.lim{background:var(--warn-bg);color:var(--warn)}
@@ -146,7 +146,7 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .promo{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--warn-bg);color:#7a4b0c;font-size:13px;margin:6px 0;line-height:1.5}
 
 /* sheet */
-.overlay{position:absolute;inset:0;background:rgba(20,10,20,.45);z-index:20;display:flex;align-items:flex-end}
+.overlay{position:absolute;inset:0;background:rgba(10,20,35,.45);z-index:20;display:flex;align-items:flex-end}
 .sheet{background:#fff;width:100%;max-height:88%;border-radius:22px 22px 0 0;display:flex;flex-direction:column}
 .sheet.anim{animation:up .2s ease-out}
 @keyframes up{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
@@ -159,10 +159,10 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .grp span{font-size:12px;color:var(--mute)}
 .grp span.req{color:var(--brand);font-weight:700}
 .grp span.okk{color:var(--ok);font-weight:700}
-.opt{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid #f4f0f2;width:100%;text-align:left}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid #eef2f6;width:100%;text-align:left}
 .opt .x{flex:1}
 .opt .x small{display:block;color:var(--mute);font-size:11px}
-.box{width:22px;height:22px;border-radius:6px;border:2px solid #d8d0d4;display:grid;place-items:center;flex:none;font-size:13px;color:#fff}
+.box{width:22px;height:22px;border-radius:6px;border:2px solid #cdd6e0;display:grid;place-items:center;flex:none;font-size:13px;color:#fff}
 .box.round{border-radius:50%}
 .opt.on .box{background:var(--brand);border-color:var(--brand)}
 .opt.dis{opacity:.4}
@@ -172,14 +172,14 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .pick{padding:9px 6px;border-radius:10px;border:1px solid var(--line);font-size:13px;background:#fff;text-align:center;line-height:1.25}
 .pick small{display:block;font-size:10px;color:var(--mute)}
-.pick.on{border-color:var(--brand);background:#fff0f5;color:var(--brand-d);font-weight:700}
+.pick.on{border-color:var(--brand);background:#e8f3fd;color:var(--brand-d);font-weight:700}
 .pick.dis{opacity:.4}
 .qty{display:flex;align-items:center;gap:10px}
 
 /* cart */
 .cgroup{background:#fff;border-radius:var(--r);padding:12px 14px;margin-bottom:12px;box-shadow:var(--sh)}
 .cgroup h4{margin:0 0 6px;font-size:15px;display:flex;justify-content:space-between}
-.cline{display:flex;gap:10px;padding:9px 0;border-top:1px solid #f4f0f2;align-items:flex-start}
+.cline{display:flex;gap:10px;padding:9px 0;border-top:1px solid #eef2f6;align-items:flex-start}
 .cline:first-of-type{border-top:0}
 .cline .x{flex:1;font-size:14px}
 .cline .x small{display:block;color:var(--mute);font-size:12px;line-height:1.5;margin-top:2px}
@@ -194,8 +194,8 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .slot{padding:8px 4px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:13px;text-align:center;line-height:1.3}
 .slot small{display:block;font-size:10px;color:var(--mute)}
 .slot.on{border-color:var(--brand);background:var(--brand);color:#fff}
-.slot.on small{color:#ffd6e5}
-.slot.full{background:#f4f0f2;color:#b8b0b4;cursor:not-allowed;text-decoration:line-through}
+.slot.on small{color:#cfe6fb}
+.slot.full{background:#eef2f6;color:#aab4c0;cursor:not-allowed;text-decoration:line-through}
 .slot.low small{color:var(--warn);font-weight:700}
 
 /* orders */
@@ -203,7 +203,7 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .ocard .top{display:flex;align-items:center;gap:12px}
 .ocard .no{font-size:28px;font-weight:800;letter-spacing:1px}
 .ocard .st{margin-left:auto}
-.stbadge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#f2eef0;color:var(--ink2)}
+.stbadge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#eef2f6;color:var(--ink2)}
 .stbadge.SUBMITTED{background:#eef2ff;color:#3b4fb5}
 .stbadge.ACCEPTED{background:var(--warn-bg);color:var(--warn)}
 .stbadge.READY{background:var(--ok);color:#fff}
@@ -211,8 +211,8 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .stbadge.CANCELLED,.stbadge.REJECTED,.stbadge.NO_SHOW{background:var(--bad-bg);color:var(--bad)}
 .timeline{display:flex;margin:14px 0 6px}
 .timeline div{flex:1;text-align:center;font-size:11px;color:var(--mute);position:relative;padding-top:16px}
-.timeline div:before{content:"";position:absolute;top:4px;left:50%;width:10px;height:10px;border-radius:50%;background:#e2dbdf;transform:translateX(-50%)}
-.timeline div:after{content:"";position:absolute;top:8px;left:calc(50% + 7px);right:calc(-50% + 7px);height:2px;background:#e2dbdf}
+.timeline div:before{content:"";position:absolute;top:4px;left:50%;width:10px;height:10px;border-radius:50%;background:#d9e1ea;transform:translateX(-50%)}
+.timeline div:after{content:"";position:absolute;top:8px;left:calc(50% + 7px);right:calc(-50% + 7px);height:2px;background:#d9e1ea}
 .timeline div:last-child:after{display:none}
 .timeline div.done{color:var(--ink)}
 .timeline div.done:before{background:var(--ok)}
@@ -228,7 +228,7 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .toast.bad{background:var(--bad)}
 
 /* ---------- vendor ---------- */
-.vwrap{background:#fff;border-radius:20px;box-shadow:0 10px 40px rgba(40,10,30,.12);overflow:hidden}
+.vwrap{background:#fff;border-radius:20px;box-shadow:0 10px 40px rgba(10,30,60,.12);overflow:hidden}
 .vhead{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
 .vhead h2{margin:0;font-size:20px}
 .vhead select{padding:9px 12px;border-radius:10px;border:1px solid var(--line);font-weight:700}
@@ -252,10 +252,10 @@ details.note summary{cursor:pointer;color:var(--brand)}
 .vtool input{padding:9px 12px;border-radius:10px;border:1px solid var(--line);width:160px}
 table.t{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:13px}
 table.t th{background:var(--ink);color:#fff;text-align:left;padding:9px 10px;font-weight:600}
-table.t td{padding:8px 10px;border-top:1px solid #f1ecef;vertical-align:middle}
-table.t tr:nth-child(even) td{background:#fcfafb}
+table.t td{padding:8px 10px;border-top:1px solid #edf1f5;vertical-align:middle}
+table.t tr:nth-child(even) td{background:#fafcfe}
 table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-radius:6px;text-align:right}
-.toggle{width:44px;height:24px;border-radius:12px;background:#d9d2d6;position:relative;transition:.15s}
+.toggle{width:44px;height:24px;border-radius:12px;background:#ccd5df;position:relative;transition:.15s}
 .toggle:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.15s}
 .toggle.on{background:var(--bad)}
 .toggle.on:after{left:23px}
@@ -278,7 +278,7 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 /* ---------- app components ---------- */
 .pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;white-space:nowrap}
 .pill.light{background:#fff;color:var(--ink);box-shadow:var(--sh)}
-.qseg{display:flex;background:#eee7ea;border-radius:12px;padding:3px;margin:4px 0 12px}
+.qseg{display:flex;background:#e6ecf3;border-radius:12px;padding:3px;margin:4px 0 12px}
 .qseg button{flex:1;padding:8px 4px;border-radius:9px;font-size:13px;color:var(--ink2)}
 .qseg button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .qseg .n{display:inline-block;min-width:18px;padding:0 5px;margin-left:3px;border-radius:9px;background:var(--brand);color:#fff;font-size:11px}
@@ -303,7 +303,7 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 .irow input{min-width:0}
 .ihead{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:6px;font-size:11px;color:var(--mute);padding:2px 2px 0}
 .fgrid .field input,.fgrid .field select{padding:9px 11px;border-radius:10px}
-.irow{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 0;border-top:1px solid #f1ecef}
+.irow{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 0;border-top:1px solid #edf1f5}
 .irow:first-of-type{border-top:0}
 .irow input{width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:8px;font-size:14px}
 .irow .full{grid-column:1/-1}
@@ -317,11 +317,43 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 .clockrow .big{font-size:24px;font-variant-numeric:tabular-nums;margin-right:6px}
 .clockrow input{padding:6px;border:1px solid var(--line);border-radius:8px}
 .clockrow button{padding:6px 10px;border-radius:8px;background:var(--bg);font-size:13px;border:1px solid var(--line)}
-.setrow{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #f1ecef}
+.setrow{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #edf1f5}
 .setrow:first-child{border-top:0}
 .setrow .x{flex:1}
 .setrow .x small{display:block;color:var(--mute);font-size:12px}
 .installtip{font-size:12px;color:var(--ink2);background:var(--peach);border-radius:10px;padding:10px 12px;line-height:1.6}
+
+/* ---------- cover (library-app style) ---------- */
+.cv{display:flex;flex-direction:column;flex:1;overflow:auto;background:#fff}
+.cv-bar{background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;position:sticky;top:0;z-index:3}
+.cv-bar img{height:26px}
+.cv-bar .t{line-height:1.15;text-align:left}
+.cv-bar .t b{display:block;font-size:14px;letter-spacing:1px}
+.cv-bar .t small{display:block;font-size:10px;opacity:.85;letter-spacing:.5px}
+.cv-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin:28px 0 6px}
+.cv-logo img{width:84px;height:84px}
+.cv-logo .w{line-height:1.1}
+.cv-logo .w b{display:block;font-size:30px;color:var(--brand);letter-spacing:3px}
+.cv-logo .w small{display:block;font-size:12px;color:var(--ink2);letter-spacing:2px;margin-top:4px}
+.cv h2{text-align:center;font-size:20px;margin:10px 0 18px;font-weight:600}
+.cv .lead{font-size:12.5px;color:var(--ink2);padding:0 16px;line-height:1.6;margin:0 0 10px}
+.cv-tabs{display:flex;border-bottom:1px solid var(--line);margin-top:4px}
+.cv-tabs button{flex:1;padding:12px 4px;font-size:14px;color:var(--ink2);border-bottom:3px solid transparent}
+.cv-tabs button.on{color:var(--brand);font-weight:700;border-bottom-color:var(--brand)}
+.cv-row{display:flex;align-items:center;border-bottom:1px solid var(--line);padding:0 16px;min-height:50px;background:#fff}
+.cv-row label{width:96px;flex:none;font-size:15px;color:var(--ink)}
+.cv-row input,.cv-row select{flex:1;min-width:0;border:0;outline:none;font-size:15px;padding:14px 0;background:transparent}
+.cv-row input::placeholder{color:#a4adb8}
+.cv-act{padding:18px 16px 4px;display:flex;flex-direction:column;gap:10px}
+.cv-act .btn.pri{border-radius:6px;padding:13px}
+.cv-act .btn.pri.dim{background:#9fc3e6}
+.cv-act .btn.sec{border-radius:6px;border-color:#cdd6e0}
+.cv-err{margin:10px 16px 0;padding:9px 12px;border-radius:6px;background:var(--bad-bg);color:var(--bad);font-size:13px}
+.cv-hint{font-size:12px;color:var(--ok);padding:6px 16px 0;min-height:18px}
+.cv-more{padding:6px 16px}
+.cv-foot{margin-top:auto;padding:22px 16px calc(18px + env(safe-area-inset-bottom));text-align:center;font-size:11.5px;color:#7f8a97;line-height:2;border-top:1px solid var(--line)}
+.cv-foot a{color:#7f8a97;text-decoration:underline;cursor:pointer}
+.applogo{width:34px;height:34px;flex:none}
 </style>
 </head>
 <body>
@@ -332,6 +364,7 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 <script>/*__QR__*/</script>
 <script>
 const MENU = /*__MENU__*/;
+const LOGO='__LOGO_DATA__', EMBLEM_W='__EMBLEM_WHITE_DATA__';
 
 /* ================= state & storage ================= */
 const KEY='ntustEats.v1';
@@ -530,42 +563,40 @@ function validTwId(id){
   return d.reduce((a,x,i)=>a+x*w[i],0)%10===0;
 }
 function renderLogin(){
-  const mode=S.loginMode;
-  const head=`<div class="cover-h"><div class="cover-badge">NTUST</div><h2>台灣科技大學<br>學生餐廳</h2><p>線上點餐 · 上課前先點好，下課直接拿</p></div>`;
-  if(!mode) return `<div class="login">${head}
-    <button class="choice" data-mode="member"><span class="ic">🎓</span><span><b>校內學生／教職員</b><small>以學號或教職員編號登入，享校內優惠價</small></span><span class="arr">›</span></button>
-    <button class="choice" data-mode="visitor"><span class="ic">🧑‍💼</span><span><b>其他校外人士</b><small>以手機號碼登入，以校外販售價計</small></span><span class="arr">›</span></button>
-    <button class="choice" data-mode="vendor"><span class="ic">🏪</span><span><b>店家</b><small>選擇店家並輸入密碼，進入接單平板</small></span><span class="arr">›</span></button>
-    <p class="note">${stores.map(x=>esc(x.name)).join('・')}</p>
-    ${installCard()}
-    <details class="note"><summary>Demo 時鐘（測試用）</summary><div style="margin-top:8px">${clockCard()}</div></details>
-  </div>`;
-  if(mode==='member') return `<div class="login">
-    <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
-    <h2 style="font-size:24px">校內學生／教職員登入</h2>
-    <div class="field"><label for="ssoNo">學號／教職員編號</label><input id="ssoNo" placeholder="例：B11201116" autocomplete="username" autocapitalize="characters" maxlength="9" value="${esc(S.loginNo||'')}"></div>
-    <div id="noHint" class="idhint">${S.loginNo?idHint(S.loginNo):''}</div>
-    <div class="field"><label for="ssoId">身分證字號</label><input id="ssoId" type="password" placeholder="例：A123456789" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
-    ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
-    <button class="btn pri" data-act="sso">登入</button>
-    <details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者，可開啟編輯模式）<br>以上皆為虛構資料。身分證字號只用來比對，不會被儲存。</details>
-  </div>`;
-  if(mode==='vendor') return `<div class="login">
-    <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
-    <h2 style="font-size:24px">店家登入</h2>
-    <div class="field"><label for="vSel">店家</label><select id="vSel">${stores.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
-    <div class="field"><label for="vPw">密碼</label><input id="vPw" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="預設 0000"></div>
-    ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
-    <button class="btn pri" data-act="vendorLogin">登入</button>
-    <p class="note">原型：各店預設密碼 0000，登入後可在「時段與密碼」變更。</p>
-  </div>`;
-  return `<div class="login">
-    <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
-    <h2 style="font-size:24px">其他校外人士</h2>
-    <p>以手機號碼登入（簡訊驗證為模擬），所有品項以<b>校外販售價</b>計算。</p>
-    <div class="field"><label for="vPhone">手機號碼</label><input id="vPhone" placeholder="09xx-xxx-xxx" inputmode="tel" value="0912345678"></div>
-    ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
-    <button class="btn pri" data-act="visitor">登入</button>
+  const mode=S.loginMode||'member';
+  const err=S.loginErr?`<div class="cv-err">⚠ ${esc(S.loginErr)}</div>`:'';
+  let rows='', lead='', forgot='';
+  if(mode==='member'){
+    lead='校內學生與教職員請以<b>學號／教職員編號</b>及<b>身分證字號</b>登入，帳號與校務系統綁定，登入後享校內優惠價。';
+    rows=`<div class="cv-row"><label for="ssoNo">帳號</label><input id="ssoNo" placeholder="學號／教職員編號" autocomplete="username" autocapitalize="characters" maxlength="9" value="${esc(S.loginNo||'')}"></div>
+      <div class="cv-row"><label for="ssoId">身分證字號</label><input id="ssoId" type="password" placeholder="請輸入身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
+      <div id="noHint" class="cv-hint">${S.loginNo?idHint(S.loginNo):''}</div>`;
+    forgot='<button class="btn sec" data-act="forgot">忘記帳號或身分驗證失敗？</button>';
+  } else if(mode==='visitor'){
+    lead='校外人士（訪客、廠商）請以手機號碼登入，所有品項以<b>校外販售價</b>計算。';
+    rows=`<div class="cv-row"><label for="vPhone">手機號碼</label><input id="vPhone" placeholder="09xx-xxx-xxx" inputmode="tel" value="0912345678"></div><div class="cv-hint"></div>`;
+  } else {
+    lead='店家請選擇店名並輸入密碼，登入後進入接單畫面。';
+    rows=`<div class="cv-row"><label for="vSel">店家</label><select id="vSel">${stores.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
+      <div class="cv-row"><label for="vPw">密碼</label><input id="vPw" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="請輸入密碼"></div><div class="cv-hint"></div>`;
+    forgot='<button class="btn sec" data-act="forgot">忘記密碼？</button>';
+  }
+  const act={member:'sso',visitor:'visitor',vendor:'vendorLogin'}[mode];
+  return `<div class="cv">
+    <div class="cv-bar"><img src="${EMBLEM_W}" alt=""><div class="t"><b>國立臺灣科技大學</b><small>學生餐廳 · Student Cafeteria</small></div></div>
+    <div class="cv-logo"><img src="${LOGO}" alt="台科大學生餐廳標誌"><div class="w"><b>臺科大</b><small>學生餐廳</small></div></div>
+    <h2>登入台科大學生餐廳</h2>
+    <p class="lead">${lead}</p>
+    <div class="cv-tabs" role="tablist">${[['member','校內學生／教職員'],['visitor','校外人士'],['vendor','店家']].map(([k,l])=>`<button role="tab" aria-selected="${mode===k}" class="${mode===k?'on':''}" data-mode="${k}">${l}</button>`).join('')}</div>
+    ${rows}${err}
+    <div class="cv-act"><button class="btn pri" data-act="${act}">登入</button>${forgot}</div>
+    <div class="cv-more">
+      ${mode==='member'?`<details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者）<br>以上皆為虛構資料；身分證字號只用於比對，不會被儲存。</details>`:''}
+      ${mode==='vendor'?`<p class="note">原型：各店預設密碼 0000。</p>`:''}
+      <details class="note"><summary>Demo 時鐘（測試用）</summary><div style="margin-top:8px">${clockCard()}</div></details>
+      <details class="note"><summary>安裝成 App</summary><div style="margin-top:6px">${installCard()}</div></details>
+    </div>
+    <div class="cv-foot"><a data-act="privacy">隱私權保護政策 Privacy Policy</a><br>台灣科技大學學生餐廳 NTUST Eats APP Ver.0.5.0（課程專案原型）<br>臺北市大安區基隆路四段43號<br>Copyright © 2026 NTUST Eats 專案小組</div>
   </div>`;
 }
 function idHint(no){
@@ -590,7 +621,7 @@ function memberLogin(){
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
 function renderHome(){
   const pt=priceType();
-  return `<div class="appbar"><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}</div></div>
+  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}</div></div>
     ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
@@ -858,7 +889,7 @@ function renderReport(){
       <div class="stat"><b>${cnt('CANCELLED')+cnt('REJECTED')}</b><span>取消／拒絕</span></div><div class="stat"><b>${cnt('NO_SHOW')}</b><span>未取餐（放鳥）</span></div></div>
     <div class="sect-h">各店 × 取餐時段 訂單數（尖峰熱度）</div>
     ${slots.length?`<div class="xscroll"><table class="t heat"><tr><th>店家</th>${slots.map(t=>`<th>${hm(t)}</th>`).join('')}<th>合計</th></tr>
-      ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${icon(s.id)} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(214,51,108,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table></div>`
+      ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${icon(s.id)} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(0,94,184,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table></div>`
       :'<div class="empty">今日尚無訂單。關閉編輯模式下幾筆單，或請店家接單後再回來看。</div>'}
     <div class="sect-h">已取餐營業額（參考）</div><div class="stat"><b>${money(rev)}</b><span>現場收款合計</span></div>
   </div><div style="height:12px"></div>${clockCard()}`;
@@ -982,7 +1013,7 @@ document.addEventListener('click',e=>{
     const name=g('name'), cp=parseInt(g('c'),10), op=st.singlePrice?cp:parseInt(g('o')||g('c'),10);
     if(!name){toast('請輸入品名','bad');return;} if(!(cp>0)){toast('請輸入價格','bad');return;} if(!st.singlePrice&&!(op>=cp)){toast('校外價不得低於校內價（FR-10）','bad');return;}
     c.items.push({id:newId(st.id+'-'),name,en:g('en')||name,campus:cp,off:op,tags:g('t')?g('t').split(/[,，、]\s*/).filter(Boolean):[]}); save(); render(); const w=st.singlePrice?'':priceWarn(cp,op); w?toast('⚠ 已新增，但'+w,'bad',4500):toast(`已新增「${name}」，學生端立即可點`,'ok'); return;}
-  if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||null; S.loginErr=''; render(); return;}
+  if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||'member'; S.loginErr=''; render(); return;}
   if(d.clock){ if(d.clock==='real'){DB.clockOffsetMin=null;} else {const [h,m]=d.clock.split(':').map(Number); DB.clockOffsetMin=h*60+m;} save(); render(); return; }
   if(d.go){S.view=d.go; S.sheet=null; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
   if(d.store){S.storeId=d.store; S.view='store'; render(); return;}
@@ -1013,6 +1044,8 @@ document.addEventListener('click',e=>{
     case 'editmode': S.editMode=!S.editMode; S.view='home'; S.mTab=S.mTab||'stores'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
     case 'addStore': addStore(); break;
     case 'toggleAdd': S.showAdd=!S.showAdd; render(); break;
+    case 'forgot': toast(S.loginMode==='vendor'?'請聯絡總務處重設店家密碼（原型）':'請至校務系統確認帳號，或洽註冊組（原型）',''); break;
+    case 'privacy': toast('本系統只用學號／手機、姓名作為點餐身分；身分證字號僅轉送校務系統驗證，不儲存。',' ',6000); break;
     case 'addCat':{const n=($('#ncName').value||'').trim(); if(!n){toast('請輸入分類名稱','bad');return;} storeById(S.mStore).categories.push({id:newId('c'),name:n,en:($('#ncEn').value||'').trim()||n,items:[]}); save(); render(); toast('已新增分類','ok'); break;}
     case 'changePw':{const v=($('#newPw').value||'').trim(); if(!/^\S{4,12}$/.test(v)){toast('密碼需 4～12 碼','bad');return;} DB.storePw=DB.storePw||{}; DB.storePw[S.vendorStore]=v; save(); render(); toast('密碼已更新','ok'); break;}
     case 'vendorLogin':{const sid=$('#vSel').value; S.vSel=sid; const _x=0, pw=($('#vPw').value||''); const ok=((DB.storePw||{})[sid]||'0000')===pw; if(!ok){S.loginErr='密碼錯誤'; render(); return;} const st=storeById(sid); S.user={id:'s-'+sid,type:'vendor',store:sid,name:st.name}; S.vendorStore=sid; S.vendorTab='queue'; S.loginMode=null; S.loginErr=''; render(); toast(`${st.name} 已登入`,'ok'); break;}
