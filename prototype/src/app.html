@@ -354,6 +354,24 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 .cv-foot{margin-top:auto;padding:22px 16px calc(18px + env(safe-area-inset-bottom));text-align:center;font-size:11.5px;color:#7f8a97;line-height:2;border-top:1px solid var(--line)}
 .cv-foot a{color:#7f8a97;text-decoration:underline;cursor:pointer}
 .applogo{width:34px;height:34px;flex:none}
+.wallet{background:linear-gradient(135deg,#005eb8,#2b7fd0);color:#fff}
+.wallet .note{color:#dbe9f7}
+.wallet .wl-top{display:flex;align-items:center}
+.wallet .wl-top small{display:block;font-size:12px;opacity:.85}
+.wallet .wl-top b{font-size:32px;letter-spacing:.5px}
+.wallet .wl-ic{margin-left:auto;font-size:30px}
+.wallet .btn.sec{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35);color:#fff}
+.wallet .sect-h{color:#dbe9f7}
+.txrow{display:flex;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.18)}
+.txrow div{flex:1}.txrow b{display:block;font-size:13px;font-weight:600}.txrow small{font-size:11px;opacity:.8}
+.txrow .in{color:#b8f5cf;font-weight:700}.txrow .out{color:#fff;font-weight:700}
+.payopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;margin-top:8px}
+.payopt.on{border-color:var(--brand);background:#eef5fc}
+.payopt.on .box{background:var(--brand);border-color:var(--brand)}
+.payopt.dis{opacity:.5}
+.payopt .pi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+.payopt .x{flex:1}.payopt .x b{display:block;font-size:15px}.payopt .x small{display:block;font-size:12px;color:var(--mute)}
+.lp-head{background:#06c755;color:#fff;border-radius:22px 22px 0 0;padding:18px;text-align:center;font-weight:800;font-size:18px}
 </style>
 </head>
 <body>
@@ -425,6 +443,22 @@ const ACTIVE=['SUBMITTED','ACCEPTED','READY','PICKED_UP','NO_SHOW'];
 const today=()=>{const d=now(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
 function bookedCount(sid,t){return DB.orders.filter(o=>o.store===sid&&o.slot===t&&o.day===today()&&ACTIVE.includes(o.status)).length;}
 function rid(){const a=new Uint8Array(16); (crypto.getRandomValues?crypto.getRandomValues(a):a.forEach((_,i)=>a[i]=Math.random()*256|0)); return [...a].map(x=>x.toString(16).padStart(2,'0')).join('');}
+
+/* ================= 校園帳戶（儲值）================= */
+const WALLET_SEED={'m-B11201116':350,'m-M11407021':80,'m-T10234':500};
+const stamp=()=>`${today()} ${hm(minOf(now()))}`;
+function wallet(uid){DB.wallets=DB.wallets||{}; if(!DB.wallets[uid]){const b=WALLET_SEED[uid]||0; DB.wallets[uid]={bal:b,tx:b?[{t:'校內儲值機儲值',amt:b,at:stamp()}]:[]};} return DB.wallets[uid];}
+function walletTx(uid,amt,label){const w=wallet(uid); w.bal+=amt; w.tx.unshift({t:label,amt,at:stamp()}); w.tx=w.tx.slice(0,30);}
+const PAY_LABEL={wallet:'校園帳戶扣款',linepay:'LINE Pay'};
+function walletCard(compact){
+  const w=wallet(S.user.id);
+  return `<div class="card wallet"><div class="wl-top"><div><small>校園帳戶餘額</small><b>${money(w.bal)}</b></div><span class="wl-ic">💳</span></div>
+    ${compact?'':`<p class="note" style="margin:6px 0 10px">可至校內儲值機以現金儲值；點餐時可直接扣款。</p>
+    <div class="vtool" style="margin:0 0 6px"><span class="note">模擬校內儲值機：</span><button class="btn sec sm" data-topup="100">＋$100</button><button class="btn sec sm" data-topup="500">＋$500</button></div>
+    <div class="sect-h" style="margin-top:10px">最近交易</div>
+    ${w.tx.length?w.tx.slice(0,8).map(x=>`<div class="txrow"><div><b>${esc(x.t)}</b><small>${esc(x.at)}</small></div><span class="${x.amt>=0?'in':'out'}">${x.amt>=0?'+':'−'}${money(Math.abs(x.amt))}</span></div>`).join(''):'<p class="note">尚無交易</p>'}`}
+  </div>`;
+}
 
 /* ================= cart model ================= */
 // line: {key, store, kind:'item'|'bowl', id, qty, addons:[id], choice, broth, pick4:[name], extras:{id:qty}}
@@ -573,8 +607,8 @@ function renderLogin(){
       <div id="noHint" class="cv-hint">${S.loginNo?idHint(S.loginNo):''}</div>`;
     forgot='<button class="btn sec" data-act="forgot">忘記帳號或身分驗證失敗？</button>';
   } else if(mode==='visitor'){
-    lead='校外人士（訪客、廠商）請以手機號碼登入，所有品項以<b>校外販售價</b>計算。';
-    rows=`<div class="cv-row"><label for="vPhone">手機號碼</label><input id="vPhone" placeholder="09xx-xxx-xxx" inputmode="tel" value="0912345678"></div><div class="cv-hint"></div>`;
+    lead='校外人士（訪客、廠商）<b>不需登入</b>，直接開始點餐，所有品項以<b>校外販售價</b>計算；<b>付款時再輸入手機號碼</b>，以 LINE Pay 付款。';
+    rows=`<div class="cv-hint"></div>`;
   } else {
     lead='店家請選擇店名並輸入密碼，登入後進入接單畫面。';
     rows=`<div class="cv-row"><label for="vSel">店家</label><select id="vSel">${stores.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
@@ -582,6 +616,7 @@ function renderLogin(){
     forgot='<button class="btn sec" data-act="forgot">忘記密碼？</button>';
   }
   const act={member:'sso',visitor:'visitor',vendor:'vendorLogin'}[mode];
+  const actLabel=mode==='visitor'?'以訪客身分開始點餐':'登入';
   return `<div class="cv">
     <div class="cv-bar"><img src="${EMBLEM_W}" alt=""><div class="t"><b>國立臺灣科技大學</b><small>學生餐廳 · Student Cafeteria</small></div></div>
     <div class="cv-logo"><img src="${LOGO}" alt="台科大學生餐廳標誌"><div class="w"><b>臺科大</b><small>學生餐廳</small></div></div>
@@ -589,7 +624,7 @@ function renderLogin(){
     <p class="lead">${lead}</p>
     <div class="cv-tabs" role="tablist">${[['member','校內學生／教職員'],['visitor','校外人士'],['vendor','店家']].map(([k,l])=>`<button role="tab" aria-selected="${mode===k}" class="${mode===k?'on':''}" data-mode="${k}">${l}</button>`).join('')}</div>
     ${rows}${err}
-    <div class="cv-act"><button class="btn pri" data-act="${act}">登入</button>${forgot}</div>
+    <div class="cv-act"><button class="btn pri" data-act="${act}">${actLabel}</button>${forgot}</div>
     <div class="cv-more">
       ${mode==='member'?`<details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者）<br>以上皆為虛構資料；身分證字號只用於比對，不會被儲存。</details>`:''}
       ${mode==='vendor'?`<p class="note">原型：各店預設密碼 0000。</p>`:''}
@@ -621,7 +656,7 @@ function memberLogin(){
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
 function renderHome(){
   const pt=priceType();
-  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}</div></div>
+  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
     ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
@@ -667,6 +702,16 @@ function openItem(id){
 function openBowl(){S.sheet={type:'bowl',qty:1,broth:null,usePick4:true,pick4:[],extras:{}}; render();}
 function renderSheet(){
   const sh=S.sheet;
+  if(sh.type==='linepay') return `<div class="overlay"><div class="sheet ${S.anim?'anim':''}" data-stop>
+    <div class="lp-head">LINE Pay</div>
+    <div class="bd" style="text-align:center;padding:22px 18px">
+      <div class="note">付款對象：台科大學生餐廳</div>
+      <div style="font-size:40px;font-weight:800;margin:10px 0">${money(sh.total)}</div>
+      <div class="note">${Object.keys(cartByStore()).map(sid=>esc(storeById(sid).name)).join('、')}</div>
+      <p class="note" style="margin-top:14px">原型模擬：正式版會跳轉至 LINE Pay 付款頁，付款完成後回到 App。</p>
+    </div>
+    <div class="ft"><button class="btn sec" style="flex:1" data-act="close">取消</button><button class="btn" style="flex:2;background:#06c755;color:#fff" data-act="lpConfirm">確認付款</button></div>
+  </div></div>`;
   if(sh.type==='item'){
     const it=item(sh.id), s=storeById(it.store), grp=it.addonGroup?s.addonGroups[it.addonGroup]:null;
     const needBroth=sh.broth!==undefined; const ok=!needBroth||sh.broth;
@@ -680,7 +725,7 @@ function renderSheet(){
           ${it.choice.options.map(o=>`<button class="opt ${sh.choice===o?'on':''}" data-choice="${esc(o)}"><span class="box round">${sh.choice===o?'✓':''}</span><span class="x">${esc(o)}</span></button>`).join('')}`:''}
         ${grp?`<div class="grp"><b>${esc(grp.name)}</b><span>${it.addonGroup==='thai_soup'?'限便當／炒飯加購（FR-07）':'可複選'}</span></div>
           ${grp.items.map(a=>{const ai=item(a.id); const on=sh.addons.includes(a.id); return `<button class="opt ${on?'on':''} ${ai.soldOut?'dis':''}" data-addon="${a.id}" ${ai.soldOut?'disabled':''}><span class="box">${on?'✓':''}</span><span class="x">${esc(ai.name)}<small>${esc(ai.en)}</small></span><b>${ai.soldOut?'售完':'+'+money(P(ai))}</b></button>`;}).join('')}`:''}
-        ${!needBroth&&!it.choice&&!grp?`<p class="note">${esc(s.name)} · 取餐時現場付款（現金／悠遊卡）</p>`:''}
+        ${!needBroth&&!it.choice&&!grp?`<p class="note">${esc(s.name)}</p>`:''}
       </div>
       <div class="ft"><div class="qty stepper"><button data-q="-1">−</button><span>${sh.qty}</span><button data-q="1">＋</button></div>
         <button class="btn pri" style="flex:1" data-act="addItem" ${ok?'':'disabled'}>${ok?`加入購物車 · ${money(unit*sh.qty)}`:'請先選湯底'}</button></div>
@@ -725,7 +770,7 @@ function renderCart(){
     </div>`;}).join('');
   return `<div class="appbar"><h1>${T('購物車','Cart')}</h1><span class="chip" style="margin-left:auto">${sids.length} 家店 → ${sids.length} 筆訂單</span></div>
   <div class="scroll">${html}
-    <div class="cgroup"><div class="sum"><b>合計</b><b>${money(total)}</b></div><p class="note" style="margin:6px 0 0">💵 取餐時現場付款（現金／悠遊卡），本系統不處理線上付款（C-1）。不提供外送（C-2）。</p></div>
+    <div class="cgroup"><div class="sum"><b>合計</b><b>${money(total)}</b></div><p class="note" style="margin:6px 0 0">💳 本系統僅提供線上付款：LINE Pay 或校園帳戶扣款（可至校內儲值機儲值）。不提供外送（C-2）。</p></div>
     <button class="btn pri" style="width:100%" data-go="checkout">選擇取餐時段 →</button>
   </div>`;
 }
@@ -756,14 +801,34 @@ function renderCheckout(){
   <div class="scroll">
     ${susp?`<div class="promo" style="background:var(--bad-bg);color:var(--bad)">⛔ 你的帳號因 30 天內 2 次未取餐，線上點餐暫停至 ${new Date(susp).toLocaleDateString()}（FR-21）</div>`:''}
     ${html}
-    <div class="cgroup"><div class="sum"><b>應付（現場付款）</b><b>${money(total)}</b></div>
-      <div class="field" style="margin-top:10px"><label>備註（選填）</label><input id="note" placeholder="例：不要香菜、少辣" maxlength="40"></div></div>
-    <button class="btn pri" style="width:100%" data-act="submit" ${allOk?'':'disabled'}>${allOk?`送出 ${sids.length} 筆訂單`:'請為每家店選擇取餐時段'}</button>
+    <div class="cgroup"><div class="field"><label>備註（選填）</label><input id="note" placeholder="例：不要香菜、少辣" maxlength="40" value="${esc(S.note||'')}"></div></div>
+    ${payBlock(total)}
+    <button class="btn pri" style="width:100%" data-act="submit" ${allOk&&payOk(total)?'':'disabled'}>${!allOk?'請為每家店選擇取餐時段':!payOk(total)?'請選擇可用的付款方式':`付款 ${money(total)} 並送出 ${sids.length} 筆訂單`}</button>
     <p class="note">送出時系統會再確認一次時段名額；若剛好被別人搶走，會請你改選（FR-13）。</p>
   </div>`;
 }
+function isMember(){return S.user&&S.user.type==='member';}
+function payBlock(total){
+  const mem=isMember(); const bal=mem?wallet(S.user.id).bal:0, short=mem&&bal<total;
+  if(!mem) S.pay='linepay'; else if(!S.pay) S.pay=short?'linepay':'wallet';
+  return `<div class="cgroup"><div class="sum" style="border-top:0;margin-top:0;padding-top:0"><b>應付金額</b><b style="font-size:20px">${money(total)}</b></div>
+    <div class="grp"><b>付款方式</b><span>僅提供線上付款</span></div>
+    ${mem?`<button class="payopt ${S.pay==='wallet'?'on':''} ${short?'dis':''}" data-pay="wallet"><span class="pi" style="background:#e3eefa;color:var(--brand)">💳</span><span class="x"><b>校園帳戶扣款</b><small>餘額 ${money(bal)}${short?` · <span style="color:var(--bad)">餘額不足，差 ${money(total-bal)}，請至校內儲值機儲值</span>`:` · 付款後餘額 ${money(bal-total)}`}</small></span><span class="box round">${S.pay==='wallet'?'✓':''}</span></button>`:''}
+    <button class="payopt ${S.pay==='linepay'?'on':''}" data-pay="linepay"><span class="pi" style="background:#06c755;color:#fff">LINE</span><span class="x"><b>LINE Pay</b><small>跳轉至 LINE Pay 完成付款</small></span><span class="box round">${S.pay==='linepay'?'✓':''}</span></button>
+    ${mem?'':`<div class="field" style="margin-top:12px"><label for="payPhone">手機號碼（取餐通知與退款聯絡用）</label><input id="payPhone" inputmode="tel" placeholder="09xx-xxx-xxx" value="${esc(S.payPhone||'')}"></div>`}
+  </div>`;
+}
+function payOk(total){ if(S.pay==='wallet') return isMember()&&wallet(S.user.id).bal>=total; return S.pay==='linepay'; }
+function startPayment(){
+  const g=cartByStore(); const total=Object.values(g).flat().reduce((a,l)=>a+linePrice(l),0);
+  S.note=($('#note')||{}).value||'';
+  if(!isMember()){const ph=(($('#payPhone')||{}).value||'').replace(/\D/g,''); S.payPhone=ph; if(!/^09\d{8}$/.test(ph)){toast('請輸入正確的手機號碼（09 開頭共 10 碼）','bad'); render(); return;}}
+  if(!payOk(total)){toast('付款方式不可用','bad'); return;}
+  if(S.pay==='linepay'){S.sheet={type:'linepay',total}; render(); return;}
+  submitOrders();
+}
 function submitOrders(){
-  const g=cartByStore(); const at=now(); const note=($('#note')||{}).value||'';
+  const g=cartByStore(); const at=now(); const note=S.note||'';
   if(userSusp()){toast('帳號停權中','bad');return;}
   // re-check capacity & sold out (simulated transaction)
   DB=load()||DB;
@@ -772,6 +837,9 @@ function submitOrders(){
     if(bookedCount(sid,t)>=c.slotCap){toast(`${storeById(sid).name} ${hm(t)} 剛好額滿，請改選時段`,'bad',4000); delete S.pick[sid]; render(); return;}
     if(g[sid].some(l=>l.kind==='item'&&item(l.id).soldOut)){toast('有品項剛剛售完，請回購物車移除','bad'); render(); return;}
   }
+  const grand=Object.values(g).flat().reduce((a,l)=>a+linePrice(l),0);
+  if(S.pay==='wallet'&&wallet(S.user.id).bal<grand){toast('餘額不足','bad'); render(); return;}
+  const txn='TX'+rid().slice(0,10).toUpperCase();
   const created=[];
   Object.keys(g).forEach(sid=>{
     const lines=g[sid].map(l=>({...l,name:lineName(l),desc:lineDesc(l),price:linePrice(l)}));
@@ -779,11 +847,13 @@ function submitOrders(){
     DB.seq=(DB.seq||100)+1;
     const prefix=storeById(sid).prefix||{thai:'T',ramen:'R',mala:'M',daka:'D',daosui:'H'}[sid]||'X';
     const o={id:rid(),no:prefix+String(DB.seq).slice(-3),token:rid(),store:sid,user:S.user.id,userName:S.user.name,priceType:priceType(),
-      lines,gifts,total:lines.reduce((a,l)=>a+l.price,0),slot:S.pick[sid],day:today(),status:'SUBMITTED',note,submittedAt:at.toISOString(),history:[{s:'SUBMITTED',at:hm(minOf(at))}]};
+      lines,gifts,total:lines.reduce((a,l)=>a+l.price,0),slot:S.pick[sid],day:today(),status:'SUBMITTED',note,submittedAt:at.toISOString(),payment:{method:S.pay,txn,paidAt:stamp()},phone:isMember()?undefined:S.payPhone,history:[{s:'SUBMITTED',at:hm(minOf(at))}]};
     DB.orders.push(o); created.push(o);
   });
-  save(); S.cart=[]; S.pick={}; S.gifts={}; S.view='orders'; render();
-  toast(`已送出 ${created.length} 筆訂單：${created.map(o=>o.no).join('、')}`,'ok',4000);
+  if(S.pay==='wallet') walletTx(S.user.id,-grand,`點餐扣款 ${created.map(o=>o.no).join('、')}`);
+  if(!isMember()) S.user.phone=S.payPhone;
+  save(); S.cart=[]; S.pick={}; S.gifts={}; S.note=''; S.sheet=null; S.view='orders'; render();
+  toast(`付款成功（${PAY_LABEL[S.pay]} ${money(grand)}），已送出 ${created.length} 筆訂單：${created.map(o=>o.no).join('、')}`,'ok',4500);
 }
 
 /* ---------- orders ---------- */
@@ -803,8 +873,9 @@ function renderOrders(){
       <div class="kv">${o.lines.map(l=>`${esc(l.name)} ×${l.qty} <b>${money(l.price)}</b>${l.desc.length?`<br><small style="color:var(--mute)">${esc(l.desc.join('；'))}</small>`:''}`).join('<br>')}
         ${o.gifts.map(g=>`<br><span class="gift">🎁 贈 ${esc(g.name)} ×${g.qty}</span>`).join('')}
         ${o.note?`<br>備註：${esc(o.note)}`:''}</div>
-      ${['SUBMITTED','ACCEPTED','READY'].includes(o.status)?`<div class="qrwrap">${qrSvg('NTUSTEATS:'+o.token)}<div class="kv">取餐時出示 QR Code 或報號碼 <b>${o.no}</b><br>應付 <b>${money(o.total)}</b>（${o.priceType==='campus'?'校內價':'校外價'}）<br>💵 現金／悠遊卡現場付款</div></div>`:`<div class="sum"><span>合計</span><b>${money(o.total)}</b></div>`}
-      ${o.status==='SUBMITTED'?`<button class="btn bad sm" style="margin-top:10px" data-cancel="${o.id}">取消訂單（店家接單前可免費取消）</button>`:''}
+      ${['SUBMITTED','ACCEPTED','READY'].includes(o.status)?`<div class="qrwrap">${qrSvg('NTUSTEATS:'+o.token)}<div class="kv">取餐時出示 QR Code 或報號碼 <b>${o.no}</b><br>已付款 <b>${money(o.total)}</b>（${o.priceType==='campus'?'校內價':'校外價'}）<br>${o.payment?PAY_LABEL[o.payment.method]+' · '+o.payment.txn:''}</div></div>`:`<div class="sum"><span>合計</span><b>${money(o.total)}</b></div>`}
+      ${o.refunded?`<div class="promo" style="background:var(--ok-bg);color:var(--ok)">已退款 ${money(o.total)} 至${o.payment.method==='wallet'?'校園帳戶':' LINE Pay'}</div>`:''}
+      ${o.status==='SUBMITTED'?`<button class="btn bad sm" style="margin-top:10px" data-cancel="${o.id}">取消訂單（店家接單前可取消並全額退款）</button>`:''}
       ${o.status==='ACCEPTED'?`<p class="note">店家已接單，無法線上取消；如有需要請直接聯絡店家（FR-19）。</p>`:''}
     </div>`;}).join('')}</div>`;
 }
@@ -812,12 +883,13 @@ function userSusp(){const u=(DB.users||{})[S.user.id]||{}; return u.suspendedUnt
 function renderMe(){
   const u=S.user; const su=userSusp(); const ns=DB.orders.filter(o=>o.user===u.id&&o.status==='NO_SHOW').length;
   return `<div class="appbar"><h1>${T('我','Me')}</h1></div><div class="scroll">
-    <div class="card"><div class="kv"><b style="font-size:18px">${esc(u.name)}</b><br>${u.type==='member'?(u.role==='student'?`學生 · ${esc(u.no)}<br>${esc(u.dept)}（${esc(u.gradeLabel)}）<br>${esc(u.levelName)} · ${u.entry} 學年入學`:`教職員 · ${esc(u.no)}<br>${esc(u.gradeLabel)}`):'校外人士 · '+esc(u.phone)}<br>計價：<b>${u.type==='member'?'校內優惠價':'校外販售價'}</b><br>30 天內未取餐：${ns} 次${su?`<br><span style="color:var(--bad)">線上點餐暫停至 ${new Date(su).toLocaleDateString()}</span>`:''}</div></div>
+    <div class="card"><div class="kv"><b style="font-size:18px">${esc(u.name)}</b><br>${u.type==='member'?(u.role==='student'?`學生 · ${esc(u.no)}<br>${esc(u.dept)}（${esc(u.gradeLabel)}）<br>${esc(u.levelName)} · ${u.entry} 學年入學`:`教職員 · ${esc(u.no)}<br>${esc(u.gradeLabel)}`):'校外人士'+(u.phone?' · '+esc(u.phone):'（付款時輸入手機號碼）')}<br>計價：<b>${u.type==='member'?'校內優惠價':'校外販售價'}</b><br>30 天內未取餐：${ns} 次${su?`<br><span style="color:var(--bad)">線上點餐暫停至 ${new Date(su).toLocaleDateString()}</span>`:''}</div></div>
     <div class="card">
       ${u.admin?`<div class="setrow"><div class="x"><b>編輯模式</b><small>新增店家、設定菜單與價格</small></div><button class="toggle ${S.editMode?'on':''}" data-act="editmode" aria-label="編輯模式"></button></div>`:''}
       <div class="setrow"><div class="x"><b>介面語言</b><small>${S.lang==='zh'?'中文':'English'}</small></div><button class="btn sec sm" data-act="lang">切換</button></div>
       <div class="setrow"><div class="x"><b>登出</b><small>回到封面選擇身分</small></div><button class="btn sec sm" data-act="logout">登出</button></div>
     </div>
+    ${u.type==='member'?walletCard(false):''}
     ${clockCard()}
     ${installCard()}
     <button class="btn ghost" style="width:100%;margin-top:10px" data-act="reset">${S.resetArm?'⚠ 再按一次確認清除':'清除所有原型資料'}</button>
@@ -839,7 +911,7 @@ function renderQueue(sid){
     ${list.map(o=>`<div class="kcard"><div class="h"><span class="no">${o.no}</span><span class="who">${esc(maskName(o.userName))} · ${o.priceType==='campus'?'校內':'校外'}</span><span class="slotlbl">${hm(o.slot)}</span></div>
       <ul>${o.lines.map(l=>`<li><b>${esc(l.name)}</b> ×${l.qty}${l.desc.length?`<br><small>${esc(l.desc.join('；'))}</small>`:''}</li>`).join('')}${o.gifts.map(g=>`<li class="gift">🎁 贈 ${esc(g.name)} ×${g.qty}</li>`).join('')}</ul>
       ${o.note?`<div class="note">備註：${esc(o.note)}</div>`:''}
-      <div class="sum" style="margin-bottom:8px"><span>現場收款</span><b>${money(o.total)}</b></div>
+      <div class="sum" style="margin-bottom:8px"><span>已付款 · ${o.payment?PAY_LABEL[o.payment.method]:"—"}</span><b>${money(o.total)}</b></div>
       <div class="act">${acts(o)}</div></div>`).join('')||'<div class="note">（無）</div>'}</div>`;};
   const done=os.filter(o=>['PICKED_UP','CANCELLED','REJECTED','NO_SHOW'].includes(o.status));
   S.qSeg=S.qSeg||'SUBMITTED'; const n=st=>os.filter(o=>o.status===st).length;
@@ -891,7 +963,7 @@ function renderReport(){
     ${slots.length?`<div class="xscroll"><table class="t heat"><tr><th>店家</th>${slots.map(t=>`<th>${hm(t)}</th>`).join('')}<th>合計</th></tr>
       ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${icon(s.id)} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(0,94,184,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table></div>`
       :'<div class="empty">今日尚無訂單。關閉編輯模式下幾筆單，或請店家接單後再回來看。</div>'}
-    <div class="sect-h">已取餐營業額（參考）</div><div class="stat"><b>${money(rev)}</b><span>現場收款合計</span></div>
+    <div class="sect-h">已取餐營業額（參考）</div><div class="stat"><b>${money(rev)}</b><span>已取餐訂單金額（線上付款）</span></div>
   </div><div style="height:12px"></div>${clockCard()}`;
 }
 function exportCsv(){
@@ -986,6 +1058,7 @@ function addStore(){
 function setStatus(id,to,extra={}){
   DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o) return;
   o.status=to; Object.assign(o,extra); (o.history=o.history||[]).push({s:to,at:hm(minOf(now()))});
+  if((to==='CANCELLED'||to==='REJECTED')&&o.payment&&!o.refunded){o.refunded=true; if(o.payment.method==='wallet') walletTx(o.user,o.total,`退款 ${o.no}（${to==='CANCELLED'?'取消':'店家拒絕'}）`);}
   if(to==='NO_SHOW') applyNoShow(o.user);
   save(); render();
 }
@@ -1005,6 +1078,8 @@ document.addEventListener('click',e=>{
   if(t.classList.contains('overlay')&&e.target!==t) return;
   if(d.mtab){S.mTab=d.mtab; render(); return;}
   if(d.qseg){S.qSeg=d.qseg; render(); return;}
+  if(d.pay){if(t.classList.contains('dis')){toast('校園帳戶餘額不足，請至校內儲值機儲值或改用 LINE Pay','bad',4000); return;} S.note=($('#note')||{}).value||S.note; if($('#payPhone')) S.payPhone=$('#payPhone').value; S.pay=d.pay; render(); return;}
+  if(d.topup){walletTx(S.user.id,Number(d.topup),'校內儲值機儲值'); save(); render(); toast(`已儲值 ${money(Number(d.topup))}`,'ok'); return;}
   if(d.editmenu){S.mStore=d.editmenu; S.mTab='menu'; render(); return;}
   if(d.resetpw){DB.storePw=DB.storePw||{}; DB.storePw[d.resetpw]='0000'; save(); render(); toast('已重設為 0000'); return;}
   if(d.delitem){if(S.delArm!=='i'+d.delitem){S.delArm='i'+d.delitem; render(); return;} const f=findCatalogItem(d.delitem); if(f){f.c.items=f.c.items.filter(x=>x.id!==d.delitem); delete DB.overrides[d.delitem]; save();} S.delArm=null; render(); toast('已刪除品項'); return;}
@@ -1020,7 +1095,7 @@ document.addEventListener('click',e=>{
   if(d.jump){const el=document.getElementById('cat-'+d.jump); const sc=$('#menuScroll'); if(el&&sc) sc.scrollTo({top:el.offsetTop-sc.offsetTop-6,behavior:'smooth'}); document.querySelectorAll('.cats button').forEach(b=>b.classList.toggle('on',b===t)); return;}
   if(d.item){openItem(d.item); return;}
   if(d.del){S.cart=S.cart.filter(l=>l.key!==d.del); render(); return;}
-  if(d.cancel){const o=DB.orders.find(x=>x.id===d.cancel); if(o&&o.status==='SUBMITTED'){setStatus(o.id,'CANCELLED'); toast('已取消，時段名額已釋放');} else toast('店家已接單，無法取消','bad'); return;}
+  if(d.cancel){const o=DB.orders.find(x=>x.id===d.cancel); if(o&&o.status==='SUBMITTED'){setStatus(o.id,'CANCELLED'); toast(`已取消並退款 ${money(o.total)}，時段名額已釋放`,'ok');} else toast('店家已接單，無法取消','bad'); return;}
   if(d.slot){S.pick[d.slot]=Number(d.t); render(); return;}
   if(d.gift){S.gifts[d.gift]=d.v; render(); return;}
   if(d.vtab){S.vendorTab=d.vtab; render(); return;}
@@ -1039,8 +1114,8 @@ document.addEventListener('click',e=>{
   }
   switch(d.act){
     case 'sso': memberLogin(); break;
-    case 'visitor':{const ph=$('#vPhone').value.replace(/\D/g,''); if(!/^09\d{8}$/.test(ph)){S.loginErr='手機號碼格式不正確（09 開頭共 10 碼）'; render(); return;} S.loginErr=''; S.loginMode=null; S.user={id:'v-'+ph,type:'visitor',phone:ph,name:'訪客'+ph.slice(-3),...(DB.users['v-'+ph]||{})}; S.view='home'; render(); toast('訪客登入：以校外價計','ok'); break;}
-    case 'logout': S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
+    case 'visitor':{S.loginErr=''; S.loginMode=null; S.user={id:'v-'+rid().slice(0,10),type:'visitor',name:'訪客'}; S.view='home'; render(); toast('以訪客身分點餐：校外價；付款時再輸入手機號碼','ok',3500); break;}
+    case 'logout': S.pay=null; S.payPhone=''; S.note=''; S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
     case 'editmode': S.editMode=!S.editMode; S.view='home'; S.mTab=S.mTab||'stores'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
     case 'addStore': addStore(); break;
     case 'toggleAdd': S.showAdd=!S.showAdd; render(); break;
@@ -1056,8 +1131,9 @@ document.addEventListener('click',e=>{
     case 'togglePick4': sh.usePick4=!sh.usePick4; if(!sh.usePick4) sh.pick4=[]; render(); break;
     case 'addItem':{const it=item(sh.id); S.cart.push({key:rid().slice(0,8),store:it.store,kind:'item',id:sh.id,qty:sh.qty,addons:[...sh.addons],choice:sh.choice,broth:sh.broth||undefined}); S.sheet=null; render(); toast(`已加入：${it.name}`,'ok'); break;}
     case 'addBowl': S.cart.push({key:rid().slice(0,8),store:'mala',kind:'bowl',qty:sh.qty,broth:sh.broth,pick4:sh.usePick4?[...sh.pick4]:[],extras:{...sh.extras}}); S.sheet=null; render(); toast('已加入組合麻辣燙','ok'); break;
-    case 'submit': submitOrders(); break;
-    case 'find':{const no=($('#findNo').value||'').trim().toUpperCase(); const o=DB.orders.find(x=>x.no===no&&x.store===S.vendorStore&&x.day===today()); if(!o) toast('找不到這個號碼（或不是本店訂單）','bad'); else if(o.status==='READY'){setStatus(o.id,'PICKED_UP'); toast(`${o.no} 核對成功，請收 ${money(o.total)}`,'ok',4000);} else toast(`${o.no} 目前狀態：${ST_LABEL[o.status]}`); break;}
+    case 'submit': startPayment(); break;
+    case 'lpConfirm': submitOrders(); break;
+    case 'find':{const no=($('#findNo').value||'').trim().toUpperCase(); const o=DB.orders.find(x=>x.no===no&&x.store===S.vendorStore&&x.day===today()); if(!o) toast('找不到這個號碼（或不是本店訂單）','bad'); else if(o.status==='READY'){setStatus(o.id,'PICKED_UP'); toast(`${o.no} 核對成功，已線上付款，直接交付餐點`,'ok',4000);} else toast(`${o.no} 目前狀態：${ST_LABEL[o.status]}`); break;}
     case 'noshowcheck': noShowCheck(); break;
     case 'saveCfg':{const p=parseInt($('#cfgPrep').value,10), c=parseInt($('#cfgCap').value,10); if(!(p>=0&&p<=60&&c>=1&&c<=99)){toast('數值不合理','bad');return;} DB.storeCfg[S.vendorStore]={prepMin:p,slotCap:c}; save(); render(); toast('已儲存','ok'); break;}
     case 'csv': exportCsv(); break;
