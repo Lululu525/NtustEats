@@ -365,12 +365,33 @@
 | 審查者 1 | 【填入】 | 【填入】 | ☐ |
 | 審查者 2 | 【填入】 | 【填入】 | ☐ |
 
+## 附錄 B. 圖
+
+![Use Case](../uml/png/01_use_case.png)
+
+![Class v1.2](../uml/png/09_class_v1_2.png)
+
+![Sequence](../uml/png/03_sequence_checkout_pickup.png)
+
+![State](../uml/png/04_state_order.png)
+
+![Activity](../uml/png/05_activity_checkout.png)
+
+![Component](../uml/png/06_component.png)
+
+![登入分流](../screenshots/01-login-roles.png)
+
+![學生點餐](../screenshots/02-student-flow.png)
+
+![餐廳分流](../screenshots/08-cafeteria-routing.png)
+
 ## 附錄 A. UML 圖
 
 | 圖 | 檔案 |
 |---|---|
 | Use Case Diagram | `docs/uml/png/01_use_case.png` |
-| Class Diagram | `docs/uml/png/02_class.png` |
+| Class Diagram v1.2 | `docs/uml/png/09_class_v1_2.png` |
+| Class Diagram v1.0 | `docs/uml/png/02_class.png` |
 | Sequence：跨店結帳與取餐 | `docs/uml/png/03_sequence_checkout_pickup.png` |
 | State Machine：Order | `docs/uml/png/04_state_order.png` |
 | Activity：結帳與選時段 | `docs/uml/png/05_activity_checkout.png` |
