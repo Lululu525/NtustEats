@@ -4,7 +4,9 @@
 
 中午 12:10 下課、1:20 又要上課，泰刻和麻辣燙常排隊 20 分鐘。台科學餐讓師生**上課前先在手機點好、選 10 分鐘一格的取餐時段、線上付款**，下課出示 QR Code 取餐；店家用平板依時段接單。
 
-- 校內五家餐廳：泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE、稻穗輕食，共 235 道菜（校內價／校外價）
+- 校內 11 家店、434 道菜（校內價／校外價），首頁可依餐廳區域切換：
+  - **第一餐廳（學生活動中心）**：溫州大餛飩、歐趴雞肉、涼麵自由吧、輕食光、小熊廚房、高麗元
+  - **其他校內餐廳**：泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE、稻穗輕食
 - 線上試用：**https://lululu525.github.io/NtustEats/**（手機打開可「加入主畫面」當 App 用）
 
 ---
@@ -24,30 +26,36 @@
 | 店家 | 下拉選單選自己的店＋密碼 | 接單、交付、售完、時段容量 |
 | 總務處 | 用校內身分登入，可切換「編輯模式」 | 新增店家、編輯菜單 |
 
-### 2. 學生點餐流程
+### 2. 依餐廳區域選店
+
+![第一餐廳](docs/screenshots/07-first-restaurant.png)
+
+首頁上方可以切換「全部／第一餐廳／其他校內餐廳」。點進店家看分類菜單，有加購的品項（例如歐趴雞肉的加煎蛋、加胸肉）會跳出加購選項。看不清楚的價格標「價格待確認」。
+
+### 3. 學生點餐流程
 
 ![學生點餐流程](docs/screenshots/02-student-flow.png)
 
 首頁選店 → 選餐點與加購（麻辣燙要選湯底、任選 4 樣火鍋料）→ 跨店放同一個購物車 → 選取餐時段（每格有名額，滿了就不能選）→ 線上付款（LINE Pay 或校園帳戶扣款）→ 拿到訂單號碼與 QR Code。
 
-### 3. 完成訂單與校園帳戶
+### 4. 完成訂單與校園帳戶
 
 ![完成訂單與校園帳戶](docs/screenshots/03-complete-wallet.png)
 
 - 店家「交付」後，學生要自己按 **「完成訂單」**；有未完成的訂單時，不能點下一餐。
 - 「我的」頁面看得到校園帳戶餘額與交易紀錄（校內儲值機儲值）。訂單被取消或拒絕會自動退款。
 
-### 4. 店家端
+### 5. 店家端
 
 ![店家端](docs/screenshots/04-vendor-queue.png)
 
 訂單依時段排好：新訂單 → 接單 → 可取餐 → 交付。學生沒來拿可以標「未取餐」；如果學生只是晚到、其實有來拿，可以在「今日已結束」**更正為已交付**（要按兩次確認），系統會撤銷那次放鳥紀錄。
 
-### 5. 總務處編輯模式
+### 6. 總務處編輯模式
 
 <img src="docs/screenshots/05-admin-edit.png" width="260" alt="總務處編輯模式">
 
-### 6. 訂單狀態
+### 7. 訂單狀態
 
 <img src="docs/screenshots/06-order-state.png" width="520" alt="訂單狀態圖">
 
@@ -75,7 +83,7 @@
 | 訪談與菜單 | [`docs/interview-notes.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/interview-notes.md)、[`data/menu.json`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/data/menu.json) |
 | Waterfall + AI | [`SRS.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/waterfall/SRS.md)、[`review-log.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/waterfall/review-log.md)、審查歷程見 [PR #1～#3](https://github.com/Lululu525/NtustEats/pulls) |
 | Agile + AI | [`product-backlog.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/agile/product-backlog.md)、User Story 見 [Issues](https://github.com/Lululu525/NtustEats/issues) |
-| 需求變更 | [`docs/change-requests/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/change-requests)（CR-01～08，PR #5～#12） |
+| 需求變更 | [`docs/change-requests/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/change-requests)（CR-01～09，PR #5～#13） |
 | UML | [`docs/uml/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/uml) |
 | AI 使用紀錄 | [`docs/ai/`](https://github.com/Lululu525/NtustEats/tree/feature/noshow-correction/docs/ai) |
 | 操作手冊（GitHub／Jira） | [`GUIDE-github-jira.md`](https://github.com/Lululu525/NtustEats/blob/feature/noshow-correction/docs/GUIDE-github-jira.md) |
