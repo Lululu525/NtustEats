@@ -561,14 +561,16 @@ function tabbar(items,cur,attr){return `<nav class="tabbar">${items.map(([k,i,l,
 function renderStudent(){
   if(!S.user) return renderLogin();
   let body='';
-  if(S.view==='home') body=renderHome();
+  if(S.view==='home'&&!S.area) S.view='hall';
+  if(S.view==='hall') body=renderHall();
+  else if(S.view==='home') body=renderHome();
   else if(S.view==='store') body=renderStore();
   else if(S.view==='cart') body=renderCart();
   else if(S.view==='checkout') body=renderCheckout();
   else if(S.view==='orders') body=renderOrders();
   else if(S.view==='me') body=renderMe();
   const myActive=DB.orders.filter(o=>o.user===S.user.id&&['SUBMITTED','ACCEPTED','READY'].includes(o.status)).length;
-  const tab=(v,i,l,b)=>`<button class="${S.view===v||(v==='home'&&S.view==='store')?'on':''}" data-go="${v}"><span class="i">${i}</span>${l}${b?`<span class="badge">${b}</span>`:''}</button>`;
+  const tab=(v,i,l,b)=>`<button class="${S.view===v||(v==='home'&&['store','hall'].includes(S.view))?'on':''}" data-go="${v}"><span class="i">${i}</span>${l}${b?`<span class="badge">${b}</span>`:''}</button>`;
   return body+(S.sheet?renderSheet():'')+`<nav class="tabbar">${tab('home','🏠',T('餐廳','Stores'))}${tab('cart','🛒',T('購物車','Cart'),cartCount()||'')}${tab('orders','🧾',T('我的訂單','Orders'),myActive||'')}${tab('me','👤',T('我','Me'))}</nav>`;
 }
 /* ---------- identity (學號解析、身分證驗證、模擬校務資料庫) ---------- */
@@ -655,26 +657,43 @@ function memberLogin(){
   const u={id:'m-'+no,type:'member',no,name:rec.name,...(DB.users['m-'+no]||{})};
   if(info){u.role='student'; u.dept=info.dept; u.levelName=info.levelName; u.entry=info.entry; u.gradeLabel=info.gradeLabel;}
   else {u.role='staff'; u.dept=rec.unit; u.gradeLabel=`${rec.unit} ${rec.title}`; u.admin=!!rec.admin;}
-  S.user=u; S.loginNo=''; S.loginMode=null; S.view='home'; S.editMode=false; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）${u.admin?' · 右上角可開啟編輯模式':' · 校內價'}`,'ok',3500);
+  S.user=u; S.loginNo=''; S.loginMode=null; S.area=null; S.view='hall'; S.editMode=false; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）${u.admin?' · 右上角可開啟編輯模式':' · 校內價'}`,'ok',3500);
 }
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
+const AREA_INFO={'第一餐廳（學生活動中心）':{short:'第一餐廳',en:'Student Activity Center',emoji:'🏫'},'第二教學大樓餐廳（T2）':{short:'第二教學大樓餐廳',en:'T2 Cafeteria',emoji:'🏢'}};
+function renderHall(){
+  const pt=priceType();
+  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('要去哪個餐廳？','Which cafeteria?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
+    ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
+  <div class="scroll">
+    ${blockBanner()}
+    <div class="hello">${hm(minOf(now()))} · ${T('先選餐廳，再選店家；購物車可以跨店、跨餐廳一起結帳','Pick a cafeteria, then a store')}</div>
+    ${areaList().map(a=>{const ss=stores.filter(s=>areaOf(s)===a); const info=AREA_INFO[a]||{short:a,en:'',emoji:'🍽️'}; const openN=ss.filter(x=>isOpen(x)).length;
+      return `<button class="storecard hallcard" data-hall="${esc(a)}" style="align-items:flex-start;padding:16px">
+        <div class="em" style="background:var(--peach);font-size:30px;width:64px;height:64px">${info.emoji}</div>
+        <div style="flex:1;min-width:0"><h3 style="font-size:18px">${esc(info.short)}</h3><div class="en">${esc(info.en)}</div>
+        <div class="meta"><span class="chip">🏪 ${ss.length} ${T('家店','stores')}</span><span class="chip"><span class="dot" style="background:${openN?'var(--ok)':'#bbb'}"></span>${openN} ${T('家營業中','open')}</span></div>
+        <div class="note" style="margin-top:8px;line-height:1.6">${ss.map(x=>icon(x.id)+' '+esc(x.name)).join('　')}</div></div></button>`;}).join('')}
+  </div>`;
+}
 function renderHome(){
   const pt=priceType();
-  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
+  const info=AREA_INFO[S.area]||{short:S.area||''};
+  return `<div class="appbar"><button class="iconbtn" data-go="hall" title="切換餐廳">←</button><div><h1>${esc(info.short)}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
     ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
     ${blockBanner()}
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
-    ${areaList().length>1?`<div class="chips" style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px">${['all',...areaList()].map(a=>`<button class="pill ${ (S.area||'all')===a?'on':''}" data-area="${esc(a)}" style="${(S.area||'all')===a?'background:var(--brand);color:#fff;border:1px solid var(--brand)':'background:#fff;color:var(--brand);border:1px solid var(--peach-d)'}">${a==='all'?'全部 '+stores.length+' 家':esc(a.replace('（學生活動中心）',''))+' '+stores.filter(x=>areaOf(x)===a).length+' 家'}</button>`).join('')}</div>`:''}
-    ${areaList().filter(a=>(S.area||'all')==='all'||S.area===a).map(a=>`<div class="sect-h">${esc(a)}</div>`+stores.filter(s=>areaOf(s)===a).map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
+    <button class="pill" data-go="hall" style="margin:2px 0 8px;background:#fff;color:var(--brand);border:1px solid var(--peach-d)">🔁 ${T('切換餐廳','Switch cafeteria')}</button>
+    ${[S.area].map(a=>stores.filter(s=>areaOf(s)===a).map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
       return `<button class="storecard" data-store="${s.id}">
         <div class="em" style="background:${bgc(s.id)}">${icon(s.id)}</div>
         <div style="flex:1;min-width:0"><h3>${esc(s.name)}</h3><div class="en">${esc(s.en)}</div>
         <div class="meta"><span class="chip"><span class="dot" style="background:${open?'var(--ok)':'#bbb'}"></span>${open?T('營業中','Open'):T('休息中','Closed')}</span>
         <span class="chip">⏱ ${T('最早','Earliest')} ${earliestLabel(s)}</span><span class="chip">🧑‍🍳 ${T('排隊','Queue')} ${q}</span></div></div></button>`;}).join('')).join('')}
     <div class="sect-h">${T('營業時間','Opening hours')}</div>
-    ${stores.map(s=>`<div class="note">${icon(s.id)} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
-    ${storeById('daka').offline?`<p class="note">※ ${esc(storeById('daka').offline[0])}（I-21）</p>`:''}
+    ${stores.filter(s=>areaOf(s)===S.area).map(s=>`<div class="note">${icon(s.id)} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
+    ${S.area===areaOf(storeById('daka'))&&storeById('daka').offline?`<p class="note">※ ${esc(storeById('daka').offline[0])}（I-21）</p>`:''}
   </div>`;
 }
 function tagHtml(t){const cls=/VEGAN|素/.test(t)?'veg':/辣/.test(t)?'hot':/限定/.test(t)?'lim':''; return `<span class="tg ${cls}">${esc(t)}</span>`;}
@@ -766,7 +785,7 @@ function renderSheet(){
 /* ---------- cart ---------- */
 function renderCart(){
   const g=cartByStore(); const sids=Object.keys(g);
-  if(!sids.length) return `<div class="appbar"><h1>${T('購物車','Cart')}</h1></div><div class="scroll"><div class="empty"><div class="big">🛒</div><p>購物車是空的</p><button class="btn sec" data-go="home">去逛逛四家店</button></div></div>`;
+  if(!sids.length) return `<div class="appbar"><h1>${T('購物車','Cart')}</h1></div><div class="scroll"><div class="empty"><div class="big">🛒</div><p>購物車是空的</p><button class="btn sec" data-go="hall">去選餐廳</button></div></div>`;
   let total=0;
   const html=sids.map(sid=>{const s=storeById(sid); const lines=g[sid]; const sub=lines.reduce((a,l)=>a+linePrice(l),0); total+=sub;
     const promos=promosFor(sid,lines);
@@ -1118,7 +1137,7 @@ document.addEventListener('click',e=>{
   if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||'member'; S.loginErr=''; render(); return;}
   if(d.clock){ if(d.clock==='real'){DB.clockOffsetMin=null;} else {const [h,m]=d.clock.split(':').map(Number); DB.clockOffsetMin=h*60+m;} save(); render(); return; }
   if(d.go){S.view=d.go; S.sheet=null; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
-  if(d.area){S.area=d.area==="all"?null:d.area; render(); return;}
+  if(d.hall){S.area=d.hall; S.view='home'; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
   if(d.store){S.storeId=d.store; S.view='store'; render(); return;}
   if(d.jump){const el=document.getElementById('cat-'+d.jump); const sc=$('#menuScroll'); if(el&&sc) sc.scrollTo({top:el.offsetTop-sc.offsetTop-6,behavior:'smooth'}); document.querySelectorAll('.cats button').forEach(b=>b.classList.toggle('on',b===t)); return;}
   if(d.item){openItem(d.item); return;}
@@ -1142,8 +1161,8 @@ document.addEventListener('click',e=>{
   }
   switch(d.act){
     case 'sso': memberLogin(); break;
-    case 'visitor':{S.loginErr=''; S.loginMode=null; S.user={id:'v-'+rid().slice(0,10),type:'visitor',name:'訪客'}; S.view='home'; render(); toast('以訪客身分點餐：校外價；付款時再輸入手機號碼','ok',3500); break;}
-    case 'logout': S.pay=null; S.payPhone=''; S.note=''; S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
+    case 'visitor':{S.loginErr=''; S.loginMode=null; S.user={id:'v-'+rid().slice(0,10),type:'visitor',name:'訪客'}; S.area=null; S.view='hall'; render(); toast('以訪客身分點餐：校外價；付款時再輸入手機號碼','ok',3500); break;}
+    case 'logout': S.area=null; S.pay=null; S.payPhone=''; S.note=''; S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
     case 'editmode': S.editMode=!S.editMode; S.view='home'; S.mTab=S.mTab||'stores'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
     case 'addStore': addStore(); break;
     case 'toggleAdd': S.showAdd=!S.showAdd; render(); break;

@@ -93,7 +93,7 @@
 | CR-06 | feature/online-payment | US-22 | 只能線上付款（LINE Pay／校園帳戶）、餘額顯示、校外人士付款時填電話 |
 | CR-07 | feature/student-complete | US-23 | 學生按完成訂單、未完成不能點下一餐 |
 | CR-08 | feature/noshow-correction | US-24 | 店家可更正「未取餐」 |
-| CR-09 | feature/first-restaurant | US-25 | 新增第一餐廳 6 家店、首頁依區域分組 |
+| CR-09 | feature/first-restaurant | US-25 | 登入後選餐廳；新增兩個餐廳 12 家店 |
 
 **PR 合併順序：** PR 是「疊起來」的（每個分支建立在前一個上），請**由上往下依序合併**；合併一個後，下一個 PR 的 base 會自動改成 main。
 
