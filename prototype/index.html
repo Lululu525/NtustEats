@@ -67,6 +67,18 @@ input,select,textarea{font:inherit}
 .or{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:12px}
 .or:before,.or:after{content:"";flex:1;height:1px;background:var(--peach-d)}
 .note{font-size:12px;color:var(--mute);line-height:1.6}
+.cover-h{padding:18px 0 8px}
+.cover-h h2{font-size:34px;margin:10px 0 6px;line-height:1.2;letter-spacing:1px}
+.cover-h p{margin:0}
+.cover-badge{display:inline-block;background:var(--ink);color:#fff;font-weight:800;letter-spacing:2px;font-size:12px;padding:4px 10px;border-radius:6px}
+.choice{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#fff;border-radius:16px;padding:18px 16px;box-shadow:var(--sh);border:1px solid var(--line)}
+.choice:hover{border-color:var(--brand)}
+.choice .ic{font-size:30px}
+.choice b{display:block;font-size:17px}
+.choice small{display:block;color:var(--mute);font-size:12px;margin-top:3px}
+.choice .arr{margin-left:auto;font-size:24px;color:var(--brand)}
+.idhint{font-size:12px;color:var(--ok);min-height:16px;margin-top:-8px}
+details.note summary{cursor:pointer;color:var(--brand)}
 
 /* home */
 .hello{margin:4px 0 14px;font-size:14px;color:var(--ink2)}
@@ -2689,24 +2701,85 @@ function renderStudent(){
   const tab=(v,i,l,b)=>`<button class="${S.view===v||(v==='home'&&S.view==='store')?'on':''}" data-go="${v}"><span class="i">${i}</span>${l}${b?`<span class="badge">${b}</span>`:''}</button>`;
   return body+(S.sheet?renderSheet():'')+`<nav class="tabbar">${tab('home','🏠',T('餐廳','Stores'))}${tab('cart','🛒',T('購物車','Cart'),cartCount()||'')}${tab('orders','🧾',T('我的訂單','Orders'),myActive||'')}${tab('me','👤',T('我','Me'))}</nav>`;
 }
+/* ---------- identity (學號解析、身分證驗證、模擬校務資料庫) ---------- */
+const DEPTS={'01':'工業管理系','02':'電子工程系','03':'機械工程系','04':'材料科學與工程系','05':'營建工程系','06':'化學工程系','07':'電機工程系','08':'企業管理系','09':'資訊管理系','10':'設計系','11':'數位學習與教育研究所','12':'自動化及控制研究所','13':'建築系','15':'資訊工程系','16':'管理研究所','17':'應用外語系','18':'財務金融研究所','19':'光電工程研究所','20':'科技管理研究所','21':'管理學院 MBA','22':'應用科技研究所','23':'醫學工程研究所','24':'專利研究所','25':'色彩與照明科技研究所','26':'資訊安全科技與管理碩士班','30':'不分系學士班','31':'工程學士班','32':'電資學士班','33':'管理學士班','34':'創意設計學士班','51':'智慧製造科技研究所','52':'人工智慧跨域科技研究所','53':'能源永續科技研究所','54':'先進半導體科技研究所'};
+const DEPT_SHORT={'01':'工管系','02':'電子系','03':'機械系','04':'材料系','05':'營建系','06':'化工系','07':'電機系','08':'企管系','09':'資管系','10':'設計系','13':'建築系','15':'資工系','17':'應外系'};
+const LEVEL={B:{name:'大學部',pre:'大'},M:{name:'碩士班',pre:'碩'},D:{name:'博士班',pre:'博'}};
+// 模擬校務系統資料（原型示範用，非真實資料）。正式系統改由校園 SSO 驗證，不在本系統儲存身分證字號。
+const DIRECTORY={
+  'B11201116':{id:'B000000000',name:'陳庭瑜'},
+  'M11407021':{id:'F000000004',name:'林家豪'},
+  'T10234':{id:'A000000009',name:'王美玲',unit:'總務處',title:'職員'}
+};
+function acadYear(d=new Date()){const y=d.getFullYear()-1911; return d.getMonth()>=7?y:y-1;}
+const CN=['','一','二','三','四','五','六','七','八','九'];
+function parseStudentNo(no){
+  if(!/^[A-Z]\d{8}$/.test(no)) return {err:'學號格式應為 1 個英文字母＋8 位數字，例如 B11201116'};
+  const lv=no[0]; if(!LEVEL[lv]) return {err:'學號第 1 碼應為 B（大學部）、M（碩士）或 D（博士）'};
+  const entry=parseInt(no.slice(1,4),10), code=no.slice(4,6);
+  if(!DEPTS[code]) return {err:`學號第 5～6 碼「${code}」不是有效的系所代碼`};
+  const g=acadYear()-entry+1;
+  const short=DEPT_SHORT[code]||DEPTS[code];
+  return {level:lv,levelName:LEVEL[lv].name,entry,code,dept:DEPTS[code],short,grade:g,
+    gradeLabel:g>=1&&g<=9?`${short} ${LEVEL[lv].pre}${CN[g]}`:`${short}（${entry} 學年入學）`};
+}
+function validTwId(id){
+  if(!/^[A-Z]\d{9}$/.test(id)) return false;
+  const L='ABCDEFGHJKLMNPQRSTUVXYWZIO'.indexOf(id[0])+10;
+  const d=[Math.floor(L/10),L%10,...id.slice(1).split('').map(Number)];
+  const w=[1,9,8,7,6,5,4,3,2,1,1];
+  return d.reduce((a,x,i)=>a+x*w[i],0)%10===0;
+}
 function renderLogin(){
-  return `<div class="login">
-    <div style="font-size:44px">🍱</div>
-    <h2>上課前先點好，<br>下課直接拿。</h2>
-    <p>NTUST Eats 整合泰刻、豬豬の拉麵屋、蔡姐麻辣燙、DAKA COFFEE、稻穗輕食的線上點餐。</p>
-    <div class="field"><label>學號／教職員編號</label><input id="ssoNo" placeholder="例：B11234567" value="B11234567"></div>
-    <div class="field"><label>姓名</label><input id="ssoName" placeholder="姓名" value="王小明"></div>
-    <button class="btn pri" data-act="sso">🎓 學校帳號登入（SSO 模擬）· 校內價</button>
-    <div class="or">或</div>
-    <div class="field"><label>校外訪客手機號碼</label><input id="vPhone" placeholder="09xx-xxx-xxx" value="0912345678"></div>
-    <button class="btn sec" data-act="visitor">📱 訪客登入（簡訊驗證模擬）· 校外價</button>
-    <p class="note">原型說明：SSO 與簡訊驗證為模擬（FR-01、FR-02）。只蒐集學號／手機與姓名（NFR-07）。資料只存在這個瀏覽器。</p>
+  const mode=S.loginMode;
+  const head=`<div class="cover-h"><div class="cover-badge">NTUST</div><h2>台灣科技大學<br>學生餐廳</h2><p>線上點餐 · 上課前先點好，下課直接拿</p></div>`;
+  if(!mode) return `<div class="login">${head}
+    <button class="choice" data-mode="member"><span class="ic">🎓</span><span><b>校內學生／教職員</b><small>以學號或教職員編號登入，享校內優惠價</small></span><span class="arr">›</span></button>
+    <button class="choice" data-mode="visitor"><span class="ic">🧑‍💼</span><span><b>其他校外人士</b><small>以手機號碼登入，以校外販售價計</small></span><span class="arr">›</span></button>
+    <p class="note">泰刻・豬豬の拉麵屋・蔡姐麻辣燙・DAKA COFFEE・稻穗輕食</p>
   </div>`;
+  if(mode==='member') return `<div class="login">
+    <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
+    <h2 style="font-size:24px">校內學生／教職員登入</h2>
+    <div class="field"><label for="ssoNo">學號／教職員編號</label><input id="ssoNo" placeholder="例：B11201116" autocomplete="username" autocapitalize="characters" maxlength="9" value="${esc(S.loginNo||'')}"></div>
+    <div id="noHint" class="idhint">${S.loginNo?idHint(S.loginNo):''}</div>
+    <div class="field"><label for="ssoId">身分證字號</label><input id="ssoId" type="password" placeholder="例：A123456789" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
+    ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
+    <button class="btn pri" data-act="sso">登入</button>
+    <details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲）<br>以上皆為虛構資料。身分證字號只用來比對，不會被儲存。</details>
+  </div>`;
+  return `<div class="login">
+    <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
+    <h2 style="font-size:24px">其他校外人士</h2>
+    <p>以手機號碼登入（簡訊驗證為模擬），所有品項以<b>校外販售價</b>計算。</p>
+    <div class="field"><label for="vPhone">手機號碼</label><input id="vPhone" placeholder="09xx-xxx-xxx" inputmode="tel" value="0912345678"></div>
+    ${S.loginErr?`<div class="promo" style="background:var(--bad-bg);color:var(--bad);margin:0">⚠ ${esc(S.loginErr)}</div>`:''}
+    <button class="btn pri" data-act="visitor">登入</button>
+  </div>`;
+}
+function idHint(no){
+  no=no.toUpperCase();
+  if(/^[BMD]/.test(no)&&no.length===9){const p=parseStudentNo(no); return p.err?`<span style="color:var(--bad)">${esc(p.err)}</span>`:`${esc(p.levelName)} · ${esc(p.dept)} · ${p.entry} 學年入學`;}
+  return '';
+}
+function memberLogin(){
+  const no=($('#ssoNo').value||'').trim().toUpperCase(), idn=($('#ssoId').value||'').trim().toUpperCase();
+  S.loginNo=no; S.loginErr='';
+  let info=null;
+  if(/^[BMD]/.test(no)){const p=parseStudentNo(no); if(p.err){S.loginErr=p.err; render(); return;} info=p;}
+  else if(!/^T\d{5}$/.test(no)){S.loginErr='請輸入學號（B／M／D 開頭）或教職員編號'; render(); return;}
+  if(!validTwId(idn)){S.loginErr='身分證字號格式或檢查碼不正確'; render(); return;}
+  const rec=DIRECTORY[no];
+  if(!rec||rec.id!==idn){S.loginErr='查無此帳號，或學號與身分證字號不符'; render(); return;}
+  const u={id:'m-'+no,type:'member',no,name:rec.name,...(DB.users['m-'+no]||{})};
+  if(info){u.role='student'; u.dept=info.dept; u.levelName=info.levelName; u.entry=info.entry; u.gradeLabel=info.gradeLabel;}
+  else {u.role='staff'; u.dept=rec.unit; u.gradeLabel=`${rec.unit} ${rec.title}`;}
+  S.user=u; S.loginNo=''; S.loginMode=null; S.view='home'; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）· 校內價`,'ok',3500);
 }
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
 function renderHome(){
   const pt=priceType();
-  return `<div class="appbar"><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)} · ${pt==='campus'?'校內優惠價':'校外販售價'}</div></div>
+  return `<div class="appbar"><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}</div></div>
     <button class="iconbtn" style="margin-left:auto" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
@@ -2897,7 +2970,7 @@ function userSusp(){const u=(DB.users||{})[S.user.id]||{}; return u.suspendedUnt
 function renderMe(){
   const u=S.user; const su=userSusp(); const ns=DB.orders.filter(o=>o.user===u.id&&o.status==='NO_SHOW').length;
   return `<div class="appbar"><h1>${T('我','Me')}</h1></div><div class="scroll">
-    <div class="cgroup"><div class="kv"><b style="font-size:18px">${esc(u.name)}</b><br>${u.type==='member'?'校內師生 · '+esc(u.no):'校外訪客 · '+esc(u.phone)}<br>計價：<b>${u.type==='member'?'校內優惠價':'校外販售價'}</b><br>30 天內未取餐：${ns} 次${su?`<br><span style="color:var(--bad)">線上點餐暫停至 ${new Date(su).toLocaleDateString()}</span>`:''}</div></div>
+    <div class="cgroup"><div class="kv"><b style="font-size:18px">${esc(u.name)}</b><br>${u.type==='member'?(u.role==='student'?`學生 · ${esc(u.no)}<br>${esc(u.dept)}（${esc(u.gradeLabel)}）<br>${esc(u.levelName)} · ${u.entry} 學年入學`:`教職員 · ${esc(u.no)}<br>${esc(u.gradeLabel)}`):'校外人士 · '+esc(u.phone)}<br>計價：<b>${u.type==='member'?'校內優惠價':'校外販售價'}</b><br>30 天內未取餐：${ns} 次${su?`<br><span style="color:var(--bad)">線上點餐暫停至 ${new Date(su).toLocaleDateString()}</span>`:''}</div></div>
     <button class="btn sec" style="width:100%;margin-bottom:10px" data-act="lang">介面語言：${S.lang==='zh'?'中文 → 切換 English':'English → 切換中文'}</button>
     <button class="btn sec" style="width:100%;margin-bottom:10px" data-act="logout">登出 / 切換身分</button>
     <button class="btn ghost" style="width:100%" data-act="reset">${S.resetArm?'⚠ 再按一次確認清除':'清除所有原型資料'}</button>
@@ -3004,6 +3077,7 @@ document.addEventListener('click',e=>{
   const d=t.dataset;
   if(t.classList.contains('overlay')&&e.target!==t) return;
   if(d.role){S.role=d.role; render(); return;}
+  if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||null; S.loginErr=''; render(); return;}
   if(d.clock){ if(d.clock==='real'){DB.clockOffsetMin=null;} else {const [h,m]=d.clock.split(':').map(Number); DB.clockOffsetMin=h*60+m;} save(); render(); return; }
   if(d.go){S.view=d.go; S.sheet=null; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
   if(d.store){S.storeId=d.store; S.view='store'; render(); return;}
@@ -3028,8 +3102,8 @@ document.addEventListener('click',e=>{
     if(d.ex){const q=(sh.extras[d.ex]||0)+Number(d.d); if(q<=0) delete sh.extras[d.ex]; else sh.extras[d.ex]=Math.min(9,q); render(); return;}
   }
   switch(d.act){
-    case 'sso':{const no=$('#ssoNo').value.trim(), name=$('#ssoName').value.trim()||'同學'; if(!/^[A-Za-z]?\d{6,9}$/.test(no)){toast('學號格式不正確','bad');return;} S.user={id:'m-'+no,type:'member',no,name,...(DB.users['m-'+no]||{})}; S.view='home'; render(); toast('已用學校帳號登入：校內價','ok'); break;}
-    case 'visitor':{const ph=$('#vPhone').value.replace(/\D/g,''); if(!/^09\d{8}$/.test(ph)){toast('手機號碼格式不正確','bad');return;} S.user={id:'v-'+ph,type:'visitor',phone:ph,name:'訪客'+ph.slice(-3),...(DB.users['v-'+ph]||{})}; S.view='home'; render(); toast('訪客登入：以校外價計','ok'); break;}
+    case 'sso': memberLogin(); break;
+    case 'visitor':{const ph=$('#vPhone').value.replace(/\D/g,''); if(!/^09\d{8}$/.test(ph)){S.loginErr='手機號碼格式不正確（09 開頭共 10 碼）'; render(); return;} S.loginErr=''; S.loginMode=null; S.user={id:'v-'+ph,type:'visitor',phone:ph,name:'訪客'+ph.slice(-3),...(DB.users['v-'+ph]||{})}; S.view='home'; render(); toast('訪客登入：以校外價計','ok'); break;}
     case 'logout': S.user=null; S.cart=[]; S.view='home'; render(); break;
     case 'lang': S.lang=S.lang==='zh'?'en':'zh'; render(); break;
     case 'reset': if(!S.resetArm){S.resetArm=true; render(); setTimeout(()=>{S.resetArm=false;},4000);} else {S.resetArm=false; DB=fresh(); save(); S.cart=[]; render(); toast('已清除');} break;
@@ -3045,6 +3119,7 @@ document.addEventListener('click',e=>{
     case 'csv': exportCsv(); break;
   }
 });
+document.addEventListener('input',e=>{if(e.target.id==='ssoNo'){const h=document.getElementById('noHint'); if(h) h.innerHTML=idHint(e.target.value.trim());}});
 document.addEventListener('change',e=>{
   const t=e.target;
   if(t.id==='vStore'){S.vendorStore=t.value; render(); return;}
