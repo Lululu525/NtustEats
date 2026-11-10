@@ -449,7 +449,7 @@ function bookedCount(sid,t){return DB.orders.filter(o=>o.store===sid&&o.slot===t
 function rid(){const a=new Uint8Array(16); (crypto.getRandomValues?crypto.getRandomValues(a):a.forEach((_,i)=>a[i]=Math.random()*256|0)); return [...a].map(x=>x.toString(16).padStart(2,'0')).join('');}
 
 /* ================= 校園帳戶（儲值）================= */
-const WALLET_SEED={'m-B11201116':350,'m-M11407021':80,'m-T10234':500};
+const WALLET_SEED={'m-B11201116':350,'m-B11301122':300,'m-B11301107':300,'m-B11301112':300,'m-B11301110':300,'m-B11201002':300,'m-B11209015':300,'m-M11407021':80,'m-T10234':500};
 const stamp=()=>`${today()} ${hm(minOf(now()))}`;
 function wallet(uid){DB.wallets=DB.wallets||{}; if(!DB.wallets[uid]){const b=WALLET_SEED[uid]||0; DB.wallets[uid]={bal:b,tx:b?[{t:'校內儲值機儲值',amt:b,at:stamp()}]:[]};} return DB.wallets[uid];}
 function walletTx(uid,amt,label){const w=wallet(uid); w.bal+=amt; w.tx.unshift({t:label,amt,at:stamp()}); w.tx=w.tx.slice(0,30);}
@@ -581,6 +581,12 @@ const LEVEL={B:{name:'大學部',pre:'大'},M:{name:'碩士班',pre:'碩'},D:{na
 // 模擬校務系統資料（原型示範用，非真實資料）。正式系統改由校園 SSO 驗證，不在本系統儲存身分證字號。
 const DIRECTORY={
   'B11201116':{id:'B000000000',name:'陳庭瑜'},
+  'B11301122':{id:'B000000000',name:'吳佳恩'},
+  'B11301107':{id:'B000000000',name:'游廷楀'},
+  'B11301112':{id:'B000000000',name:'夏予珊'},
+  'B11301110':{id:'B000000000',name:'劉佩諭'},
+  'B11201002':{id:'B000000000',name:'許書堯'},
+  'B11209015':{id:'B000000000',name:'連儷芳'},
   'M11407021':{id:'F000000004',name:'林家豪'},
   'T10234':{id:'A000000009',name:'王美玲',unit:'總務處',title:'職員',admin:true}
 };
@@ -608,9 +614,9 @@ function renderLogin(){
   const err=S.loginErr?`<div class="cv-err">⚠ ${esc(S.loginErr)}</div>`:'';
   let rows='', lead='', forgot='';
   if(mode==='member'){
-    lead='校內學生與教職員請以<b>學號／教職員編號</b>及<b>身分證字號</b>登入，帳號與校務系統綁定，登入後享校內優惠價。';
+    lead='校內學生與教職員請以<b>學號／教職員編號</b>及<b>密碼</b>登入，<b>密碼為您的身分證字號</b>（英文字母請大寫，例如 A123456789）。帳號與校務系統綁定，登入後享校內優惠價。';
     rows=`<div class="cv-row"><label for="ssoNo">帳號</label><input id="ssoNo" placeholder="學號／教職員編號" autocomplete="username" autocapitalize="characters" maxlength="9" value="${esc(S.loginNo||'')}"></div>
-      <div class="cv-row"><label for="ssoId">身分證字號</label><input id="ssoId" type="password" placeholder="請輸入身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
+      <div class="cv-row"><label for="ssoId">密碼</label><input id="ssoId" type="password" placeholder="密碼＝身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
       <div id="noHint" class="cv-hint">${S.loginNo?idHint(S.loginNo):''}</div>`;
     forgot='<button class="btn sec" data-act="forgot">忘記帳號或身分驗證失敗？</button>';
   } else if(mode==='visitor'){
@@ -637,7 +643,7 @@ function renderLogin(){
     ${rows}${err}
     <div class="cv-act"><button class="btn pri" data-act="${act}">${actLabel}</button>${forgot}</div>
     <div class="cv-more">
-      ${mode==='member'?`<details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者）<br>以上皆為虛構資料；身分證字號只用於比對，不會被儲存。</details>`:''}
+      ${mode==='member'?`<details class="note"><summary>原型測試帳號</summary>密碼即身分證字號。<br>學生 B11201116／B000000000（陳庭瑜）<br>組員帳號 B11301122、B11301107、B11301112、B11301110、B11201002、B11209015，密碼皆為 B000000000<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者）<br>密碼皆為虛構測試值；身分證字號只用於比對，不會被儲存。</details>`:''}
       ${mode==='vendor'?`<p class="note">原型：各店預設密碼 0000。</p>`:''}
       <details class="note"><summary>Demo 時鐘（測試用）</summary><div style="margin-top:8px">${clockCard()}</div></details>
       <details class="note"><summary>安裝成 App</summary><div style="margin-top:6px">${installCard()}</div></details>
@@ -656,9 +662,9 @@ function memberLogin(){
   let info=null;
   if(/^[BMD]/.test(no)){const p=parseStudentNo(no); if(p.err){S.loginErr=p.err; render(); return;} info=p;}
   else if(!/^T\d{5}$/.test(no)){S.loginErr='請輸入學號（B／M／D 開頭）或教職員編號'; render(); return;}
-  if(!validTwId(idn)){S.loginErr='身分證字號格式或檢查碼不正確'; render(); return;}
+  if(!validTwId(idn)){S.loginErr='密碼格式不正確：密碼為您的身分證字號（1 個英文字母＋9 位數字）'; render(); return;}
   const rec=DIRECTORY[no];
-  if(!rec||rec.id!==idn){S.loginErr='查無此帳號，或學號與身分證字號不符'; render(); return;}
+  if(!rec||rec.id!==idn){S.loginErr='帳號或密碼錯誤（密碼為身分證字號）'; render(); return;}
   const u={id:'m-'+no,type:'member',no,name:rec.name,...(DB.users['m-'+no]||{})};
   if(info){u.role='student'; u.dept=info.dept; u.levelName=info.levelName; u.entry=info.entry; u.gradeLabel=info.gradeLabel;}
   else {u.role='staff'; u.dept=rec.unit; u.gradeLabel=`${rec.unit} ${rec.title}`; u.admin=!!rec.admin;}
