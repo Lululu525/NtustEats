@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NTUST Eats — 台科大學餐線上點餐（需求原型）</title>
+<title>台科大學生餐廳 · NTUST Eats</title>
+<meta name="theme-color" content="#d6336c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="台科學餐">
+<meta name="description" content="台灣科技大學學生餐廳線上點餐：上課前先點好，下課直接拿。">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
 <style>
 :root{
   --ink:#1d1b1e; --ink2:#55505a; --mute:#8b8590; --line:#ebe5e8; --bg:#faf7f8; --card:#fff;
@@ -13,7 +22,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#efe9ec;-webkit-font-smoothing:antialiased}
+body{font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#e9e3e6;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 input,select,textarea{font:inherit}
 .hidden{display:none!important}
@@ -44,12 +53,13 @@ table.t input.w{width:100%;padding:5px 6px;border:1px solid var(--line);border-r
 .seg button.on{background:#fff;color:var(--ink);font-weight:700}
 
 /* ---------- layout ---------- */
-.stage{display:flex;justify-content:center;padding:22px 16px 90px}
-.phone{width:100%;max-width:430px;height:calc(100vh - 100px);max-height:880px;min-height:620px;background:var(--bg);border-radius:28px;box-shadow:0 10px 40px rgba(40,10,30,.18);overflow:hidden;position:relative;display:flex;flex-direction:column}
-@media (max-width:520px){.stage{padding:0}.phone{border-radius:0;height:calc(100vh - 52px);max-height:none;min-height:0;box-shadow:none}}
+.stage{display:flex;justify-content:center;min-height:100vh;min-height:100dvh}
+.phone{width:100%;max-width:480px;height:100vh;height:100dvh;background:var(--bg);position:relative;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 40px rgba(40,10,30,.12)}
+.phone.tab{max-width:1024px}
+@media (max-width:520px){.phone{box-shadow:none}}
 .wide{width:100%;max-width:1180px}
 
-.appbar{display:flex;align-items:center;gap:10px;padding:14px 16px 10px;background:var(--bg);position:sticky;top:0;z-index:5}
+.appbar{display:flex;align-items:center;gap:10px;padding:calc(14px + env(safe-area-inset-top)) 16px 10px;background:var(--bg);position:sticky;top:0;z-index:5}
 .appbar h1{font-size:19px;margin:0;font-weight:800}
 .appbar .sub{font-size:12px;color:var(--mute)}
 .iconbtn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#fff;box-shadow:var(--sh);font-size:18px}
@@ -65,7 +75,7 @@ table.t input.w{width:100%;padding:5px 6px;border:1px solid var(--line);border-r
 .badge{position:absolute;top:2px;right:calc(50% - 22px);min-width:18px;height:18px;border-radius:9px;background:var(--brand);color:#fff;font-size:11px;display:grid;place-items:center;padding:0 5px;font-weight:700}
 
 /* login */
-.login{padding:42px 26px;display:flex;flex-direction:column;gap:14px;flex:1;background:linear-gradient(180deg,#fff 0%,var(--peach) 100%)}
+.login{overflow:auto;padding:calc(30px + env(safe-area-inset-top)) 24px 30px;display:flex;flex-direction:column;gap:14px;flex:1;background:linear-gradient(180deg,#fff 0%,var(--peach) 100%)}
 .login h2{font-size:28px;margin:10px 0 0;line-height:1.25}
 .login p{color:var(--ink2);margin:0 0 12px;line-height:1.6}
 .field{display:flex;flex-direction:column;gap:6px}
@@ -264,21 +274,60 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 .clock button{padding:5px 8px;border-radius:8px;background:var(--bg);font-size:12px}
 .clock .lbl{font-size:11px;color:var(--mute)}
 @media (max-width:520px){.topbar{padding:8px 10px;gap:8px}.topbar .tag{display:none}.who .me{display:none}.mswitch{font-size:11px}.seg button{padding:5px 10px;font-size:12px}.clock{right:8px;bottom:78px;padding:5px 9px;border-radius:10px}.clock b{font-size:13px}.clock button,.clock input,.clock .lbl{display:none}}
+
+/* ---------- app components ---------- */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;white-space:nowrap}
+.pill.light{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+.qseg{display:flex;background:#eee7ea;border-radius:12px;padding:3px;margin:4px 0 12px}
+.qseg button{flex:1;padding:8px 4px;border-radius:9px;font-size:13px;color:var(--ink2)}
+.qseg button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.qseg .n{display:inline-block;min-width:18px;padding:0 5px;margin-left:3px;border-radius:9px;background:var(--brand);color:#fff;font-size:11px}
+.kcol{display:none}.kcol.sel{display:block}
+@media (min-width:760px){.phone.tab .qseg{display:none}.phone.tab .kcols{grid-template-columns:repeat(3,1fr)}.phone.tab .kcol{display:block}}
+.kcols{display:grid;gap:12px;grid-template-columns:1fr}
+.mrow{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.mrow .x{flex:1;min-width:0}
+.mrow .x b{display:block;font-size:14px;line-height:1.35}
+.mrow .x small{display:block;color:var(--mute);font-size:11px}
+.mrow input.p{width:58px;padding:6px;border:1px solid var(--line);border-radius:8px;text-align:right}
+.mrow .pl{font-size:10px;color:var(--mute);text-align:center}
+.mrow.warn{background:var(--warn-bg)}
+.card{background:#fff;border-radius:var(--r);padding:14px;margin-bottom:12px;box-shadow:var(--sh)}
+.card h4{margin:0 0 8px;font-size:15px;display:flex;align-items:center;gap:8px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fgrid .full{grid-column:1/-1}
+.fgrid>*{min-width:0}
+.fgrid .field input,.fgrid .field select{width:100%;min-width:0}
+.kcol h3{display:none}
+@media (min-width:760px){.phone.tab .kcol h3{display:flex}}
+.irow input{min-width:0}
+.ihead{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:6px;font-size:11px;color:var(--mute);padding:2px 2px 0}
+.fgrid .field input,.fgrid .field select{padding:9px 11px;border-radius:10px}
+.irow{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 0;border-top:1px solid #f1ecef}
+.irow:first-of-type{border-top:0}
+.irow input{width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:8px;font-size:14px}
+.irow .full{grid-column:1/-1}
+.irow .p3{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:6px;grid-column:1/-1;align-items:center}
+.irow.warn{background:var(--warn-bg);border-radius:8px;padding:10px 6px}
+.xscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+.xscroll table.t{min-width:520px}
+.cards3{grid-template-columns:repeat(2,1fr)!important}
+@media (min-width:760px){.phone.tab .cards3{grid-template-columns:repeat(4,1fr)!important}}
+.clockrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.clockrow .big{font-size:24px;font-variant-numeric:tabular-nums;margin-right:6px}
+.clockrow input{padding:6px;border:1px solid var(--line);border-radius:8px}
+.clockrow button{padding:6px 10px;border-radius:8px;background:var(--bg);font-size:13px;border:1px solid var(--line)}
+.setrow{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #f1ecef}
+.setrow:first-child{border-top:0}
+.setrow .x{flex:1}
+.setrow .x small{display:block;color:var(--mute);font-size:12px}
+.installtip{font-size:12px;color:var(--ink2);background:var(--peach);border-radius:10px;padding:10px 12px;line-height:1.6}
 </style>
 </head>
 <body>
-<div class="topbar">
-  <div><div class="logo">NTUST <b>Eats</b></div><div class="tag">台灣科技大學 學生餐廳 · 線上點餐（需求原型）</div></div>
-  <div class="who" id="who"></div>
-</div>
-
 <div class="stage" id="stage"></div>
 
-<div class="clock" id="clock">
-  <span class="lbl">Demo 時鐘</span><b id="clockNow">--:--</b>
-  <input type="time" id="clockInput" step="60" aria-label="設定 Demo 時間">
-  <button data-clock="09:40">09:40</button><button data-clock="11:45">11:45</button><button data-clock="17:30">17:30</button><button data-clock="real">現在</button>
-</div>
+
 
 <script>//---------------------------------------------------------------------
 //
@@ -2706,14 +2755,24 @@ function _renderOuter(){
   if(keep){document.querySelectorAll('.scroll,.sheet .bd').forEach((el,i)=>{if(sc[i]!=null) el.scrollTop=sc[i];}); window.scrollTo(0,wy);}
 }
 function _render(){
-  renderWho();
   const st=$('#stage');
   if(S.role==='student') st.innerHTML=`<div class="phone" id="phone">${renderStudent()}</div>`;
-  else if(S.role==='vendor') st.innerHTML=`<div class="wide">${renderVendor()}</div>`;
-  else st.innerHTML=`<div class="wide">${renderManage()}</div>`;
-  $('#clockNow').textContent=hm(minOf(now()));
+  else if(S.role==='vendor') st.innerHTML=`<div class="phone tab" id="phone">${renderVendor()}</div>`;
+  else st.innerHTML=`<div class="phone tab" id="phone">${renderManage()}</div>`;
   saveSession();
 }
+
+/* ================= shared app components ================= */
+function clockCard(){
+  return `<div class="card"><h4>⏰ Demo 時鐘 <span class="note" style="font-weight:400;margin-left:auto">${DB.clockOffsetMin==null?'使用實際時間':'已手動調整'}</span></h4>
+    <div class="clockrow"><b class="big">${hm(minOf(now()))}</b><input type="time" id="clockInput" aria-label="設定 Demo 時間">
+    <button data-clock="09:40">09:40</button><button data-clock="11:45">11:45</button><button data-clock="17:30">17:30</button><button data-clock="real">現在</button></div>
+    <p class="note" style="margin:6px 0 0">調整時間可測試 DAKA 10:00 前優惠、取餐時段與營業狀態。</p></div>`;
+}
+function installCard(){
+  return `<div class="installtip">📲 <b>安裝成 App</b>：Android Chrome 點選單「安裝應用程式」；iPhone Safari 點分享 →「加入主畫面」。安裝後會像一般 App 全螢幕開啟。</div>`;
+}
+function tabbar(items,cur,attr){return `<nav class="tabbar">${items.map(([k,i,l,b])=>`<button class="${cur===k?'on':''}" data-${attr}="${k}"><span class="i">${i}</span>${l}${b?`<span class="badge">${b}</span>`:''}</button>`).join('')}</nav>`;}
 
 /* ================= student ================= */
 function renderStudent(){
@@ -2766,6 +2825,8 @@ function renderLogin(){
     <button class="choice" data-mode="visitor"><span class="ic">🧑‍💼</span><span><b>其他校外人士</b><small>以手機號碼登入，以校外販售價計</small></span><span class="arr">›</span></button>
     <button class="choice" data-mode="vendor"><span class="ic">🏪</span><span><b>店家</b><small>選擇店家並輸入密碼，進入接單平板</small></span><span class="arr">›</span></button>
     <p class="note">${stores.map(x=>esc(x.name)).join('・')}</p>
+    ${installCard()}
+    <details class="note"><summary>Demo 時鐘（測試用）</summary><div style="margin-top:8px">${clockCard()}</div></details>
   </div>`;
   if(mode==='member') return `<div class="login">
     <button class="btn ghost sm" style="align-self:flex-start;padding-left:0" data-mode="">← 返回</button>
@@ -2818,7 +2879,7 @@ function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm
 function renderHome(){
   const pt=priceType();
   return `<div class="appbar"><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}</div></div>
-    <button class="iconbtn" style="margin-left:auto" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
+    ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
     ${stores.map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
@@ -3008,65 +3069,70 @@ function userSusp(){const u=(DB.users||{})[S.user.id]||{}; return u.suspendedUnt
 function renderMe(){
   const u=S.user; const su=userSusp(); const ns=DB.orders.filter(o=>o.user===u.id&&o.status==='NO_SHOW').length;
   return `<div class="appbar"><h1>${T('我','Me')}</h1></div><div class="scroll">
-    <div class="cgroup"><div class="kv"><b style="font-size:18px">${esc(u.name)}</b><br>${u.type==='member'?(u.role==='student'?`學生 · ${esc(u.no)}<br>${esc(u.dept)}（${esc(u.gradeLabel)}）<br>${esc(u.levelName)} · ${u.entry} 學年入學`:`教職員 · ${esc(u.no)}<br>${esc(u.gradeLabel)}`):'校外人士 · '+esc(u.phone)}<br>計價：<b>${u.type==='member'?'校內優惠價':'校外販售價'}</b><br>30 天內未取餐：${ns} 次${su?`<br><span style="color:var(--bad)">線上點餐暫停至 ${new Date(su).toLocaleDateString()}</span>`:''}</div></div>
-    <button class="btn sec" style="width:100%;margin-bottom:10px" data-act="lang">介面語言：${S.lang==='zh'?'中文 → 切換 English':'English → 切換中文'}</button>
-    <button class="btn sec" style="width:100%;margin-bottom:10px" data-act="logout">登出 / 切換身分</button>
-    <button class="btn ghost" style="width:100%" data-act="reset">${S.resetArm?'⚠ 再按一次確認清除':'清除所有原型資料'}</button>
-    <p class="note">這是需求原型：用來在 Sprint Review 讓同學與店家實際操作、確認需求。資料只存在你的瀏覽器（localStorage）。</p>
+    <div class="card"><div class="kv"><b style="font-size:18px">${esc(u.name)}</b><br>${u.type==='member'?(u.role==='student'?`學生 · ${esc(u.no)}<br>${esc(u.dept)}（${esc(u.gradeLabel)}）<br>${esc(u.levelName)} · ${u.entry} 學年入學`:`教職員 · ${esc(u.no)}<br>${esc(u.gradeLabel)}`):'校外人士 · '+esc(u.phone)}<br>計價：<b>${u.type==='member'?'校內優惠價':'校外販售價'}</b><br>30 天內未取餐：${ns} 次${su?`<br><span style="color:var(--bad)">線上點餐暫停至 ${new Date(su).toLocaleDateString()}</span>`:''}</div></div>
+    <div class="card">
+      ${u.admin?`<div class="setrow"><div class="x"><b>編輯模式</b><small>新增店家、設定菜單與價格</small></div><button class="toggle ${S.editMode?'on':''}" data-act="editmode" aria-label="編輯模式"></button></div>`:''}
+      <div class="setrow"><div class="x"><b>介面語言</b><small>${S.lang==='zh'?'中文':'English'}</small></div><button class="btn sec sm" data-act="lang">切換</button></div>
+      <div class="setrow"><div class="x"><b>登出</b><small>回到封面選擇身分</small></div><button class="btn sec sm" data-act="logout">登出</button></div>
+    </div>
+    ${clockCard()}
+    ${installCard()}
+    <button class="btn ghost" style="width:100%;margin-top:10px" data-act="reset">${S.resetArm?'⚠ 再按一次確認清除':'清除所有原型資料'}</button>
+    <p class="note">需求原型：資料只存在這支裝置（localStorage），不會上傳。</p>
   </div>`;
 }
-
 /* ================= vendor ================= */
 function renderVendor(){
-  const sid=S.vendorStore, s=storeById(sid);
-  const tabs=[['queue','訂單佇列'],['menu','菜單與售完'],['settings','時段與密碼']];
-  return `<div class="vwrap"><div class="vhead"><span style="font-size:28px">${icon(sid)}</span><div><h2>${esc(s.name)} · 店家平板</h2><div class="note">${esc(s.open)} · 現在 ${hm(minOf(now()))}</div></div>
-    <div class="vtabs">${tabs.map(([k,l])=>`<button class="${S.vendorTab===k?'on':''}" data-vtab="${k}">${l}</button>`).join('')}</div></div>
-    <div class="vbody">${S.vendorTab==='queue'?renderQueue(sid):S.vendorTab==='menu'?renderMenuAdmin(sid):renderSettings(sid)}</div></div>`;
+  const sid=S.vendorStore, s=storeById(sid); S.vendorTab=S.vendorTab||'queue';
+  const newN=DB.orders.filter(o=>o.store===sid&&o.day===today()&&o.status==='SUBMITTED').length;
+  const title={queue:'訂單',menu:'菜單與售完',settings:'設定'}[S.vendorTab];
+  return `<div class="appbar"><span style="font-size:26px">${icon(sid)}</span><div><h1>${esc(s.name)} · ${title}</h1><div class="sub">${esc(s.open)} · 現在 ${hm(minOf(now()))} · ${isOpen(s)?'營業中':'休息中'}</div></div></div>
+  <div class="scroll">${S.vendorTab==='queue'?renderQueue(sid):S.vendorTab==='menu'?renderMenuAdmin(sid):renderSettings(sid)}</div>
+  ${tabbar([['queue','🧾','訂單',newN||''],['menu','📋','菜單'],['settings','⚙️','設定']],S.vendorTab,'vtab')}`;
 }
 function renderQueue(sid){
   const os=DB.orders.filter(o=>o.store===sid&&o.day===today()).sort((a,b)=>a.slot-b.slot||a.submittedAt.localeCompare(b.submittedAt));
-  const col=(st,title,acts)=>{const list=os.filter(o=>o.status===st); return `<div class="kcol"><h3>${title}<span class="n">${list.length}</span></h3>
+  const col=(st,title,acts)=>{const list=os.filter(o=>o.status===st); return `<div class="kcol ${S.qSeg===st?'sel':''}"><h3>${title}<span class="n">${list.length}</span></h3>
     ${list.map(o=>`<div class="kcard"><div class="h"><span class="no">${o.no}</span><span class="who">${esc(maskName(o.userName))} · ${o.priceType==='campus'?'校內':'校外'}</span><span class="slotlbl">${hm(o.slot)}</span></div>
       <ul>${o.lines.map(l=>`<li><b>${esc(l.name)}</b> ×${l.qty}${l.desc.length?`<br><small>${esc(l.desc.join('；'))}</small>`:''}</li>`).join('')}${o.gifts.map(g=>`<li class="gift">🎁 贈 ${esc(g.name)} ×${g.qty}</li>`).join('')}</ul>
       ${o.note?`<div class="note">備註：${esc(o.note)}</div>`:''}
       <div class="sum" style="margin-bottom:8px"><span>現場收款</span><b>${money(o.total)}</b></div>
       <div class="act">${acts(o)}</div></div>`).join('')||'<div class="note">（無）</div>'}</div>`;};
   const done=os.filter(o=>['PICKED_UP','CANCELLED','REJECTED','NO_SHOW'].includes(o.status));
-  return `<div class="vtool"><input id="findNo" placeholder="輸入號碼，如 M101" maxlength="5"><button class="btn sec sm" data-act="find">🔍 核對取餐</button>
-    <button class="btn sec sm" data-act="noshowcheck">⏰ 執行放鳥檢查（排程器模擬）</button>
-    <span class="note">新訂單會自動出現（同一瀏覽器另開分頁點餐即可測試）</span></div>
+  S.qSeg=S.qSeg||'SUBMITTED'; const n=st=>os.filter(o=>o.status===st).length;
+  return `<div class="vtool" style="margin-top:4px"><input id="findNo" placeholder="輸入號碼，如 M101" maxlength="5" style="flex:1;min-width:0"><button class="btn pri sm" data-act="find">🔍 核對取餐</button></div>
+  <div class="qseg">${[['SUBMITTED','新訂單'],['ACCEPTED','製作中'],['READY','可取餐']].map(([k,l])=>`<button class="${S.qSeg===k?'on':''}" data-qseg="${k}">${l}${n(k)?`<span class="n">${n(k)}</span>`:''}</button>`).join('')}</div>
   <div class="kcols">
     ${col('SUBMITTED','🆕 新訂單',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="ACCEPTED">接單</button><button class="btn bad sm" data-reject="${o.id}" data-r="售完">拒絕：售完</button><button class="btn bad sm" data-reject="${o.id}" data-r="店內忙不過來">拒絕：忙不過來</button>`)}
     ${col('ACCEPTED','🔥 製作中',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="READY">完成，通知取餐</button>`)}
     ${col('READY','✅ 可取餐',o=>`<button class="btn pri sm" data-vs="${o.id}" data-to="PICKED_UP">已取餐</button><button class="btn bad sm" data-vs="${o.id}" data-to="NO_SHOW">未取餐</button>`)}
   </div>
-  ${done.length?`<div class="sect-h">今日已結束（${done.length}）</div><table class="t"><tr><th>號碼</th><th>時段</th><th>狀態</th><th>金額</th></tr>${done.map(o=>`<tr><td>${o.no}</td><td>${hm(o.slot)}</td><td><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span></td><td>${money(o.total)}</td></tr>`).join('')}</table>`:''}`;
+  ${done.length?`<div class="sect-h">今日已結束（${done.length}）</div>${done.map(o=>`<div class="mrow"><div class="x"><b>${o.no} · ${hm(o.slot)}</b><small>${esc(o.lines.map(l=>l.name).join('、'))}</small></div><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span><b>${money(o.total)}</b></div>`).join('')}`:''}
+  <button class="btn sec sm" style="width:100%;margin-top:10px" data-act="noshowcheck">⏰ 執行放鳥檢查（排程器模擬）</button>`;
 }
 const maskName=n=>!n?'':n.length<=1?n:n.length===2?n[0]+'○':n[0]+'○'.repeat(n.length-2)+n[n.length-1];
 function priceWarn(c,o){if(o<c) return '校外價低於校內價，無法儲存'; if(o-c>=20&&o>c*1.6) return `校外價比校內價高 ${Math.round((o/c-1)*100)}%，請確認是否輸入錯誤`; return '';}
 function renderMenuAdmin(sid){
-  const s=storeById(sid);
-  return `<p class="note">一鍵售完（FR-06）· 修改價格（FR-05、FR-10）：校外價高於校內價 60% 以上且差額 ≥ $20 會以黃色提醒。</p>
-  ${s.categories.map(c=>`<div class="sect-h">${esc(c.name)} · ${esc(c.en)}</div><table class="t"><tr><th>品項</th><th style="width:90px">校內價</th><th style="width:90px">校外價</th><th style="width:80px">售完</th></tr>
-    ${c.items.map(x=>{const it=item(x.id); const w=priceWarn(it.campus,it.off); return `<tr class="${w?'warnrow':''}"><td>${esc(it.name)}<div class="note">${esc(it.en)}${w?' · ⚠ '+esc(w):''}</div></td>
-      <td><input class="p" data-pc="${it.id}" data-k="campus" value="${it.campus}" inputmode="numeric"></td><td><input class="p" data-pc="${it.id}" data-k="off" value="${it.off}" inputmode="numeric"></td>
-      <td><button class="toggle ${it.soldOut?'on':''}" data-sold="${it.id}" aria-label="售完切換"></button></td></tr>`;}).join('')}</table>`).join('')}
-  ${Object.values(s.addonGroups||{}).map(g=>`<div class="sect-h">${esc(g.name)}（加購／加料）</div><table class="t"><tr><th>品項</th><th>價格</th><th>售完</th></tr>${g.items.map(x=>{const it=item(x.id); return `<tr><td>${esc(it.name)}</td><td>${money(it.campus)}</td><td><button class="toggle ${it.soldOut?'on':''}" data-sold="${it.id}"></button></td></tr>`;}).join('')}</table>`).join('')}`;
+  const s=storeById(sid), single=!!s.singlePrice;
+  const row=it=>{const w=single?'':priceWarn(it.campus,it.off); return `<div class="mrow ${w?'warn':''}"><div class="x"><b>${esc(it.name)}</b><small>${esc(it.en||'')}${w?' · ⚠ '+esc(w):''}</small></div>
+    <div><div class="pl">${single?'價格':'校內'}</div><input class="p" data-pc="${it.id}" data-k="campus" value="${it.campus}" inputmode="numeric"></div>
+    ${single?'':`<div><div class="pl">校外</div><input class="p" data-pc="${it.id}" data-k="off" value="${it.off}" inputmode="numeric"></div>`}
+    <div><div class="pl">售完</div><button class="toggle ${it.soldOut?'on':''}" data-sold="${it.id}" aria-label="售完切換"></button></div></div>`;};
+  return `<p class="note">右側開關＝一鍵售完（FR-06）；直接改價格即儲存（FR-05、FR-10）。</p>
+  ${s.categories.filter(c=>c.items.length).map(c=>`<div class="sect-h">${esc(c.name)}</div>${c.items.map(x=>row(item(x.id))).join('')}`).join('')}
+  ${Object.values(s.addonGroups||{}).map(g=>`<div class="sect-h">${esc(g.name)}（加購／加料）</div>${g.items.map(x=>{const it=item(x.id); return `<div class="mrow"><div class="x"><b>${esc(it.name)}</b><small>${money(it.campus)}</small></div><div><div class="pl">售完</div><button class="toggle ${it.soldOut?'on':''}" data-sold="${it.id}"></button></div></div>`;}).join('')}`).join('')}`;
 }
 function renderSettings(sid){
   const c=cfg(sid); const sl=slotsFor(sid);
-  return `<div class="cards3"><div class="stat"><span>備餐時間（分）</span><input class="p" style="font-size:22px;width:90px;padding:6px;border:1px solid var(--line);border-radius:8px" id="cfgPrep" value="${c.prepMin}" inputmode="numeric"></div>
-    <div class="stat"><span>每 10 分鐘時段上限（筆）</span><input class="p" style="font-size:22px;width:90px;padding:6px;border:1px solid var(--line);border-radius:8px" id="cfgCap" value="${c.slotCap}" inputmode="numeric"></div>
-    <div class="stat"><span>營業時間</span><b style="font-size:16px">${esc(storeById(sid).open)}</b></div>
-    <div class="stat"><span>&nbsp;</span><button class="btn pri sm" data-act="saveCfg">儲存設定</button></div></div>
-  <div class="sect-h">變更店家登入密碼</div>
-  <div class="vtool"><input id="newPw" type="password" placeholder="新密碼（4～12 碼）" maxlength="12"><button class="btn sec sm" data-act="changePw">更新密碼</button><span class="note">預設密碼為 0000，建議第一次登入後更改</span></div>
-  <div class="sect-h">接下來的時段（FR-12、FR-13）</div>
-  <table class="t heat"><tr><th>時段</th>${sl.map(x=>`<th>${hm(x.t)}</th>`).join('')}</tr><tr><td>已訂／上限</td>${sl.map(x=>`<td class="c" style="color:${x.full?'var(--bad)':'inherit'}">${x.used}/${x.cap}</td>`).join('')}</tr></table>
-  <p class="note">提示：把上限改成 1，再用學生端連續下兩筆同時段的單，就能看到「已滿」與搶名額的處理。</p>`;
+  return `<div class="card"><h4>接單設定</h4><div class="fgrid">
+      <div class="field"><label for="cfgPrep">備餐時間（分）</label><input id="cfgPrep" value="${c.prepMin}" inputmode="numeric"></div>
+      <div class="field"><label for="cfgCap">每 10 分鐘上限（筆）</label><input id="cfgCap" value="${c.slotCap}" inputmode="numeric"></div>
+      <div class="full"><button class="btn pri" style="width:100%" data-act="saveCfg">儲存</button></div></div></div>
+  <div class="card"><h4>接下來的時段</h4>${sl.length?`<div class="xscroll"><table class="t heat"><tr><th>時段</th>${sl.map(x=>`<th>${hm(x.t)}</th>`).join('')}</tr><tr><td>已訂／上限</td>${sl.map(x=>`<td class="c" style="color:${x.full?'var(--bad)':'inherit'}">${x.used}/${x.cap}</td>`).join('')}</tr></table></div>`:'<p class="note">今日已無時段</p>'}</div>
+  <div class="card"><h4>登入密碼</h4><div class="vtool" style="margin:0"><input id="newPw" type="password" placeholder="新密碼（4～12 碼）" maxlength="12" style="flex:1;min-width:0"><button class="btn sec sm" data-act="changePw">更新</button></div><p class="note" style="margin:6px 0 0">預設密碼為 0000，建議第一次登入後更改。</p></div>
+  ${clockCard()}
+  <button class="btn sec" style="width:100%" data-act="logout">登出店家</button>`;
 }
-
 /* ================= admin ================= */
 function renderReport(){
   const os=DB.orders.filter(o=>o.day===today());
@@ -3074,16 +3140,16 @@ function renderReport(){
   const rev=os.filter(o=>o.status==='PICKED_UP').reduce((a,o)=>a+o.total,0);
   const slots=[...new Set(os.map(o=>o.slot))].sort((a,b)=>a-b);
   const max=Math.max(1,...stores.flatMap(s=>slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length)));
-  return `<div class="vtool"><span class="note">今日 ${today()} · FR-22、FR-23</span><button class="btn sec sm" style="margin-left:auto" data-act="csv">⬇ 匯出／複製 CSV</button></div>
+  return `<div class="vtool" style="margin-top:4px"><span class="note">今日 ${today()}</span><button class="btn sec sm" style="margin-left:auto" data-act="csv">⬇ 匯出／複製 CSV</button></div>
   <div>
     <div class="cards3"><div class="stat"><b>${os.length}</b><span>今日訂單</span></div><div class="stat"><b>${cnt('PICKED_UP')}</b><span>已取餐</span></div>
       <div class="stat"><b>${cnt('CANCELLED')+cnt('REJECTED')}</b><span>取消／拒絕</span></div><div class="stat"><b>${cnt('NO_SHOW')}</b><span>未取餐（放鳥）</span></div></div>
     <div class="sect-h">各店 × 取餐時段 訂單數（尖峰熱度）</div>
-    ${slots.length?`<table class="t heat"><tr><th>店家</th>${slots.map(t=>`<th>${hm(t)}</th>`).join('')}<th>合計</th></tr>
-      ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${icon(s.id)} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(214,51,108,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table>`
+    ${slots.length?`<div class="xscroll"><table class="t heat"><tr><th>店家</th>${slots.map(t=>`<th>${hm(t)}</th>`).join('')}<th>合計</th></tr>
+      ${stores.map(s=>{const row=slots.map(t=>os.filter(o=>o.store===s.id&&o.slot===t).length); return `<tr><td>${icon(s.id)} ${esc(s.name)}</td>${row.map(n=>`<td class="c" style="background:rgba(214,51,108,${n/max*0.55})">${n||''}</td>`).join('')}<td class="c">${row.reduce((a,b)=>a+b,0)}</td></tr>`;}).join('')}</table></div>`
       :'<div class="empty">今日尚無訂單。關閉編輯模式下幾筆單，或請店家接單後再回來看。</div>'}
-    <div class="sect-h">已取餐營業額（參考）</div><div class="stat" style="max-width:240px"><b>${money(rev)}</b><span>現場收款合計</span></div>
-  </div>`;
+    <div class="sect-h">已取餐營業額（參考）</div><div class="stat"><b>${money(rev)}</b><span>現場收款合計</span></div>
+  </div><div style="height:12px"></div>${clockCard()}`;
 }
 function exportCsv(){
   const rows=[['day','order_no','store','slot','status','price_type','total','submitted_at']].concat(DB.orders.map(o=>[o.day,o.no,storeById(o.store).name,hm(o.slot),o.status,o.priceType,o.total,o.submittedAt]));
@@ -3103,59 +3169,56 @@ function renderWho(){
 }
 const OPEN_RE=/^\s*\d{2}:\d{2}-\d{2}:\d{2}(\s*,\s*\d{2}:\d{2}-\d{2}:\d{2})*\s*$/;
 function renderManage(){
-  const tabs=[['stores','店家管理'],['menu','菜單設定'],['report','訂單報表']]; S.mTab=S.mTab||'stores';
-  return `<div class="vwrap"><div class="vhead"><span style="font-size:28px">🛠️</span><div><h2>總務處 · 編輯模式</h2><div class="note">新增店家、設定菜單與價格；關閉右上角「編輯模式」即回到一般點餐畫面</div></div>
-    <div class="vtabs">${tabs.map(([k,l])=>`<button class="${S.mTab===k?'on':''}" data-mtab="${k}">${l}</button>`).join('')}</div></div>
-    <div class="vbody">${S.mTab==='stores'?renderStoreAdmin():S.mTab==='menu'?renderMenuEditor():renderReport()}</div></div>`;
+  S.mTab=S.mTab||'stores';
+  const title={stores:'店家管理',menu:'菜單設定',report:'訂單報表'}[S.mTab];
+  return `<div class="appbar"><span style="font-size:26px">🛠️</span><div><h1>${title}</h1><div class="sub">編輯模式 · ${esc(S.user.name)}</div></div><button class="pill" style="margin-left:auto" data-act="editmode">✓ 完成編輯</button></div>
+  <div class="scroll">${S.mTab==='stores'?renderStoreAdmin():S.mTab==='menu'?renderMenuEditor():renderReport()}</div>
+  ${tabbar([['stores','🏪','店家'],['menu','📋','菜單'],['report','📊','報表']],S.mTab,'mtab')}`;
 }
 function renderStoreAdmin(){
   const pw=DB.storePw||{};
-  return `<div class="sect-h">新增店家</div>
-  <div class="mform">
-    <div class="field"><label>店名</label><input id="nsName" placeholder="例：七都燒臘"></div>
-    <div class="field"><label>英文名稱</label><input id="nsEn" placeholder="例：Cantonese BBQ"></div>
-    <div class="field"><label>圖示（emoji）</label><input id="nsIcon" value="🍽️" maxlength="4"></div>
-    <div class="field"><label>營業時間</label><input id="nsOpen" value="11:00-14:00, 17:00-19:30"></div>
-    <div class="field"><label>價格模式</label><select id="nsMode"><option value="dual">分校內價／校外價</option><option value="single">單一價格</option></select></div>
-    <div class="field"><label>備餐時間（分）</label><input id="nsPrep" value="10" inputmode="numeric"></div>
-    <div class="field"><label>每時段上限（筆）</label><input id="nsCap" value="15" inputmode="numeric"></div>
-    <div class="field"><label>初始密碼</label><input id="nsPw" value="0000" maxlength="12"></div>
-    <div class="field" style="grid-column:1/-1"><button class="btn pri" data-act="addStore">＋ 新增店家</button></div>
-  </div>
-  <div class="sect-h">現有店家（${stores.length}）· 直接修改欄位即儲存</div>
-  <table class="t"><tr><th style="width:44px"></th><th>店名</th><th>英文名稱</th><th>營業時間</th><th style="width:70px">備餐</th><th style="width:70px">上限</th><th style="width:90px">價格</th><th style="width:60px">品項</th><th style="width:150px">登入密碼</th><th style="width:110px"></th></tr>
-  ${stores.map(st=>{const c=cfg(st.id); const n=st.categories.reduce((a,x)=>a+x.items.length,0); return `<tr>
-    <td style="font-size:22px">${icon(st.id)}</td>
-    <td><input class="w" data-sf="${st.id}" data-k="name" value="${esc(st.name)}"></td>
-    <td><input class="w" data-sf="${st.id}" data-k="en" value="${esc(st.en)}"></td>
-    <td><input class="w" data-sf="${st.id}" data-k="open" value="${esc(st.open)}"></td>
-    <td><input class="w" data-sf="${st.id}" data-k="prepMin" value="${c.prepMin}" inputmode="numeric"></td>
-    <td><input class="w" data-sf="${st.id}" data-k="slotCap" value="${c.slotCap}" inputmode="numeric"></td>
-    <td>${st.singlePrice?'單一價格':'校內／校外'}</td><td>${n}</td>
-    <td>${pw[st.id]&&pw[st.id]!=='0000'?'已自訂':'預設 0000'} <button class="btn ghost sm" data-resetpw="${st.id}">重設</button></td>
-    <td><button class="btn sec sm" data-editmenu="${st.id}">菜單設定 →</button></td></tr>`;}).join('')}</table>
-  <p class="note">營業時間格式：HH:MM-HH:MM，多個時段用逗號分隔。店家用「店家」入口、選店名並輸入密碼登入。</p>`;
+  return `${S.showAdd?`<div class="card"><h4>＋ 新增店家 <button class="btn ghost sm" style="margin-left:auto" data-act="toggleAdd">收合</button></h4><div class="fgrid">
+    <div class="field"><label for="nsName">店名</label><input id="nsName" placeholder="例：七都燒臘"></div>
+    <div class="field"><label for="nsEn">英文名稱</label><input id="nsEn" placeholder="Cantonese BBQ"></div>
+    <div class="field"><label for="nsIcon">圖示</label><input id="nsIcon" value="🍽️" maxlength="4"></div>
+    <div class="field"><label for="nsMode">價格模式</label><select id="nsMode"><option value="dual">校內／校外價</option><option value="single">單一價格</option></select></div>
+    <div class="field full"><label for="nsOpen">營業時間</label><input id="nsOpen" value="11:00-14:00, 17:00-19:30"></div>
+    <div class="field"><label for="nsPrep">備餐（分）</label><input id="nsPrep" value="10" inputmode="numeric"></div>
+    <div class="field"><label for="nsCap">每時段上限</label><input id="nsCap" value="15" inputmode="numeric"></div>
+    <div class="field full"><label for="nsPw">初始密碼</label><input id="nsPw" value="0000" maxlength="12"></div>
+    <div class="full"><button class="btn pri" style="width:100%" data-act="addStore">新增店家</button></div></div></div>`
+    :`<button class="btn pri" style="width:100%;margin:4px 0 14px" data-act="toggleAdd">＋ 新增店家</button>`}
+  ${stores.map(st=>{const c=cfg(st.id); const n=st.categories.reduce((a,x)=>a+x.items.length,0); return `<div class="card">
+    <h4><span style="font-size:24px">${icon(st.id)}</span>${esc(st.name)}<span class="chip" style="margin-left:auto">${n} 品項 · ${st.singlePrice?'單一價':'校內／校外'}</span></h4>
+    <div class="fgrid">
+      <div class="field"><label>店名</label><input data-sf="${st.id}" data-k="name" value="${esc(st.name)}"></div>
+      <div class="field"><label>英文名稱</label><input data-sf="${st.id}" data-k="en" value="${esc(st.en)}"></div>
+      <div class="field full"><label>營業時間</label><input data-sf="${st.id}" data-k="open" value="${esc(st.open)}"></div>
+      <div class="field"><label>備餐（分）</label><input data-sf="${st.id}" data-k="prepMin" value="${c.prepMin}" inputmode="numeric"></div>
+      <div class="field"><label>每時段上限</label><input data-sf="${st.id}" data-k="slotCap" value="${c.slotCap}" inputmode="numeric"></div>
+    </div>
+    <div class="vtool" style="margin:10px 0 0"><span class="note">🔑 ${pw[st.id]&&pw[st.id]!=='0000'?'已自訂密碼':'預設密碼 0000'}</span><button class="btn ghost sm" data-resetpw="${st.id}">重設</button><button class="btn sec sm" style="margin-left:auto" data-editmenu="${st.id}">菜單設定 →</button></div>
+  </div>`;}).join('')}
+  <p class="note">營業時間格式：HH:MM-HH:MM，多個時段用逗號分隔；修改欄位後即儲存。</p>`;
 }
 function renderMenuEditor(){
   S.mStore=S.mStore&&storeById(S.mStore)?S.mStore:stores[0].id;
   const st=storeById(S.mStore), single=!!st.singlePrice;
-  return `<div class="vtool"><label class="note" for="mStore">店家</label><select id="mStore" style="padding:8px 10px;border-radius:10px;border:1px solid var(--line);font-weight:700">${stores.map(x=>`<option value="${x.id}" ${x.id===st.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select>
-    <span class="note">${single?'此店為單一價格':'校外價須 ≥ 校內價；差距過大會以黃色提醒（FR-10）'}</span></div>
-  ${st.categories.map(c=>`<div class="catbar"><input data-catf="${c.id}" data-k="name" value="${esc(c.name)}" aria-label="分類名稱"><input data-catf="${c.id}" data-k="en" value="${esc(c.en||'')}" placeholder="英文分類名" aria-label="英文分類名稱" style="font-weight:400">
-      <span class="note">${c.items.length} 項</span><button class="btn ghost sm" data-delcat="${c.id}" style="margin-left:auto">${S.delArm==='c'+c.id?'⚠ 再按一次刪除整個分類':'刪除分類'}</button></div>
-    <table class="t"><tr><th>品名</th><th>英文名稱</th><th style="width:80px">${single?'價格':'校內價'}</th>${single?'':'<th style="width:80px">校外價</th>'}<th style="width:150px">標籤（逗號分隔）</th><th style="width:70px"></th></tr>
-    ${c.items.map(x=>{const it=item(x.id); const w=single?'':priceWarn(it.campus,it.off); return `<tr class="${w?'warnrow':''}">
-      <td><input class="w" data-itf="${x.id}" data-k="name" value="${esc(x.name)}">${w?`<div class="note">⚠ ${esc(w)}</div>`:''}</td>
-      <td><input class="w" data-itf="${x.id}" data-k="en" value="${esc(x.en||'')}"></td>
-      <td><input class="w" data-itf="${x.id}" data-k="campus" value="${it.campus}" inputmode="numeric"></td>
-      ${single?'':`<td><input class="w" data-itf="${x.id}" data-k="off" value="${it.off}" inputmode="numeric"></td>`}
-      <td><input class="w" data-itf="${x.id}" data-k="tags" value="${esc((x.tags||[]).join(', '))}"></td>
-      <td><button class="btn ghost sm" data-delitem="${x.id}">${S.delArm==='i'+x.id?'確定?':'刪除'}</button></td></tr>`;}).join('')}
-    <tr><td><input class="w" id="ni-name-${c.id}" placeholder="新品名"></td><td><input class="w" id="ni-en-${c.id}" placeholder="English name"></td>
-      <td><input class="w" id="ni-c-${c.id}" placeholder="${single?'價格':'校內'}" inputmode="numeric"></td>${single?'':`<td><input class="w" id="ni-o-${c.id}" placeholder="校外" inputmode="numeric"></td>`}
-      <td><input class="w" id="ni-t-${c.id}" placeholder="VEGAN, 辣"></td><td><button class="btn pri sm" data-additem="${c.id}">新增</button></td></tr>
-    </table>`).join('')}
-  <div class="catbar"><input id="ncName" placeholder="新分類名稱，例：飲料"><input id="ncEn" placeholder="English" style="font-weight:400"><button class="btn sec sm" data-act="addCat">＋ 新增分類</button></div>`;
+  return `<div class="field" style="margin:4px 0 12px"><label for="mStore">店家</label><select id="mStore" style="font-weight:700">${stores.map(x=>`<option value="${x.id}" ${x.id===st.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
+  <p class="note" style="margin-top:0">${single?'此店為單一價格。':'校外價須 ≥ 校內價；差距過大以黃色提醒（FR-10）。'}修改欄位後即儲存。</p>
+  ${st.categories.map(c=>`<div class="card">
+    <div class="vtool" style="margin:0 0 6px"><input data-catf="${c.id}" data-k="name" value="${esc(c.name)}" aria-label="分類名稱" style="flex:1;min-width:0;font-weight:700"><input data-catf="${c.id}" data-k="en" value="${esc(c.en||'')}" placeholder="English" aria-label="英文分類名稱" style="flex:1;min-width:0">
+      <button class="btn ghost sm" data-delcat="${c.id}">${S.delArm==='c'+c.id?'⚠ 確定刪除':'刪除分類'}</button></div>
+    <div class="note" style="margin-bottom:2px">每項第一列：品名｜英文名稱；第二列：${single?'價格｜（無）':'校內價｜校外價'}｜標籤</div>
+    ${c.items.map(x=>{const it=item(x.id); const w=single?'':priceWarn(it.campus,it.off); return `<div class="irow ${w?'warn':''}">
+      <input data-itf="${x.id}" data-k="name" value="${esc(x.name)}" aria-label="品名"><input data-itf="${x.id}" data-k="en" value="${esc(x.en||'')}" placeholder="English" aria-label="英文名稱">
+      <div class="p3"><input data-itf="${x.id}" data-k="campus" value="${it.campus}" inputmode="numeric" aria-label="${single?'價格':'校內價'}" title="${single?'價格':'校內價'}">${single?'<span></span>':`<input data-itf="${x.id}" data-k="off" value="${it.off}" inputmode="numeric" aria-label="校外價" title="校外價">`}<input data-itf="${x.id}" data-k="tags" value="${esc((x.tags||[]).join(', '))}" placeholder="標籤" aria-label="標籤"><button class="btn ghost sm" data-delitem="${x.id}">${S.delArm==='i'+x.id?'確定?':'刪除'}</button></div>
+      ${w?`<div class="full note">⚠ ${esc(w)}</div>`:''}</div>`;}).join('')}
+    <div class="irow" style="background:var(--bg);border-radius:10px;padding:10px">
+      <input id="ni-name-${c.id}" placeholder="＋ 新品名"><input id="ni-en-${c.id}" placeholder="English name">
+      <div class="p3"><input id="ni-c-${c.id}" placeholder="${single?'價格':'校內'}" inputmode="numeric">${single?'<span></span>':`<input id="ni-o-${c.id}" placeholder="校外" inputmode="numeric">`}<input id="ni-t-${c.id}" placeholder="VEGAN, 辣"><button class="btn pri sm" data-additem="${c.id}">新增</button></div></div>
+  </div>`).join('')}
+  <div class="card"><h4>＋ 新增分類</h4><div class="vtool" style="margin:0"><input id="ncName" placeholder="分類名稱，例：飲料" style="flex:1;min-width:0"><input id="ncEn" placeholder="English" style="flex:1;min-width:0"><button class="btn sec sm" data-act="addCat">新增</button></div></div>`;
 }
 function catOf(st,cid){return st.categories.find(c=>c.id===cid);}
 function findCatalogItem(id){for(const st of stores) for(const c of st.categories){const it=c.items.find(x=>x.id===id); if(it) return {st,c,it};} return null;}
@@ -3173,7 +3236,7 @@ function addStore(){
   const id=newId('st');
   DB.catalog.push({id,name,en,icon:v('nsIcon')||'🍽️',open,prepMin:prep,slotCap:cap,prefix,singlePrice:$('#nsMode').value==='single',
     categories:[{id:newId('c'),name:'主餐',en:'Main',items:[]}]});
-  DB.storePw=DB.storePw||{}; DB.storePw[id]=pw; save(); S.mStore=id; S.mTab='menu'; render(); toast(`已新增「${name}」，接著設定菜單`,'ok');
+  DB.storePw=DB.storePw||{}; DB.storePw[id]=pw; save(); S.mStore=id; S.mTab='menu'; S.showAdd=false; render(); toast(`已新增「${name}」，接著設定菜單`,'ok');
 }
 
 /* ================= actions ================= */
@@ -3198,6 +3261,7 @@ document.addEventListener('click',e=>{
   const d=t.dataset;
   if(t.classList.contains('overlay')&&e.target!==t) return;
   if(d.mtab){S.mTab=d.mtab; render(); return;}
+  if(d.qseg){S.qSeg=d.qseg; render(); return;}
   if(d.editmenu){S.mStore=d.editmenu; S.mTab='menu'; render(); return;}
   if(d.resetpw){DB.storePw=DB.storePw||{}; DB.storePw[d.resetpw]='0000'; save(); render(); toast('已重設為 0000'); return;}
   if(d.delitem){if(S.delArm!=='i'+d.delitem){S.delArm='i'+d.delitem; render(); return;} const f=findCatalogItem(d.delitem); if(f){f.c.items=f.c.items.filter(x=>x.id!==d.delitem); delete DB.overrides[d.delitem]; save();} S.delArm=null; render(); toast('已刪除品項'); return;}
@@ -3234,8 +3298,9 @@ document.addEventListener('click',e=>{
     case 'sso': memberLogin(); break;
     case 'visitor':{const ph=$('#vPhone').value.replace(/\D/g,''); if(!/^09\d{8}$/.test(ph)){S.loginErr='手機號碼格式不正確（09 開頭共 10 碼）'; render(); return;} S.loginErr=''; S.loginMode=null; S.user={id:'v-'+ph,type:'visitor',phone:ph,name:'訪客'+ph.slice(-3),...(DB.users['v-'+ph]||{})}; S.view='home'; render(); toast('訪客登入：以校外價計','ok'); break;}
     case 'logout': S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
-    case 'editmode': S.editMode=!S.editMode; S.view='home'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
+    case 'editmode': S.editMode=!S.editMode; S.view='home'; S.mTab=S.mTab||'stores'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
     case 'addStore': addStore(); break;
+    case 'toggleAdd': S.showAdd=!S.showAdd; render(); break;
     case 'addCat':{const n=($('#ncName').value||'').trim(); if(!n){toast('請輸入分類名稱','bad');return;} storeById(S.mStore).categories.push({id:newId('c'),name:n,en:($('#ncEn').value||'').trim()||n,items:[]}); save(); render(); toast('已新增分類','ok'); break;}
     case 'changePw':{const v=($('#newPw').value||'').trim(); if(!/^\S{4,12}$/.test(v)){toast('密碼需 4～12 碼','bad');return;} DB.storePw=DB.storePw||{}; DB.storePw[S.vendorStore]=v; save(); render(); toast('密碼已更新','ok'); break;}
     case 'vendorLogin':{const sid=$('#vSel').value; S.vSel=sid; const _x=0, pw=($('#vPw').value||''); const ok=((DB.storePw||{})[sid]||'0000')===pw; if(!ok){S.loginErr='密碼錯誤'; render(); return;} const st=storeById(sid); S.user={id:'s-'+sid,type:'vendor',store:sid,name:st.name}; S.vendorStore=sid; S.vendorTab='queue'; S.loginMode=null; S.loginErr=''; render(); toast(`${st.name} 已登入`,'ok'); break;}
@@ -3279,9 +3344,10 @@ document.addEventListener('change',e=>{
     DB.overrides[id]={...(DB.overrides[id]||{}),[k]:v}; save(); render(); w?toast('⚠ 已儲存，但'+w+'（FR-10）','bad',5000):toast('價格已更新，學生端立即生效','ok');}
 });
 // periodic refresh (clock + no-show timing), keeps tabs in sync even without storage events
-setInterval(()=>{const before=snapshotStatuses(); const d=load(); if(d){DB=d;} notifyChanges(before); if(!S.sheet && !(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))) render(); else $('#clockNow').textContent=hm(minOf(now()));},5000);
+setInterval(()=>{const before=snapshotStatuses(); const d=load(); if(d){DB=d;} notifyChanges(before); if(!S.sheet && !(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))) render();},5000);
 rebuildCatalog();
 render();
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
 </body>
 </html>
