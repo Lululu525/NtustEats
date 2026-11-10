@@ -2904,7 +2904,7 @@ function renderLogin(){
   if(mode==='member'){
     lead='校內學生與教職員請以<b>學號／教職員編號</b>及<b>密碼</b>登入，<b>密碼為您的身分證字號</b>（英文字母請大寫，例如 A123456789）。帳號與校務系統綁定，登入後享校內優惠價。';
     rows=`<div class="cv-row"><label for="ssoNo">帳號</label><input id="ssoNo" placeholder="學號／教職員編號" autocomplete="username" autocapitalize="characters" maxlength="9" value="${esc(S.loginNo||'')}"></div>
-      <div class="cv-row"><label for="ssoId">密碼</label><input id="ssoId" type="password" placeholder="密碼＝身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
+      <div class="cv-row"><label for="ssoId">密碼</label><input id="ssoId" type="password" placeholder="身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
       <div id="noHint" class="cv-hint">${S.loginNo?idHint(S.loginNo):''}</div>`;
     forgot='<button class="btn sec" data-act="forgot">忘記帳號或身分驗證失敗？</button>';
   } else if(mode==='visitor'){
