@@ -1,0 +1,35 @@
+@startuml
+!include _style.iuml
+title NTUST Eats — Sprint 1 Domain Sketch (just enough design)
+hide empty members
+left to right direction
+class Store {
+  name
+  slotCapacity
+}
+class MenuItem {
+  name
+  campusPrice
+  offCampusPrice
+}
+class BowlBuilder {
+  broth
+  pick4[4]
+}
+class Cart
+class Order {
+  no
+  status
+  slot
+}
+Store *-- MenuItem
+Cart --> MenuItem
+Cart --> BowlBuilder
+Cart ..> Order : 依店拆單
+Order --> Store
+note bottom of Order
+  Sprint 1 狀態只有
+  SUBMITTED → ACCEPTED → READY → PICKED_UP
+  取消／放鳥在 Sprint 2 加入
+end note
+@enduml
