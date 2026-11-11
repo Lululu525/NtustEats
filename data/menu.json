@@ -1,11 +1,12 @@
 {
  "version": "2026-11",
- "source": "各店紙本菜單（校內優惠價／校外販售價）；稻穗輕食取自 iCHEF 線上菜單（單一價格）",
+ "source": "各店紙本菜單（校內優惠價／校外販售價）；稻穗輕食取自 iCHEF 線上菜單；第一餐廳 6 家、第二教學大樓餐廳 6 家為 2026-11-10 現場拍攝菜單",
  "stores": [
   {
    "id": "thai",
    "name": "泰刻",
    "en": "Thai Express",
+   "area": "第一餐廳（學生活動中心）",
    "open": "10:30-14:00, 16:30-19:30",
    "prepMin": 10,
    "slotCap": 15,
@@ -220,6 +221,7 @@
    "id": "ramen",
    "name": "豬豬の拉麵屋",
    "en": "Japanese Ramen",
+   "area": "第一餐廳（學生活動中心）",
    "open": "11:00-14:00, 17:00-20:00",
    "prepMin": 12,
    "slotCap": 12,
@@ -431,6 +433,7 @@
    "id": "mala",
    "name": "蔡姐麻辣燙",
    "en": "Mala Tang",
+   "area": "第一餐廳（學生活動中心）",
    "open": "11:00-14:00, 16:30-20:00",
    "prepMin": 10,
    "slotCap": 15,
@@ -1157,6 +1160,7 @@
    "id": "daka",
    "name": "DAKA COFFEE",
    "en": "Coffee",
+   "area": "第一餐廳（學生活動中心）",
    "open": "07:30-19:00",
    "prepMin": 5,
    "slotCap": 20,
@@ -2264,6 +2268,7 @@
    "id": "daosui",
    "name": "稻穗輕食",
    "en": "Dao Sui Healthy Meal",
+   "area": "第二教學大樓餐廳（T2）",
    "open": "10:30-14:30, 16:30-19:30",
    "prepMin": 8,
    "slotCap": 15,
@@ -2498,6 +2503,5164 @@
      ]
     }
    ]
+  },
+  {
+   "id": "wenzhou",
+   "name": "溫州大餛飩",
+   "en": "Wonton",
+   "area": "第一餐廳（學生活動中心）",
+   "icon": "🥟",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 8,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認",
+   "categories": [
+    {
+     "id": "soup-noodle",
+     "name": "湯麵類",
+     "en": "Noodle Soup",
+     "items": [
+      {
+       "name": "蝦肉餛飩麵",
+       "en": "Shrimp Wonton Noodles",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "id": "wenzhou-001"
+      },
+      {
+       "name": "菜肉餛飩麵",
+       "en": "Vegetables and Meat Wonton Noodles",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "id": "wenzhou-002"
+      },
+      {
+       "name": "鮮肉餛飩麵",
+       "en": "Fresh Meat Wonton Noodles",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "wenzhou-003"
+      },
+      {
+       "name": "排骨麵",
+       "en": "Pork Rib Noodles",
+       "campus": 95,
+       "off": 100,
+       "tags": [],
+       "id": "wenzhou-004"
+      },
+      {
+       "name": "榨菜肉絲麵",
+       "en": "Shredded Meat with Pickled Vegetable Noodles",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "wenzhou-005"
+      },
+      {
+       "name": "牛肉河粉",
+       "en": "Beef Pho",
+       "campus": 85,
+       "off": 95,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "品名被反光遮住，依英文 Pho Daging Sapi 推定",
+       "id": "wenzhou-006"
+      },
+      {
+       "name": "豬肉河粉",
+       "en": "Pork Pho",
+       "campus": 85,
+       "off": 95,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "校外價被反光遮住",
+       "id": "wenzhou-007"
+      },
+      {
+       "name": "過橋米線",
+       "en": "GuoQiao Rice-Flour Noodles",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-008"
+      },
+      {
+       "name": "虱目魚肚麵",
+       "en": "Milkfish Belly Noodles",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "wenzhou-009"
+      },
+      {
+       "name": "虱目魚柳麵",
+       "en": "Milkfish Fillet Noodles",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-010"
+      },
+      {
+       "name": "瘦肉麵",
+       "en": "Noodles with Lean Meat",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "wenzhou-011"
+      },
+      {
+       "name": "豬肝麵",
+       "en": "Pork Liver Noodles",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "id": "wenzhou-012"
+      },
+      {
+       "name": "嘴邊肉麵",
+       "en": "Pork Jowl Noodles",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "id": "wenzhou-013"
+      },
+      {
+       "name": "番茄蛋花麵",
+       "en": "Tomato Egg Noodles",
+       "campus": 75,
+       "off": 85,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "校外價被遮住",
+       "id": "wenzhou-014"
+      },
+      {
+       "name": "青菜豆腐麵",
+       "en": "QingJiang Tofu Noodles",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "wenzhou-015"
+      },
+      {
+       "name": "魯肉飯",
+       "en": "Braised Pork Rice",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "wenzhou-016"
+      }
+     ]
+    },
+    {
+     "id": "dry",
+     "name": "乾麵類",
+     "en": "Dried Noodles",
+     "items": [
+      {
+       "name": "蝦肉炒手麵",
+       "en": "Stir-Fried Noodles with Shrimp",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "wenzhou-017"
+      },
+      {
+       "name": "菜肉炒手麵",
+       "en": "Stir-Fried Noodles with Vegetables and Meat",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-018"
+      },
+      {
+       "name": "鮮肉炒手麵",
+       "en": "Stir-Fried Noodles with Fresh Meat",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "wenzhou-019"
+      },
+      {
+       "name": "皮蛋拌麵",
+       "en": "Century Egg Mixed Noodles",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "wenzhou-020"
+      },
+      {
+       "name": "香辣老虎麵",
+       "en": "Spicy Tiger Noodles",
+       "campus": 55,
+       "off": 65,
+       "tags": [
+        "辣"
+       ],
+       "id": "wenzhou-021"
+      },
+      {
+       "name": "香辣老虎麵（大）",
+       "en": "Spicy Tiger Noodles (Large)",
+       "campus": 75,
+       "off": 85,
+       "tags": [
+        "辣"
+       ],
+       "id": "wenzhou-022"
+      },
+      {
+       "name": "炸醬麵",
+       "en": "Noodles with Soybean Paste",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "wenzhou-023"
+      },
+      {
+       "name": "炸醬麵（大）",
+       "en": "Noodles with Soybean Paste (Large)",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "id": "wenzhou-024"
+      },
+      {
+       "name": "麻醬麵",
+       "en": "Noodles with Sesame Sauce",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "wenzhou-025"
+      },
+      {
+       "name": "麻醬麵（大）",
+       "en": "Noodles with Sesame Sauce (Large)",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "id": "wenzhou-026"
+      },
+      {
+       "name": "旦旦麵",
+       "en": "DanDan Noodles (Chili Oil)",
+       "campus": 50,
+       "off": 60,
+       "tags": [
+        "辣"
+       ],
+       "id": "wenzhou-027"
+      },
+      {
+       "name": "旦旦麵（大）",
+       "en": "DanDan Noodles (Chili Oil) (Large)",
+       "campus": 70,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "wenzhou-028"
+      },
+      {
+       "name": "乾拌粉",
+       "en": "Stir Fried Vermicelli",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "id": "wenzhou-029"
+      },
+      {
+       "name": "酸辣粉",
+       "en": "Sour and Spicy Vermicelli",
+       "campus": 75,
+       "off": 85,
+       "tags": [
+        "辣"
+       ],
+       "id": "wenzhou-030"
+      },
+      {
+       "name": "雙醬麵",
+       "en": "Double Sauce Noodles (Sesame & Soybean)",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "id": "wenzhou-031"
+      },
+      {
+       "name": "雙醬麵（大）",
+       "en": "Double Sauce Noodles (Large)",
+       "campus": 85,
+       "off": 95,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "校外價被遮住",
+       "id": "wenzhou-032"
+      }
+     ]
+    },
+    {
+     "id": "rice",
+     "name": "炒飯類",
+     "en": "Fried Rice",
+     "items": [
+      {
+       "name": "蝦仁蛋炒飯",
+       "en": "Shrimp and Egg Fried Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-033"
+      },
+      {
+       "name": "牛肉炒飯",
+       "en": "Beef Fried Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-034"
+      },
+      {
+       "name": "羊肉炒飯",
+       "en": "Lamb Fried Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-035"
+      },
+      {
+       "name": "高麗菜香腸蛋炒飯",
+       "en": "Cabbage Sausage Egg Fried Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-036"
+      },
+      {
+       "name": "時蔬肉絲蛋炒飯",
+       "en": "Vegetable Shredded Pork Egg Fried Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-037"
+      }
+     ]
+    },
+    {
+     "id": "fried-noodle",
+     "name": "炒麵類",
+     "en": "Fried Noodles",
+     "items": [
+      {
+       "name": "沙茶牛肉炒麵",
+       "en": "Shacha Sauce Beef Fried Noodles",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-038"
+      },
+      {
+       "name": "沙茶羊肉炒麵",
+       "en": "Shacha Sauce Lamb Fried Noodles",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "wenzhou-039"
+      },
+      {
+       "name": "沙茶豬肉炒麵",
+       "en": "Shacha Sauce Pork Fried Noodles",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "wenzhou-040"
+      },
+      {
+       "name": "蝦仁炒麵",
+       "en": "Shrimp Fried Noodles",
+       "campus": 85,
+       "off": 95,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "價格被反光遮住",
+       "id": "wenzhou-041"
+      },
+      {
+       "name": "蔬菜炒麵",
+       "en": "Vegetables Fried Noodles",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "id": "wenzhou-042"
+      }
+     ]
+    },
+    {
+     "id": "soup",
+     "name": "湯品",
+     "en": "Soup",
+     "items": [
+      {
+       "name": "蝦肉餛飩湯",
+       "en": "Shrimp Wonton Soup",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "id": "wenzhou-043"
+      },
+      {
+       "name": "菜肉餛飩湯",
+       "en": "Vegetables and Meat Wonton Soup",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "wenzhou-044"
+      },
+      {
+       "name": "鮮肉餛飩湯",
+       "en": "Fresh Meat Wonton Soup",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "wenzhou-045"
+      },
+      {
+       "name": "青菜豆腐湯",
+       "en": "Vegetables and Tofu Soup",
+       "campus": 30,
+       "off": 40,
+       "tags": [],
+       "id": "wenzhou-046"
+      },
+      {
+       "name": "瘦肉湯",
+       "en": "Meat Soup",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "wenzhou-047"
+      },
+      {
+       "name": "豬肝湯",
+       "en": "Pork Liver Soup",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "wenzhou-048"
+      },
+      {
+       "name": "虱目魚雜湯",
+       "en": "Milkfish Soup",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "id": "wenzhou-049"
+      },
+      {
+       "name": "番茄蛋花湯",
+       "en": "Tomato and Egg Soup",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "wenzhou-050"
+      }
+     ]
+    },
+    {
+     "id": "combo",
+     "name": "套餐類",
+     "en": "Combo Meal",
+     "items": [
+      {
+       "name": "A餐 老虎麵＋綜合餛飩湯",
+       "en": "Meal A Tiger Noodles + Mixed Wonton Soup",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "wenzhou-051"
+      },
+      {
+       "name": "B餐 炸醬麵＋綜合餛飩湯",
+       "en": "Meal B Soybean Paste Noodles + Mixed Wonton Soup",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "wenzhou-052"
+      },
+      {
+       "name": "C餐 麻醬麵＋綜合餛飩湯",
+       "en": "Meal C Sesame Noodles + Mixed Wonton Soup",
+       "campus": 100,
+       "off": 110,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "品名被反光遮住，依英文推定",
+       "id": "wenzhou-053"
+      },
+      {
+       "name": "D餐 旦旦麵＋綜合餛飩湯",
+       "en": "Meal D DanDan Noodles + Mixed Wonton Soup",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "wenzhou-054"
+      }
+     ]
+    },
+    {
+     "id": "dumpling",
+     "name": "炒手",
+     "en": "Dumplings",
+     "items": [
+      {
+       "name": "蝦肉炒手",
+       "en": "Shrimp Dumplings",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "id": "wenzhou-055"
+      },
+      {
+       "name": "菜肉炒手",
+       "en": "Vegetables and Meat Dumplings",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "id": "wenzhou-056"
+      },
+      {
+       "name": "鮮肉炒手",
+       "en": "Fresh Meat Dumplings",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "wenzhou-057"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "opa",
+   "name": "歐趴雞肉",
+   "en": "Chicken Cuisine",
+   "area": "第一餐廳（學生活動中心）",
+   "icon": "🍗",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 8,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認",
+   "categories": [
+    {
+     "id": "rice",
+     "name": "飯類",
+     "en": "Rice",
+     "note": "可備註：內用／外帶、全熟蛋／半熟蛋、加辣、加蔥花、加薑絲",
+     "items": [
+      {
+       "name": "銷魂飯（小）",
+       "en": "Chicken Bento (S)",
+       "campus": 75,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "opa_add",
+       "id": "opa-001"
+      },
+      {
+       "name": "銷魂飯（大）",
+       "en": "Chicken Bento (L)",
+       "campus": 95,
+       "off": 110,
+       "tags": [],
+       "addonGroup": "opa_add",
+       "id": "opa-002"
+      },
+      {
+       "name": "舒肥雞胸飯",
+       "en": "Shufei Chicken Breast Bento",
+       "campus": 100,
+       "off": 115,
+       "tags": [],
+       "addonGroup": "opa_add",
+       "id": "opa-003"
+      },
+      {
+       "name": "去骨雞腿飯",
+       "en": "Boneless Chicken Bento",
+       "campus": 110,
+       "off": 125,
+       "tags": [],
+       "addonGroup": "opa_add",
+       "id": "opa-004"
+      },
+      {
+       "name": "蔬食菜飯（小）",
+       "en": "Side Dish Bento (S)",
+       "campus": 55,
+       "off": 70,
+       "tags": [
+        "素"
+       ],
+       "addonGroup": "opa_add",
+       "id": "opa-005"
+      },
+      {
+       "name": "蔬食菜飯（大）",
+       "en": "Side Dish Bento (L)",
+       "campus": 65,
+       "off": 80,
+       "tags": [
+        "素"
+       ],
+       "addonGroup": "opa_add",
+       "id": "opa-006"
+      }
+     ]
+    },
+    {
+     "id": "side",
+     "name": "單點與湯品",
+     "en": "Sides & Soup",
+     "items": [
+      {
+       "name": "白飯",
+       "en": "Rice",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "opa-007"
+      },
+      {
+       "name": "雞油拌飯",
+       "en": "Rice with Chicken Oil",
+       "campus": 20,
+       "off": 30,
+       "tags": [],
+       "id": "opa-008"
+      },
+      {
+       "name": "黃金泡菜",
+       "en": "Taiwanese Golden Kimchi",
+       "campus": 35,
+       "off": 40,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "校外價被遮住",
+       "id": "opa-009"
+      },
+      {
+       "name": "綜合菇湯",
+       "en": "Comprehensive Mushroom Soup",
+       "campus": 30,
+       "off": 40,
+       "tags": [
+        "價格待確認"
+       ],
+       "verify": "校外價被遮住",
+       "id": "opa-010"
+      },
+      {
+       "name": "下水湯",
+       "en": "Chicken Gizzard Soup",
+       "campus": 30,
+       "off": 40,
+       "tags": [],
+       "id": "opa-011"
+      },
+      {
+       "name": "豆漿紅茶",
+       "en": "Black Tea With Soy Milk",
+       "campus": 25,
+       "off": 30,
+       "tags": [],
+       "id": "opa-012"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "opa_add": {
+     "name": "加購",
+     "items": [
+      {
+       "name": "加煎蛋",
+       "en": "Xtra Fried Egg",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "opa-a01"
+      },
+      {
+       "name": "銷魂肉加量",
+       "en": "Xtra Chicken",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "id": "opa-a02"
+      },
+      {
+       "name": "加一份胸肉",
+       "en": "Xtra Shufei Chicken Breast",
+       "campus": 50,
+       "off": 65,
+       "tags": [],
+       "id": "opa-a03"
+      },
+      {
+       "name": "加一份腿肉",
+       "en": "Xtra Boneless Chicken",
+       "campus": 60,
+       "off": 75,
+       "tags": [],
+       "id": "opa-a04"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "coldnoodle",
+   "name": "涼麵自由吧",
+   "en": "Cold Noodles",
+   "area": "第一餐廳（學生活動中心）",
+   "icon": "🍝",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 6,
+   "slotCap": 15,
+   "singlePrice": true,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認；紙本菜單只標單一價格，店內電視看板另有校內／校外價（例：蒜香牛奶湯麵 100/110），且貼有「2026.11.18 起調漲」公告，價格待店家確認",
+   "categories": [
+    {
+     "id": "cold",
+     "name": "涼麵區",
+     "en": "Cold Noodles",
+     "note": "步驟：選麵體 → 選醬汁（芝麻醬、和風醬、柴魚醬、麻辣醬）→ 選 5 種配菜（現場選）",
+     "items": [
+      {
+       "name": "黃涼麵",
+       "en": "Yellow Cold Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-001"
+      },
+      {
+       "name": "蕎麥麵",
+       "en": "Soba Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-002"
+      },
+      {
+       "name": "藜麥麵",
+       "en": "Quinoa Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-003"
+      },
+      {
+       "name": "綠藻麵",
+       "en": "Chlorella Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-004"
+      },
+      {
+       "name": "紅龍果麵",
+       "en": "Red Dragon Fruit Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-005"
+      },
+      {
+       "name": "和風番茄烏龍冷麵",
+       "en": "Japanese-Style Tomato Udon (Cold)",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-006"
+      },
+      {
+       "name": "柴魚番茄烏龍冷麵",
+       "en": "Bonito Tomato Udon (Cold)",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-007"
+      }
+     ]
+    },
+    {
+     "id": "hot",
+     "name": "熱麵區（乾麵系列）",
+     "en": "Hot Dry Noodles",
+     "note": "標「選五種配菜」者現場選配菜",
+     "items": [
+      {
+       "name": "乾拌意麵（小）",
+       "en": "Dry Pasta (Small)",
+       "campus": 45,
+       "off": 45,
+       "tags": [],
+       "id": "coldnoodle-008"
+      },
+      {
+       "name": "乾拌意麵（大）",
+       "en": "Dry Pasta (Big)",
+       "campus": 65,
+       "off": 65,
+       "tags": [],
+       "id": "coldnoodle-009"
+      },
+      {
+       "name": "麻醬意麵（小）",
+       "en": "Sesame Pasta (Small)",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "coldnoodle-010"
+      },
+      {
+       "name": "麻醬意麵（大）",
+       "en": "Sesame Pasta (Big)",
+       "campus": 75,
+       "off": 75,
+       "tags": [],
+       "id": "coldnoodle-011"
+      },
+      {
+       "name": "泡菜意麵",
+       "en": "Kimchi Pasta",
+       "campus": 65,
+       "off": 65,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-012"
+      },
+      {
+       "name": "菜菜麻醬意麵",
+       "en": "Sesame Pasta with Vegetables",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-013"
+      },
+      {
+       "name": "菜菜肉燥意麵",
+       "en": "Minced Pork Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-014"
+      },
+      {
+       "name": "三杯意麵",
+       "en": "Spicy Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-015"
+      },
+      {
+       "name": "雙醬麵（麻醬＋醋醬）",
+       "en": "Double Sauce Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-016"
+      },
+      {
+       "name": "菜菜三杯麵",
+       "en": "Spicy Vegetable Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-017"
+      },
+      {
+       "name": "舒肥雞三杯麵",
+       "en": "Sous Vide Chicken Breast Spicy Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-018"
+      },
+      {
+       "name": "泡菜柴魚拌麵",
+       "en": "Kimchi Bonito Noodles",
+       "campus": 90,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-019"
+      }
+     ]
+    },
+    {
+     "id": "udon",
+     "name": "番茄烏龍麵・刀削麵",
+     "en": "Tomato Udon & Sliced Noodles",
+     "items": [
+      {
+       "name": "雙醬番茄烏龍麵",
+       "en": "Double Sauce Tomato Udon",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-020"
+      },
+      {
+       "name": "麻醬番茄烏龍麵",
+       "en": "Sesame Tomato Udon",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-021"
+      },
+      {
+       "name": "三杯番茄烏龍麵",
+       "en": "Spicy Tomato Udon",
+       "campus": 80,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-022"
+      },
+      {
+       "name": "三杯刀削麵",
+       "en": "Spicy Sliced Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-023"
+      },
+      {
+       "name": "雙醬刀削麵",
+       "en": "Double Sauce Sliced Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-024"
+      },
+      {
+       "name": "麻醬刀削麵",
+       "en": "Sesame Sliced Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-025"
+      }
+     ]
+    },
+    {
+     "id": "soup",
+     "name": "湯麵區",
+     "en": "Noodle Soup",
+     "items": [
+      {
+       "name": "泡菜柴魚湯麵",
+       "en": "Kimchi Bonito Noodles Soup",
+       "campus": 90,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-026"
+      },
+      {
+       "name": "招牌味噌湯麵",
+       "en": "Miso Noodles",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-027"
+      },
+      {
+       "name": "柴魚番茄烏龍麵",
+       "en": "Bonito and Tomato Udon",
+       "campus": 80,
+       "off": 80,
+       "tags": [],
+       "id": "coldnoodle-028"
+      }
+     ]
+    },
+    {
+     "id": "new",
+     "name": "新品上市",
+     "en": "New",
+     "items": [
+      {
+       "name": "維力炸醬麵",
+       "en": "Wei Lih Zhajiang Noodles",
+       "campus": 55,
+       "off": 55,
+       "tags": [],
+       "id": "coldnoodle-029"
+      },
+      {
+       "name": "菜菜維力炸醬麵",
+       "en": "Vegetable Wei Lih Zhajiang Noodles",
+       "campus": 85,
+       "off": 85,
+       "tags": [],
+       "id": "coldnoodle-030"
+      },
+      {
+       "name": "菜菜維力炸醬刀削麵",
+       "en": "Vegetable Wei Lih Zhajiang Knife-Cut Noodles",
+       "campus": 85,
+       "off": 85,
+       "tags": [],
+       "id": "coldnoodle-031"
+      },
+      {
+       "name": "菜菜維力炸醬烏龍麵",
+       "en": "Vegetable Wei Lih Zhajiang Tomato Udon",
+       "campus": 85,
+       "off": 85,
+       "tags": [],
+       "id": "coldnoodle-032"
+      },
+      {
+       "name": "豆皮番茄烏龍湯麵",
+       "en": "Tofu Skin & Tomato Udon Soup",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "coldnoodle-033"
+      },
+      {
+       "name": "豆皮番茄烏龍拌麵",
+       "en": "Tofu Skin & Tomato Udon Dry Noodles",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "coldnoodle-034"
+      },
+      {
+       "name": "豆皮三杯番茄烏龍麵",
+       "en": "Three-Cup Tofu Skin & Tomato Udon Soup",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "coldnoodle-035"
+      },
+      {
+       "name": "豆皮三杯刀削麵",
+       "en": "Three-Cup Tofu Skin Knife-Cut Dry Noodles",
+       "campus": 95,
+       "off": 95,
+       "tags": [],
+       "id": "coldnoodle-036"
+      }
+     ]
+    },
+    {
+     "id": "chef",
+     "name": "職人系列",
+     "en": "Chef Series",
+     "items": [
+      {
+       "name": "小雞亂炸涼麵",
+       "en": "Cold Noodle with Mixed Fried Food",
+       "campus": 90,
+       "off": 90,
+       "tags": [],
+       "id": "coldnoodle-037"
+      },
+      {
+       "name": "蒜香牛奶湯麵",
+       "en": "Garlic Milk Noodle Soup",
+       "campus": 100,
+       "off": 100,
+       "tags": [],
+       "id": "coldnoodle-038"
+      },
+      {
+       "name": "柚香白玉豬肉湯麵",
+       "en": "Yuzu-Flavored Pork Noodle Soup",
+       "campus": 120,
+       "off": 120,
+       "tags": [],
+       "id": "coldnoodle-039"
+      },
+      {
+       "name": "柚香白玉牛肉湯麵",
+       "en": "Yuzu-Flavored Beef Noodle Soup",
+       "campus": 140,
+       "off": 140,
+       "tags": [],
+       "id": "coldnoodle-040"
+      },
+      {
+       "name": "職人壽喜豬肉拌麵",
+       "en": "Sukiyaki Pork Noodle",
+       "campus": 120,
+       "off": 120,
+       "tags": [],
+       "id": "coldnoodle-041"
+      },
+      {
+       "name": "職人壽喜牛肉拌麵",
+       "en": "Sukiyaki Beef Noodle",
+       "campus": 140,
+       "off": 140,
+       "tags": [],
+       "id": "coldnoodle-042"
+      }
+     ]
+    },
+    {
+     "id": "add",
+     "name": "加料區",
+     "en": "Add-ons",
+     "items": [
+      {
+       "name": "水煮蛋",
+       "en": "Boiled Egg",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "coldnoodle-043"
+      },
+      {
+       "name": "糖心蛋（一顆）",
+       "en": "Soft-Boiled Egg",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "coldnoodle-044"
+      },
+      {
+       "name": "韓式泡菜",
+       "en": "Korean Kimchi",
+       "campus": 20,
+       "off": 20,
+       "tags": [
+        "辣"
+       ],
+       "id": "coldnoodle-045"
+      },
+      {
+       "name": "舒肥雞",
+       "en": "Sous Vide Chicken",
+       "campus": 30,
+       "off": 30,
+       "tags": [],
+       "id": "coldnoodle-046"
+      },
+      {
+       "name": "味噌湯",
+       "en": "Miso Soup",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "coldnoodle-047"
+      },
+      {
+       "name": "和風豆皮",
+       "en": "Japanese-Style Tofu Skin",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "coldnoodle-048"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lightfood",
+   "name": "輕食光",
+   "en": "Light Food",
+   "area": "第一餐廳（學生活動中心）",
+   "icon": "🍱",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 6,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認；單點肉看板只有一個價格，校外價待確認",
+   "categories": [
+    {
+     "id": "box",
+     "name": "健康餐盒",
+     "en": "Lunch Box",
+     "note": "餐盒皆含主食黑米飯、季節蔬菜、水煮蛋",
+     "items": [
+      {
+       "name": "黑胡椒雞胸 餐盒",
+       "en": "Black Pepper Chicken Breast Lunch Box",
+       "campus": 100,
+       "off": 115,
+       "tags": [],
+       "id": "lightfood-001"
+      },
+      {
+       "name": "蒜香椒鹽雞胸 餐盒",
+       "en": "Garlic Pepper Salt Chicken Breast Lunch Box",
+       "campus": 109,
+       "off": 125,
+       "tags": [],
+       "id": "lightfood-002"
+      },
+      {
+       "name": "照燒雞胸 餐盒",
+       "en": "Teriyaki Chicken Breast Lunch Box",
+       "campus": 109,
+       "off": 125,
+       "tags": [],
+       "id": "lightfood-003"
+      },
+      {
+       "name": "香蔥雞胸 餐盒",
+       "en": "Scallion Chicken Breast Lunch Box",
+       "campus": 109,
+       "off": 125,
+       "tags": [],
+       "id": "lightfood-004"
+      },
+      {
+       "name": "雞胸漢堡排 餐盒",
+       "en": "Chicken Breast Patty Lunch Box",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "lightfood-005"
+      },
+      {
+       "name": "油蔥碎碎雞 餐盒",
+       "en": "Minced Chicken Rice Lunch Box",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "lightfood-006"
+      },
+      {
+       "name": "紐奧良棒腿 餐盒",
+       "en": "New Orleans Drumstick Lunch Box",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "lightfood-007"
+      },
+      {
+       "name": "韓式雞腿排 餐盒",
+       "en": "Korean Sauce Chicken Thigh Lunch Box",
+       "campus": 116,
+       "off": 129,
+       "tags": [],
+       "id": "lightfood-008"
+      },
+      {
+       "name": "蒜泥白切豬 餐盒",
+       "en": "Garlic Mashed Pork Lunch Box",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "lightfood-009"
+      },
+      {
+       "name": "胡麻梅花豬 餐盒",
+       "en": "Sesame Pork Collar Lunch Box",
+       "campus": 115,
+       "off": 129,
+       "tags": [],
+       "id": "lightfood-010"
+      },
+      {
+       "name": "泰式打拋豬 餐盒",
+       "en": "Thai Basil Pork Lunch Box",
+       "campus": 109,
+       "off": 125,
+       "tags": [],
+       "id": "lightfood-011"
+      },
+      {
+       "name": "蔥鹽梅花豬 餐盒",
+       "en": "Salt and Scallion Pork Collar Lunch Box",
+       "campus": 115,
+       "off": 139,
+       "tags": [],
+       "id": "lightfood-012"
+      },
+      {
+       "name": "Miso味噌雞胸 餐盒",
+       "en": "Miso Chicken Breast Lunch Box",
+       "campus": 115,
+       "off": 129,
+       "tags": [],
+       "id": "lightfood-013"
+      },
+      {
+       "name": "低脂滷牛腱 餐盒",
+       "en": "Low-Fat Braised Beef Shank Lunch Box",
+       "campus": 159,
+       "off": 180,
+       "tags": [],
+       "id": "lightfood-014"
+      },
+      {
+       "name": "日式牛丼 餐盒",
+       "en": "Japanese Beef Bowl Lunch Box",
+       "campus": 105,
+       "off": 119,
+       "tags": [],
+       "id": "lightfood-015"
+      },
+      {
+       "name": "胡麻雪花牛 餐盒",
+       "en": "Sesame Snowflake Beef Lunch Box",
+       "campus": 125,
+       "off": 139,
+       "tags": [],
+       "id": "lightfood-016"
+      },
+      {
+       "name": "日式胡麻雞胸 餐盒",
+       "en": "Japanese Sesame Chicken Breast Lunch Box",
+       "campus": 115,
+       "off": 129,
+       "tags": [],
+       "id": "lightfood-017"
+      },
+      {
+       "name": "小銀魚 餐盒",
+       "en": "Whitebait Fish Lunch Box",
+       "campus": 125,
+       "off": 139,
+       "tags": [],
+       "id": "lightfood-018"
+      },
+      {
+       "name": "泰式酸辣魚 餐盒",
+       "en": "Thai Spicy and Sour Fish Lunch Box",
+       "campus": 105,
+       "off": 119,
+       "tags": [],
+       "id": "lightfood-019"
+      },
+      {
+       "name": "新鮮蔬食菜飯",
+       "en": "Fresh Vegetable Rice",
+       "campus": 76,
+       "off": 85,
+       "tags": [
+        "素"
+       ],
+       "id": "lightfood-020"
+      },
+      {
+       "name": "Miso梅花豬 餐盒",
+       "en": "Miso Sauce Pork Slices Lunch Box",
+       "campus": 119,
+       "off": 135,
+       "tags": [],
+       "id": "lightfood-021"
+      }
+     ]
+    },
+    {
+     "id": "meat",
+     "name": "單點肉（不含飯）",
+     "en": "Meat by Itself",
+     "items": [
+      {
+       "name": "黑胡椒雞胸 單點肉",
+       "en": "Black Pepper Chicken Breast (Meat Only)",
+       "campus": 58,
+       "off": 58,
+       "tags": [],
+       "id": "lightfood-022"
+      },
+      {
+       "name": "蒜香椒鹽雞胸 單點肉",
+       "en": "Garlic Pepper Salt Chicken Breast (Meat Only)",
+       "campus": 62,
+       "off": 62,
+       "tags": [],
+       "id": "lightfood-023"
+      },
+      {
+       "name": "照燒雞胸 單點肉",
+       "en": "Teriyaki Chicken Breast (Meat Only)",
+       "campus": 62,
+       "off": 62,
+       "tags": [],
+       "id": "lightfood-024"
+      },
+      {
+       "name": "香蔥雞胸 單點肉",
+       "en": "Scallion Chicken Breast (Meat Only)",
+       "campus": 62,
+       "off": 62,
+       "tags": [],
+       "id": "lightfood-025"
+      },
+      {
+       "name": "雞胸漢堡排 單點肉",
+       "en": "Chicken Breast Patty (Meat Only)",
+       "campus": 44,
+       "off": 44,
+       "tags": [],
+       "id": "lightfood-026"
+      },
+      {
+       "name": "單點碎雞飯",
+       "en": "Minced Chicken Rice (Single)",
+       "campus": 49,
+       "off": 49,
+       "tags": [],
+       "id": "lightfood-027"
+      },
+      {
+       "name": "紐奧良棒腿 單點肉",
+       "en": "New Orleans Drumstick (Meat Only)",
+       "campus": 49,
+       "off": 49,
+       "tags": [],
+       "id": "lightfood-028"
+      },
+      {
+       "name": "韓式雞腿排 單點肉",
+       "en": "Korean Sauce Chicken Thigh (Meat Only)",
+       "campus": 68,
+       "off": 68,
+       "tags": [],
+       "id": "lightfood-029"
+      },
+      {
+       "name": "蒜泥白切豬 單點肉",
+       "en": "Garlic Mashed Pork (Meat Only)",
+       "campus": 58,
+       "off": 58,
+       "tags": [],
+       "id": "lightfood-030"
+      },
+      {
+       "name": "胡麻梅花豬 單點肉",
+       "en": "Sesame Pork Collar (Meat Only)",
+       "campus": 67,
+       "off": 67,
+       "tags": [],
+       "id": "lightfood-031"
+      },
+      {
+       "name": "蔥鹽梅花豬 單點肉",
+       "en": "Salt and Scallion Pork Collar (Meat Only)",
+       "campus": 67,
+       "off": 67,
+       "tags": [],
+       "id": "lightfood-032"
+      },
+      {
+       "name": "Miso味噌雞胸 單點肉",
+       "en": "Miso Chicken Breast (Meat Only)",
+       "campus": 67,
+       "off": 67,
+       "tags": [],
+       "id": "lightfood-033"
+      },
+      {
+       "name": "日式牛丼 單點肉",
+       "en": "Japanese Beef (Meat Only)",
+       "campus": 60,
+       "off": 60,
+       "tags": [],
+       "id": "lightfood-034"
+      },
+      {
+       "name": "胡麻雪花牛 單點肉",
+       "en": "Sesame Snowflake Beef (Meat Only)",
+       "campus": 85,
+       "off": 85,
+       "tags": [],
+       "id": "lightfood-035"
+      },
+      {
+       "name": "日式胡麻雞胸 單點肉",
+       "en": "Japanese Sesame Chicken Breast (Meat Only)",
+       "campus": 67,
+       "off": 67,
+       "tags": [],
+       "id": "lightfood-036"
+      },
+      {
+       "name": "小銀魚 單點肉",
+       "en": "Whitebait Fish (Meat Only)",
+       "campus": 85,
+       "off": 85,
+       "tags": [],
+       "id": "lightfood-037"
+      },
+      {
+       "name": "泰式酸辣魚 單點肉",
+       "en": "Thai Spicy and Sour Fish (Meat Only)",
+       "campus": 53,
+       "off": 53,
+       "tags": [],
+       "id": "lightfood-038"
+      },
+      {
+       "name": "Miso梅花豬 單點肉",
+       "en": "Miso Sauce Pork Slices (Meat Only)",
+       "campus": 69,
+       "off": 69,
+       "tags": [],
+       "id": "lightfood-039"
+      }
+     ]
+    },
+    {
+     "id": "side",
+     "name": "單點與飲品",
+     "en": "Sides & Drinks",
+     "note": "加購優惠：紐奧良棒腿 +39、雞胸漢堡排 +35、油蔥碎雞飯升級 +43（現場加購）",
+     "items": [
+      {
+       "name": "每日例湯",
+       "en": "Daily Soup",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "lightfood-040"
+      },
+      {
+       "name": "黑米飯",
+       "en": "Rice",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "lightfood-041"
+      },
+      {
+       "name": "水煮蛋",
+       "en": "Egg",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "lightfood-042"
+      },
+      {
+       "name": "蔬菜",
+       "en": "Vegetable",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "lightfood-043"
+      },
+      {
+       "name": "無糖豆漿",
+       "en": "Unsweetened Soy Milk",
+       "campus": 27,
+       "off": 27,
+       "tags": [],
+       "id": "lightfood-044"
+      },
+      {
+       "name": "燕麥薏仁飲",
+       "en": "Oat and Coix Seed Drink",
+       "campus": 27,
+       "off": 27,
+       "tags": [],
+       "id": "lightfood-045"
+      },
+      {
+       "name": "杏仁奶（低糖）",
+       "en": "Almond Drink (Low-Sugar)",
+       "campus": 39,
+       "off": 39,
+       "tags": [],
+       "id": "lightfood-046"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bear",
+   "name": "小熊廚房",
+   "en": "Fried Rice Box",
+   "area": "第一餐廳（學生活動中心）",
+   "icon": "🍤",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 8,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認",
+   "categories": [
+    {
+     "id": "rice",
+     "name": "炸物飯",
+     "en": "Fried Rice Boxes",
+     "items": [
+      {
+       "name": "炸雞排飯",
+       "en": "Fried Chicken Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-001"
+      },
+      {
+       "name": "炸豬排飯",
+       "en": "Fried Pork Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-002"
+      },
+      {
+       "name": "炸魚排飯",
+       "en": "Fried Fish Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-003"
+      },
+      {
+       "name": "炸雙拼飯（雞排＋豬排）",
+       "en": "Fried Duo Rice (Chicken + Pork)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-004"
+      },
+      {
+       "name": "炸排骨飯",
+       "en": "Fried Rib Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-005"
+      },
+      {
+       "name": "椒鹽雞塊飯",
+       "en": "Salt and Pepper Chicken Nugget Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-006"
+      },
+      {
+       "name": "蜂蜜芥末雞塊飯",
+       "en": "Honey Mustard Chicken Nuggets with Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-007"
+      },
+      {
+       "name": "糖醋雞塊飯",
+       "en": "Sweet and Sour Chicken Nugget Rice",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "bear-008"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "korean",
+   "name": "高麗元",
+   "en": "Korean Cuisine",
+   "area": "第一餐廳（學生活動中心）",
+   "icon": "🍲",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 10,
+   "slotCap": 12,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認",
+   "categories": [
+    {
+     "id": "bbq",
+     "name": "烤肉",
+     "en": "Roast Food",
+     "items": [
+      {
+       "name": "韓式烤豬肉飯",
+       "en": "Korean BBQ Pork Rice",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "korean-001"
+      },
+      {
+       "name": "韓式蜜汁腿排飯",
+       "en": "Korean Honey Chicken Rice",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "korean-002"
+      },
+      {
+       "name": "韓式炸雞飯",
+       "en": "Korean Fried Chicken Rice",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "korean-003"
+      },
+      {
+       "name": "韓式雞排飯",
+       "en": "Korean Chicken Chop Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "korean-004"
+      },
+      {
+       "name": "韓式安東雞肉飯",
+       "en": "Korean Andong Chicken Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "korean-005"
+      },
+      {
+       "name": "四菜飯",
+       "en": "Four Course Meal",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "korean-006"
+      },
+      {
+       "name": "韓式牛雞雙拼飯",
+       "en": "Korean Beef & Chicken Rice",
+       "campus": 130,
+       "off": 140,
+       "tags": [],
+       "id": "korean-007"
+      },
+      {
+       "name": "韓式牛豬雙拼飯",
+       "en": "Korean Beef & Pork Rice",
+       "campus": 130,
+       "off": 140,
+       "tags": [],
+       "id": "korean-008"
+      },
+      {
+       "name": "韓式豬雞雙拼飯",
+       "en": "Korean Pork & Chicken Rice",
+       "campus": 125,
+       "off": 135,
+       "tags": [],
+       "id": "korean-009"
+      },
+      {
+       "name": "韓式辣醬炸雞飯",
+       "en": "Korean Spicy Fried Chicken Rice",
+       "campus": 100,
+       "off": 110,
+       "tags": [
+        "辣"
+       ],
+       "id": "korean-010"
+      },
+      {
+       "name": "韓式椒鹽雞柳飯",
+       "en": "Korean Salt & Pepper Chicken Strips Rice",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "korean-011"
+      },
+      {
+       "name": "韓式雞柳飯",
+       "en": "Korean Chicken Strips Rice",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "korean-012"
+      }
+     ]
+    },
+    {
+     "id": "bibimbap",
+     "name": "拌飯",
+     "en": "Bibimbap",
+     "items": [
+      {
+       "name": "韓式蔬菜拌飯",
+       "en": "Korean Vegetable Bibimbap",
+       "campus": 60,
+       "off": 70,
+       "tags": [
+        "素"
+       ],
+       "id": "korean-013"
+      },
+      {
+       "name": "韓式豬肉拌飯",
+       "en": "Korean Pork Bibimbap",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "korean-014"
+      },
+      {
+       "name": "韓式腿排拌飯",
+       "en": "Korean Chicken Leg Bibimbap",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "korean-015"
+      }
+     ]
+    },
+    {
+     "id": "hotpot",
+     "name": "小火鍋",
+     "en": "Small Hot Pot",
+     "items": [
+      {
+       "name": "蔬菜豆腐鍋",
+       "en": "Vegetable Tofu Hot Pot",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "korean-016"
+      },
+      {
+       "name": "蔬菜泡菜鍋",
+       "en": "Vegetable Kimchi Hot Pot",
+       "campus": 80,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "korean-017"
+      },
+      {
+       "name": "豆腐泡菜鍋",
+       "en": "Tofu Kimchi Hot Pot",
+       "campus": 85,
+       "off": 95,
+       "tags": [
+        "辣"
+       ],
+       "id": "korean-018"
+      },
+      {
+       "name": "豬肉豆腐鍋",
+       "en": "Pork Tofu Hot Pot",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "korean-019"
+      },
+      {
+       "name": "豬肉泡菜鍋",
+       "en": "Pork Kimchi Hot Pot",
+       "campus": 95,
+       "off": 105,
+       "tags": [
+        "辣"
+       ],
+       "id": "korean-020"
+      },
+      {
+       "name": "牛肉豆腐鍋",
+       "en": "Beef Tofu Hot Pot",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "korean-021"
+      },
+      {
+       "name": "牛肉泡菜鍋",
+       "en": "Beef Kimchi Hot Pot",
+       "campus": 100,
+       "off": 110,
+       "tags": [
+        "辣"
+       ],
+       "id": "korean-022"
+      },
+      {
+       "name": "蔬菜部隊鍋",
+       "en": "Vegetable Cheese Hot Pot",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "korean-023"
+      },
+      {
+       "name": "豬肉部隊鍋",
+       "en": "Pork Cheese Hot Pot",
+       "campus": 110,
+       "off": 120,
+       "tags": [],
+       "id": "korean-024"
+      },
+      {
+       "name": "牛肉部隊鍋",
+       "en": "Beef Cheese Hot Pot",
+       "campus": 120,
+       "off": 130,
+       "tags": [],
+       "id": "korean-025"
+      }
+     ]
+    },
+    {
+     "id": "extra",
+     "name": "加點",
+     "en": "Extras",
+     "items": [
+      {
+       "name": "加飯",
+       "en": "Extra Rice",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "korean-026"
+      },
+      {
+       "name": "每增加一樣",
+       "en": "Extra Side Dish",
+       "campus": 10,
+       "off": 15,
+       "tags": [],
+       "id": "korean-027"
+      },
+      {
+       "name": "韓式泡菜",
+       "en": "Korean Kimchi",
+       "campus": 30,
+       "off": 40,
+       "tags": [
+        "辣"
+       ],
+       "id": "korean-028"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "drinkstore",
+   "name": "Drinkstore 飲料",
+   "en": "Drinkstore",
+   "area": "第二教學大樓餐廳（T2）",
+   "icon": "🧋",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 5,
+   "slotCap": 20,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認；菜單標示「校內價9折優惠」，系統依原價自動算 9 折（四捨五入）；冰量、甜度請寫在備註；自備罐裝回填現折 20 元（現場）",
+   "categories": [
+    {
+     "id": "jelly",
+     "name": "黑糖粉粿",
+     "en": "Brown Sugar Starch Jelly",
+     "items": [
+      {
+       "name": "黑糖粉粿奶茶（L）",
+       "en": "Milk Tea with Brown Sugar Starch Jelly (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-001"
+      },
+      {
+       "name": "黑糖粉粿冬瓜撞奶（L）",
+       "en": "Winter Melon Fresh Milk with Brown Sugar Starch Jelly (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-002"
+      },
+      {
+       "name": "黑糖粉粿冬瓜茶（L）",
+       "en": "Melon Tea with Brown Sugar Starch Jelly (L)",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-003"
+      },
+      {
+       "name": "粉粿冬瓜檸檬冰沙（L）",
+       "en": "Winter Melon Lemon Smoothie with Brown Sugar Starch Jelly (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-004"
+      }
+     ]
+    },
+    {
+     "id": "best",
+     "name": "暢銷單品",
+     "en": "Best Seller",
+     "items": [
+      {
+       "name": "甘蔗青茶（L）",
+       "en": "Sugar Cane with Si Ji Chun Tea (L)",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-005"
+      },
+      {
+       "name": "甘蔗青茶（980cc 罐）",
+       "en": "Sugar Cane with Si Ji Chun Tea (980cc)",
+       "campus": 99,
+       "off": 110,
+       "tags": [],
+       "id": "drinkstore-006"
+      },
+      {
+       "name": "甘蔗檸檬（L）",
+       "en": "Sugar Cane Lemon (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-007"
+      },
+      {
+       "name": "玉荷青（L）",
+       "en": "Lychee Flavor with Si Ji Chun Tea (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-008"
+      },
+      {
+       "name": "楊枝甘露（L）",
+       "en": "Mango Pomelo Sago (L)",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-009"
+      },
+      {
+       "name": "養樂多綠茶（L）",
+       "en": "Yakult Green Tea (L)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-010"
+      },
+      {
+       "name": "養樂多綠茶（980cc 罐）",
+       "en": "Yakult Green Tea (980cc)",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "drinkstore-011"
+      },
+      {
+       "name": "茶凍伯爵紅茶（L）",
+       "en": "Tea Jelly with Earl Grey Tea (L)",
+       "campus": 41,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-012"
+      },
+      {
+       "name": "芋頭鮮奶（L）",
+       "en": "Taro Fresh Milk (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-013"
+      },
+      {
+       "name": "黑糖奶茶（L）",
+       "en": "Brown Sugar Milk Tea (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-014"
+      },
+      {
+       "name": "黑糖奶茶（980cc 罐）",
+       "en": "Brown Sugar Milk Tea (980cc)",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "id": "drinkstore-015"
+      }
+     ]
+    },
+    {
+     "id": "creamer",
+     "name": "濃醇芝芝厚奶",
+     "en": "Classic Creamer",
+     "items": [
+      {
+       "name": "濃醇芝芝厚奶茶（L）",
+       "en": "Ceylon Black Milk Tea with Cheese Milk Foam (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-016"
+      },
+      {
+       "name": "濃醇芝芝厚奶茶（980cc 罐）",
+       "en": "Ceylon Black Milk Tea with Cheese Milk Foam (980cc)",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "id": "drinkstore-017"
+      },
+      {
+       "name": "濃醇芝芝厚奶綠（L）",
+       "en": "Green Milk Tea with Cheese Milk Foam (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-018"
+      },
+      {
+       "name": "濃醇芝芝厚奶綠（980cc 罐）",
+       "en": "Green Milk Tea with Cheese Milk Foam (980cc)",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "id": "drinkstore-019"
+      },
+      {
+       "name": "起司抹綠茶（L）",
+       "en": "Green Tea with Cheese Milk Foam (L)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-020"
+      },
+      {
+       "name": "起司抹綠茶（980cc 罐）",
+       "en": "Green Tea with Cheese Milk Foam (980cc)",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "drinkstore-021"
+      },
+      {
+       "name": "布丁雙倍厚奶茶（L）",
+       "en": "Pudding Milk Tea with Cheese Milk Foam (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-022"
+      },
+      {
+       "name": "日式可可奶茶（L）",
+       "en": "Japanese-Style Cocoa with Cheese Milk Foam (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-023"
+      },
+      {
+       "name": "日式可可奶茶（980cc 罐）",
+       "en": "Japanese-Style Cocoa with Cheese Milk Foam (980cc)",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "id": "drinkstore-024"
+      }
+     ]
+    },
+    {
+     "id": "smoothie",
+     "name": "現打冰沙",
+     "en": "Freshly Made Smoothies",
+     "items": [
+      {
+       "name": "綠豆冰沙（L）",
+       "en": "Mung Bean Smoothie (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-025"
+      },
+      {
+       "name": "綠豆沙牛奶（L）",
+       "en": "Mung Bean Smoothie with Milk (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-026"
+      },
+      {
+       "name": "鮮檸檬椰冰沙（L）",
+       "en": "Fresh Lemon Smoothie (Aloe Vera & Tea Jelly) (L)",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-027"
+      },
+      {
+       "name": "芒芒芝士果粒（L）",
+       "en": "Mango Smoothie with Cheese Milk Foam (L)",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-028"
+      }
+     ]
+    },
+    {
+     "id": "bubble",
+     "name": "黑糖珍珠",
+     "en": "Bubble with Brown Sugar",
+     "items": [
+      {
+       "name": "黑糖珍珠奶茶（L）",
+       "en": "Brown Sugar Bubble Milk Tea (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-029"
+      },
+      {
+       "name": "黑糖珍珠奶茶（980cc 罐）",
+       "en": "Brown Sugar Bubble Milk Tea (980cc)",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "id": "drinkstore-030"
+      },
+      {
+       "name": "黑糖珍珠鮮奶（L）",
+       "en": "Brown Sugar Bubble Milk (L)",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-031"
+      },
+      {
+       "name": "黑糖珍珠鮮奶（980cc 罐）",
+       "en": "Brown Sugar Bubble Milk (980cc)",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "drinkstore-032"
+      },
+      {
+       "name": "黑糖珍珠紅茶拿鐵（L）",
+       "en": "Brown Sugar Bubble Ceylon Black Milk Tea (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-033"
+      },
+      {
+       "name": "黑糖珍珠紅茶拿鐵（980cc 罐）",
+       "en": "Brown Sugar Bubble Ceylon Black Milk Tea (980cc)",
+       "campus": 86,
+       "off": 95,
+       "tags": [],
+       "id": "drinkstore-034"
+      },
+      {
+       "name": "百香雙Q（L）",
+       "en": "Bubble & Coconut Jelly with Passion Fruit (L)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-035"
+      },
+      {
+       "name": "百香雙Q（980cc 罐）",
+       "en": "Bubble & Coconut Jelly with Passion Fruit (980cc)",
+       "campus": 77,
+       "off": 85,
+       "tags": [],
+       "id": "drinkstore-036"
+      }
+     ]
+    },
+    {
+     "id": "tea",
+     "name": "單品茶",
+     "en": "Fresh Tea",
+     "items": [
+      {
+       "name": "四季春青茶（L）",
+       "en": "Si Ji Chun Tea (L)",
+       "campus": 32,
+       "off": 35,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-037"
+      },
+      {
+       "name": "四季春青茶（980cc 罐）",
+       "en": "Si Ji Chun Tea (980cc)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "id": "drinkstore-038"
+      },
+      {
+       "name": "手煮蔗香紅茶（L）",
+       "en": "Ceylon Black Tea (L)",
+       "campus": 27,
+       "off": 30,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-039"
+      },
+      {
+       "name": "手煮蔗香紅茶（980cc 罐）",
+       "en": "Ceylon Black Tea (980cc)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "id": "drinkstore-040"
+      },
+      {
+       "name": "茉香綠茶（L）",
+       "en": "Jasmine Green Tea (L)",
+       "campus": 27,
+       "off": 30,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-041"
+      },
+      {
+       "name": "茉香綠茶（980cc 罐）",
+       "en": "Jasmine Green Tea (980cc)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "id": "drinkstore-042"
+      },
+      {
+       "name": "伯爵紅茶（L）",
+       "en": "Earl Grey Tea (L)",
+       "campus": 27,
+       "off": 30,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-043"
+      },
+      {
+       "name": "伯爵紅茶（980cc 罐）",
+       "en": "Earl Grey Tea (980cc)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "id": "drinkstore-044"
+      },
+      {
+       "name": "烏龍青茶（L）",
+       "en": "Oolong Si Ji Chun Tea (L)",
+       "campus": 32,
+       "off": 35,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-045"
+      },
+      {
+       "name": "烏龍青茶（980cc 罐）",
+       "en": "Oolong Si Ji Chun Tea (980cc)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "id": "drinkstore-046"
+      },
+      {
+       "name": "冬瓜茶（L）",
+       "en": "Melon Tea (L)",
+       "campus": 27,
+       "off": 30,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-047"
+      },
+      {
+       "name": "冬瓜茶（980cc 罐）",
+       "en": "Melon Tea (980cc)",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "id": "drinkstore-048"
+      },
+      {
+       "name": "冬瓜四季春（L）",
+       "en": "Melon with Si Ji Chun Tea (L)",
+       "campus": 41,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-049"
+      },
+      {
+       "name": "冬瓜四季春（980cc 罐）",
+       "en": "Melon with Si Ji Chun Tea (980cc)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "id": "drinkstore-050"
+      }
+     ]
+    },
+    {
+     "id": "chew",
+     "name": "嚼嚼 CHEW CHEW",
+     "en": "Chew Chew",
+     "items": [
+      {
+       "name": "伯爵嚼嚼紅茶（L）",
+       "en": "Earl Grey Tea with Agar Jelly, Aloe Vera & Lychee Coconut Jelly (L)",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-051"
+      },
+      {
+       "name": "伯爵嚼嚼紅茶（980cc 罐）",
+       "en": "Earl Grey Tea with Agar Jelly, Aloe Vera & Lychee Coconut Jelly (980cc)",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "id": "drinkstore-052"
+      },
+      {
+       "name": "四季嚼嚼青茶（L）",
+       "en": "Si Ji Chun Tea with Agar Jelly, Aloe Vera & Lychee Coconut Jelly (L)",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-053"
+      },
+      {
+       "name": "四季嚼嚼青茶（980cc 罐）",
+       "en": "Si Ji Chun Tea with Agar Jelly, Aloe Vera & Lychee Coconut Jelly (980cc)",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "id": "drinkstore-054"
+      }
+     ]
+    },
+    {
+     "id": "milk",
+     "name": "鮮奶茶",
+     "en": "Fresh Milk Tea",
+     "items": [
+      {
+       "name": "伯爵鮮奶茶（L）",
+       "en": "Earl Grey Milk Tea (L)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-055"
+      },
+      {
+       "name": "伯爵鮮奶茶（980cc 罐）",
+       "en": "Earl Grey Milk Tea (980cc)",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "drinkstore-056"
+      },
+      {
+       "name": "紅茶拿鐵（L）",
+       "en": "Ceylon Black Tea Latte (L)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-057"
+      },
+      {
+       "name": "紅茶拿鐵（980cc 罐）",
+       "en": "Ceylon Black Tea Latte (980cc)",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "drinkstore-058"
+      },
+      {
+       "name": "四季鮮奶青（L）",
+       "en": "Si Ji Chun Milk Tea (L)",
+       "campus": 54,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-059"
+      },
+      {
+       "name": "四季鮮奶青（980cc 罐）",
+       "en": "Si Ji Chun Milk Tea (980cc)",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "drinkstore-060"
+      },
+      {
+       "name": "法式可可鮮奶（L）",
+       "en": "Cocoa Latte (L)",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-061"
+      },
+      {
+       "name": "法式可可鮮奶（980cc 罐）",
+       "en": "Cocoa Latte (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-062"
+      },
+      {
+       "name": "黑糖鮮奶茶（L）",
+       "en": "Brown Sugar Latte (L)",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-063"
+      },
+      {
+       "name": "黑糖鮮奶茶（980cc 罐）",
+       "en": "Brown Sugar Latte (980cc)",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "drinkstore-064"
+      }
+     ]
+    },
+    {
+     "id": "fruit",
+     "name": "新鮮水果",
+     "en": "Fresh Fruit",
+     "items": [
+      {
+       "name": "木瓜牛奶（L）",
+       "en": "Papaya Milk (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-065"
+      },
+      {
+       "name": "木瓜牛奶（980cc 罐）",
+       "en": "Papaya Milk (980cc)",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "drinkstore-066"
+      },
+      {
+       "name": "超級水果四季春（L）",
+       "en": "Super Fruit with Si Ji Chun Tea (L)",
+       "campus": 63,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-067"
+      },
+      {
+       "name": "超級水果四季春（980cc 罐）",
+       "en": "Super Fruit with Si Ji Chun Tea (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-068"
+      },
+      {
+       "name": "完全檸檬鮮綠（L）",
+       "en": "Fresh Lemon with Green Tea (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-069"
+      },
+      {
+       "name": "完全檸檬鮮綠（980cc 罐）",
+       "en": "Fresh Lemon with Green Tea (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-070"
+      },
+      {
+       "name": "手榨檸檬（L）",
+       "en": "Fresh Squeezed Lemon (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-071"
+      },
+      {
+       "name": "手榨檸檬（980cc 罐）",
+       "en": "Fresh Squeezed Lemon (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-072"
+      },
+      {
+       "name": "金桔檸檬四季春（L）",
+       "en": "Kumquat Lemon Si Ji Chun Tea (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-073"
+      },
+      {
+       "name": "金桔檸檬四季春（980cc 罐）",
+       "en": "Kumquat Lemon Si Ji Chun Tea (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-074"
+      },
+      {
+       "name": "冬瓜檸檬（L）",
+       "en": "Fresh Melon Lemon (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-075"
+      },
+      {
+       "name": "冬瓜檸檬（980cc 罐）",
+       "en": "Fresh Melon Lemon (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-076"
+      },
+      {
+       "name": "蜂蜜檸檬（L）",
+       "en": "Honey Lemon (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-077"
+      },
+      {
+       "name": "蜂蜜檸檬（980cc 罐）",
+       "en": "Honey Lemon (980cc)",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "id": "drinkstore-078"
+      },
+      {
+       "name": "芭樂汁（L）",
+       "en": "Guava Juice (L)",
+       "campus": 59,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-079"
+      },
+      {
+       "name": "芭樂汁（980cc 罐）",
+       "en": "Guava Juice (980cc)",
+       "campus": 1,
+       "off": true,
+       "tags": [],
+       "id": "drinkstore-080"
+      },
+      {
+       "name": "火龍果芭樂（L）",
+       "en": "Pitaya & Guava Juice (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-081"
+      },
+      {
+       "name": "火龍果芭樂（980cc 罐）",
+       "en": "Pitaya & Guava Juice (980cc)",
+       "campus": 1,
+       "off": true,
+       "tags": [],
+       "id": "drinkstore-082"
+      },
+      {
+       "name": "橙香火龍果（L）",
+       "en": "Pitaya & Orange Juice (L)",
+       "campus": 68,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "drink_top",
+       "id": "drinkstore-083"
+      },
+      {
+       "name": "橙香火龍果（980cc 罐）",
+       "en": "Pitaya & Orange Juice (980cc)",
+       "campus": 1,
+       "off": true,
+       "tags": [],
+       "id": "drinkstore-084"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "drink_top": {
+     "name": "加料",
+     "items": [
+      {
+       "name": "黑糖珍珠",
+       "en": "Brown Sugar Pearls",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "drinkstore-a01"
+      },
+      {
+       "name": "荔枝椰果",
+       "en": "Lychee Coconut Jelly",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "drinkstore-a02"
+      },
+      {
+       "name": "蘆薈",
+       "en": "Aloe Vera",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "drinkstore-a03"
+      },
+      {
+       "name": "寒天晶球",
+       "en": "Agar Jelly Balls",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "drinkstore-a04"
+      },
+      {
+       "name": "茶凍",
+       "en": "Tea Jelly",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "drinkstore-a05"
+      },
+      {
+       "name": "布丁",
+       "en": "Pudding",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "drinkstore-a06"
+      },
+      {
+       "name": "黑糖粉粿",
+       "en": "Brown Sugar Starch Jelly",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "drinkstore-a07"
+      },
+      {
+       "name": "芋頭",
+       "en": "Taro",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "drinkstore-a08"
+      },
+      {
+       "name": "嚼嚼",
+       "en": "Chew Chew",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "drinkstore-a09"
+      },
+      {
+       "name": "起司奶蓋",
+       "en": "Cheese Milk Foam",
+       "campus": 35,
+       "off": 35,
+       "tags": [],
+       "id": "drinkstore-a10"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "asahi",
+   "name": "朝日食堂",
+   "en": "Breakfast",
+   "area": "第二教學大樓餐廳（T2）",
+   "icon": "🍳",
+   "open": "07:00-14:00",
+   "prepMin": 6,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，早餐店暫用 07:00–14:00，待店家確認；請告知內用或外帶",
+   "categories": [
+    {
+     "id": "burger",
+     "name": "漢堡",
+     "en": "Burger",
+     "items": [
+      {
+       "name": "吉士玉米蛋堡",
+       "en": "Cheese Corn Egg Burger",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-001"
+      },
+      {
+       "name": "豬肉蛋堡",
+       "en": "Pork Egg Burger",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-002"
+      },
+      {
+       "name": "培根蛋堡",
+       "en": "Bacon Egg Burger",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-003"
+      },
+      {
+       "name": "胡麻醬豬排蛋堡",
+       "en": "Sesame Sauce Pork Cutlet Egg Burger",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-004"
+      },
+      {
+       "name": "烤肉蛋堡",
+       "en": "Grilled Pork Egg Burger",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-005"
+      },
+      {
+       "name": "韓式泡菜烤肉蛋堡",
+       "en": "Korean Kimchi Grilled Pork Egg Burger",
+       "campus": 65,
+       "off": 75,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "asahi_set",
+       "id": "asahi-006"
+      },
+      {
+       "name": "薯餅玉米蛋堡",
+       "en": "Hash Brown Corn Egg Burger",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-007"
+      },
+      {
+       "name": "蘑菇起士蛋堡",
+       "en": "Mushroom Cheese Egg Burger",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-008"
+      },
+      {
+       "name": "鱈魚蛋堡",
+       "en": "Sea Bream Egg Burger",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-009"
+      },
+      {
+       "name": "胡麻醬起士G排蛋堡",
+       "en": "Sesame Cheese Chicken Cutlet Egg Burger",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-010"
+      },
+      {
+       "name": "香雞排蛋堡",
+       "en": "Crispy Chicken Cutlet Egg Burger",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-011"
+      },
+      {
+       "name": "辣味咔啦雞蛋堡",
+       "en": "Spicy Karaage Chicken Egg Burger",
+       "campus": 60,
+       "off": 70,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "asahi_set",
+       "id": "asahi-012"
+      },
+      {
+       "name": "辣味韓式泡菜雞腿蛋堡",
+       "en": "Spicy Korean Kimchi Chicken Thigh Egg Burger",
+       "campus": 70,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "asahi_set",
+       "id": "asahi-013"
+      },
+      {
+       "name": "雙層牛肉吉士蛋堡",
+       "en": "Double Beef Cheese Egg Burger",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-014"
+      }
+     ]
+    },
+    {
+     "id": "toast",
+     "name": "吐司",
+     "en": "Toast",
+     "items": [
+      {
+       "name": "果醬薄片吐司",
+       "en": "Jam Thin Toast",
+       "campus": 20,
+       "off": 30,
+       "tags": [],
+       "id": "asahi-015"
+      },
+      {
+       "name": "果醬厚片吐司",
+       "en": "Jam Thick Toast",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-016"
+      },
+      {
+       "name": "藜麥鮪魚蛋吐司",
+       "en": "Quinoa Tuna Egg Toast",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-017"
+      },
+      {
+       "name": "胡麻醬炸豬排蛋吐司",
+       "en": "Sesame Sauce Pork Cutlet Toast",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-018"
+      },
+      {
+       "name": "火腿蛋吐司",
+       "en": "Egg Toast (火腿蛋吐司)",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-019"
+      },
+      {
+       "name": "玉米蛋吐司",
+       "en": "Egg Toast (玉米蛋吐司)",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-020"
+      },
+      {
+       "name": "肉鬆蛋吐司",
+       "en": "Egg Toast (肉鬆蛋吐司)",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-021"
+      },
+      {
+       "name": "起士蛋吐司",
+       "en": "Egg Toast (起士蛋吐司)",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-022"
+      },
+      {
+       "name": "培根蛋吐司",
+       "en": "Egg Toast (培根蛋吐司)",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-023"
+      },
+      {
+       "name": "香雞排蛋吐司",
+       "en": "Egg Toast (香雞排蛋吐司)",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-024"
+      },
+      {
+       "name": "豬肉蛋吐司",
+       "en": "Egg Toast (豬肉蛋吐司)",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-025"
+      },
+      {
+       "name": "烤肉蛋吐司",
+       "en": "Grilled Pork Egg Toast",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-026"
+      },
+      {
+       "name": "辣味卡啦雞蛋吐司",
+       "en": "Spicy Karaage Chicken Egg Toast",
+       "campus": 60,
+       "off": 70,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "asahi_set",
+       "id": "asahi-027"
+      },
+      {
+       "name": "韓式泡菜烤肉蛋吐司",
+       "en": "Korean Kimchi Grilled Pork Egg Toast",
+       "campus": 65,
+       "off": 75,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "asahi_set",
+       "id": "asahi-028"
+      },
+      {
+       "name": "胡麻起士雞排蛋吐司",
+       "en": "Sesame Cheese Chicken Cutlet Egg Toast",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-029"
+      },
+      {
+       "name": "厚切雞胸蛋吐司",
+       "en": "Thick-cut Chicken Breast Egg Toast",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-030"
+      },
+      {
+       "name": "蘑菇起士蛋吐司",
+       "en": "Mushroom Cheese Egg Toast",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-031"
+      },
+      {
+       "name": "鱈魚蛋吐司",
+       "en": "Sea Bream Egg Toast",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-032"
+      },
+      {
+       "name": "辣味韓式泡菜雞腿蛋吐司",
+       "en": "Spicy Korean Kimchi Chicken Thigh Egg Toast",
+       "campus": 70,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "asahi_set",
+       "id": "asahi-033"
+      },
+      {
+       "name": "雙層牛肉吉士蛋吐司",
+       "en": "Double Beef Cheese Egg Toast",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-034"
+      },
+      {
+       "name": "豬肉總匯三明治",
+       "en": "Pork Club Sandwich",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-035"
+      },
+      {
+       "name": "巧克力咔啦雞總匯三明治",
+       "en": "Chocolate Karaage Chicken Club Sandwich",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-036"
+      }
+     ]
+    },
+    {
+     "id": "pancake",
+     "name": "蛋餅",
+     "en": "Egg Pancake",
+     "items": [
+      {
+       "name": "原味蛋餅",
+       "en": "Plain Egg Pancake",
+       "campus": 30,
+       "off": 40,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-037"
+      },
+      {
+       "name": "蔬菜蛋餅",
+       "en": "Egg Pancake (蔬菜蛋餅)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-038"
+      },
+      {
+       "name": "豆芽菜蛋餅",
+       "en": "Egg Pancake (豆芽菜蛋餅)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-039"
+      },
+      {
+       "name": "火腿蛋餅",
+       "en": "Egg Pancake (火腿蛋餅)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-040"
+      },
+      {
+       "name": "玉米蛋餅",
+       "en": "Egg Pancake (玉米蛋餅)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-041"
+      },
+      {
+       "name": "肉鬆蛋餅",
+       "en": "Egg Pancake (肉鬆蛋餅)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-042"
+      },
+      {
+       "name": "起士蛋餅",
+       "en": "Egg Pancake (起士蛋餅)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-043"
+      },
+      {
+       "name": "藜麥鮪魚蛋餅",
+       "en": "Egg Pancake (藜麥鮪魚蛋餅)",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-044"
+      },
+      {
+       "name": "烤肉蛋餅",
+       "en": "Egg Pancake (烤肉蛋餅)",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-045"
+      },
+      {
+       "name": "泡菜燒肉蛋餅",
+       "en": "Egg Pancake (泡菜燒肉蛋餅)",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-046"
+      },
+      {
+       "name": "蘑菇起士蛋餅",
+       "en": "Egg Pancake (蘑菇起士蛋餅)",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-047"
+      },
+      {
+       "name": "巧克力雞球蛋餅",
+       "en": "Egg Pancake (巧克力雞球蛋餅)",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-048"
+      },
+      {
+       "name": "草莓肉鬆蛋餅",
+       "en": "Egg Pancake (草莓肉鬆蛋餅)",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "asahi_set",
+       "id": "asahi-049"
+      }
+     ]
+    },
+    {
+     "id": "noodle",
+     "name": "麵點",
+     "en": "Noodles",
+     "items": [
+      {
+       "name": "豬肉鍋燒意麵",
+       "en": "Pork Yaki Noodles (豬肉鍋燒意麵)",
+       "campus": 79,
+       "off": 89,
+       "tags": [],
+       "id": "asahi-050"
+      },
+      {
+       "name": "豬肉鍋燒雞絲麵",
+       "en": "Pork Yaki Noodles (豬肉鍋燒雞絲麵)",
+       "campus": 79,
+       "off": 89,
+       "tags": [],
+       "id": "asahi-051"
+      },
+      {
+       "name": "豬肉鍋燒泡麵",
+       "en": "Pork Yaki Noodles (豬肉鍋燒泡麵)",
+       "campus": 79,
+       "off": 89,
+       "tags": [],
+       "id": "asahi-052"
+      },
+      {
+       "name": "豬肉鍋燒烏龍麵",
+       "en": "Pork Yaki Noodles (豬肉鍋燒烏龍麵)",
+       "campus": 79,
+       "off": 89,
+       "tags": [],
+       "id": "asahi-053"
+      },
+      {
+       "name": "牛肉鍋燒意麵",
+       "en": "Beef Yaki Noodles (牛肉鍋燒意麵)",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "asahi-054"
+      },
+      {
+       "name": "牛肉鍋燒雞絲麵",
+       "en": "Beef Yaki Noodles (牛肉鍋燒雞絲麵)",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "asahi-055"
+      },
+      {
+       "name": "牛肉鍋燒泡麵",
+       "en": "Beef Yaki Noodles (牛肉鍋燒泡麵)",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "asahi-056"
+      },
+      {
+       "name": "牛肉鍋燒烏龍麵",
+       "en": "Beef Yaki Noodles (牛肉鍋燒烏龍麵)",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "asahi-057"
+      },
+      {
+       "name": "韓式泡菜辣味肉醬麵",
+       "en": "Korean Kimchi Spicy Meat Sauce Noodles",
+       "campus": 79,
+       "off": 89,
+       "tags": [
+        "辣"
+       ],
+       "id": "asahi-058"
+      },
+      {
+       "name": "培根白醬義大利麵",
+       "en": "Bacon White Sauce Spaghetti",
+       "campus": 89,
+       "off": 99,
+       "tags": [],
+       "id": "asahi-059"
+      },
+      {
+       "name": "厚切雞胸青醬義大利麵",
+       "en": "Thick-cut Chicken Breast Pesto Spaghetti",
+       "campus": 99,
+       "off": 109,
+       "tags": [],
+       "id": "asahi-060"
+      },
+      {
+       "name": "炒泡麵＋蛋",
+       "en": "Stir-fried Instant Noodles",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "asahi-061"
+      },
+      {
+       "name": "府城肉燥拌麵＋蛋",
+       "en": "Tainan Braised Pork Noodles",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "asahi-062"
+      },
+      {
+       "name": "蒜味沙茶拌麵＋蛋",
+       "en": "Garlic Sha Cha Noodles",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "asahi-063"
+      },
+      {
+       "name": "黑胡椒麵＋蛋",
+       "en": "Black Pepper Noodles",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "asahi-064"
+      },
+      {
+       "name": "蘑菇麵＋蛋",
+       "en": "Mushroom Noodles",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "asahi-065"
+      }
+     ]
+    },
+    {
+     "id": "snack",
+     "name": "點心",
+     "en": "Snacks",
+     "note": "點心只有單一價格",
+     "items": [
+      {
+       "name": "蘿蔔糕",
+       "en": "Radish Cake",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-066"
+      },
+      {
+       "name": "熱狗（3條）",
+       "en": "Hot Dogs (3 pcs)",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "asahi-067"
+      },
+      {
+       "name": "薯餅",
+       "en": "Hash Brown",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "asahi-068"
+      },
+      {
+       "name": "荷包蛋",
+       "en": "Fried Egg",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "asahi-069"
+      },
+      {
+       "name": "小鬆餅",
+       "en": "Mini Pancake",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-070"
+      },
+      {
+       "name": "小雞球",
+       "en": "Chicken Ball",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-071"
+      },
+      {
+       "name": "雞塊（6個）",
+       "en": "Chicken Nuggets (6 pcs)",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-072"
+      },
+      {
+       "name": "煎餃（7個）",
+       "en": "Pan-fried Dumplings (7 pcs)",
+       "campus": 35,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-073"
+      },
+      {
+       "name": "炸地瓜球",
+       "en": "Fried Sweet Potato Ball",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-074"
+      },
+      {
+       "name": "炸脆薯",
+       "en": "Crispy Fries",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-075"
+      },
+      {
+       "name": "義式厚切雞胸（1片）",
+       "en": "Thick-cut Chicken Breast (1 pc)",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "asahi-076"
+      },
+      {
+       "name": "咔啦雞（1塊）",
+       "en": "Karaage Chicken (1 pc)",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "asahi-077"
+      },
+      {
+       "name": "培根起士蛋卷",
+       "en": "Bacon Cheese Egg Roll",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "asahi-078"
+      }
+     ]
+    },
+    {
+     "id": "drink",
+     "name": "飲料",
+     "en": "Drinks",
+     "note": "套餐 A：主餐加購任一飲料折 5 元（現場折）",
+     "items": [
+      {
+       "name": "紅茶",
+       "en": "Tea (紅茶)",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-079"
+      },
+      {
+       "name": "綠茶",
+       "en": "Tea (綠茶)",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-080"
+      },
+      {
+       "name": "冬瓜茶",
+       "en": "Tea (冬瓜茶)",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-081"
+      },
+      {
+       "name": "無糖紅茶",
+       "en": "Sugar-free Tea (無糖紅茶)",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-082"
+      },
+      {
+       "name": "無糖綠茶",
+       "en": "Sugar-free Tea (無糖綠茶)",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-083"
+      },
+      {
+       "name": "奶茶",
+       "en": "Milk Tea (奶茶)",
+       "campus": 30,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-084"
+      },
+      {
+       "name": "奶綠",
+       "en": "Milk Tea (奶綠)",
+       "campus": 30,
+       "off": 40,
+       "tags": [],
+       "id": "asahi-085"
+      },
+      {
+       "name": "豆漿",
+       "en": "Soy Milk",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-086"
+      },
+      {
+       "name": "奇亞籽豆漿",
+       "en": "Chia Seed Soy Milk",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "id": "asahi-087"
+      },
+      {
+       "name": "可爾必思",
+       "en": "Calpis",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "id": "asahi-088"
+      },
+      {
+       "name": "黑咖啡",
+       "en": "Coffee (黑咖啡)",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "id": "asahi-089"
+      },
+      {
+       "name": "招牌咖啡",
+       "en": "Coffee (招牌咖啡)",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "id": "asahi-090"
+      },
+      {
+       "name": "柳橙汁",
+       "en": "Orange Juice",
+       "campus": 25,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-091"
+      },
+      {
+       "name": "玉米濃湯（季節限定）",
+       "en": "Corn Chowder (Seasonal)",
+       "campus": 40,
+       "off": 50,
+       "tags": [],
+       "id": "asahi-092"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "asahi_set": {
+     "name": "套餐加購",
+     "items": [
+      {
+       "name": "B 套餐：紅／綠／奶茶＋薯餅",
+       "en": "Set B: Tea + Hash Brown",
+       "campus": 35,
+       "off": 35,
+       "tags": [],
+       "id": "asahi-a01"
+      },
+      {
+       "name": "C 套餐：紅／綠／奶茶＋雞塊×2＋蛋餅",
+       "en": "Set C: Tea + 2 Nuggets + Egg Pancake",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "asahi-a02"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "kyoto",
+   "name": "京都日式料理",
+   "en": "Japanese Cuisine",
+   "area": "第二教學大樓餐廳（T2）",
+   "icon": "🍣",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 10,
+   "slotCap": 12,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認",
+   "categories": [
+    {
+     "id": "set",
+     "name": "定食",
+     "en": "Set Meal",
+     "items": [
+      {
+       "name": "赤魂燒牛定食",
+       "en": "Aka-Damashii Grilled Beef Set Meal",
+       "campus": 99,
+       "off": 109,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-001"
+      },
+      {
+       "name": "日式炸蝦定食",
+       "en": "Japanese Fried Shrimp Set Meal",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-002"
+      },
+      {
+       "name": "鯖魚定食",
+       "en": "Grilled Mackerel Set Meal",
+       "campus": 129,
+       "off": 139,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-003"
+      },
+      {
+       "name": "蒲燒鯛魚定食",
+       "en": "Teriyaki Sea Bream Set Meal",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-004"
+      },
+      {
+       "name": "醬香雞腿定食",
+       "en": "Soy Sauce Chicken Thigh Set Meal",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-005"
+      },
+      {
+       "name": "麻辣雞柳定食",
+       "en": "Spicy Chicken Strips Set Meal",
+       "campus": 99,
+       "off": 109,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-006"
+      },
+      {
+       "name": "香酥雞排定食（帶骨）",
+       "en": "Crispy Bone-in Chicken Cutlet Set Meal",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-007"
+      },
+      {
+       "name": "極上雞腿丁定食",
+       "en": "Premium Diced Chicken Thigh Set Meal",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-008"
+      },
+      {
+       "name": "嫩雞柳定食",
+       "en": "Tender Chicken Strips Set Meal",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-009"
+      },
+      {
+       "name": "唐揚雞定食",
+       "en": "Japanese Fried Chicken (Karaage) Set Meal",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-010"
+      },
+      {
+       "name": "黃金雞排定食（無骨）",
+       "en": "Golden Boneless Chicken Cutlet Set Meal",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-011"
+      },
+      {
+       "name": "脆雞定食",
+       "en": "Crispy Chicken Set Meal",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-012"
+      },
+      {
+       "name": "本家醬煮豚排定食",
+       "en": "House Braised Pork Cutlet Set Meal",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-013"
+      },
+      {
+       "name": "麻辣豬肉片定食",
+       "en": "Spicy Sliced Pork Set Meal",
+       "campus": 99,
+       "off": 109,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-014"
+      },
+      {
+       "name": "傳家豚角煮定食",
+       "en": "Traditional Braised Pork Belly Set Meal",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-015"
+      },
+      {
+       "name": "梅花豬肉片定食",
+       "en": "Sliced Pork Collar Set Meal",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-016"
+      },
+      {
+       "name": "日式豬排定食",
+       "en": "Japanese Pork Cutlet Set Meal",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-017"
+      },
+      {
+       "name": "極選四品菜（無主食）",
+       "en": "Premium Four Side Dishes (No Rice)",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "kyoto-018"
+      },
+      {
+       "name": "職人濃厚咖哩飯",
+       "en": "Artisan Rich Japanese Curry Rice",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "id": "kyoto-019"
+      }
+     ]
+    },
+    {
+     "id": "don",
+     "name": "丼飯",
+     "en": "Rice Bowls",
+     "items": [
+      {
+       "name": "豚角煮丼",
+       "en": "Braised Pork Belly Rice Bowl",
+       "campus": 105,
+       "off": 115,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-020"
+      },
+      {
+       "name": "豬排丼",
+       "en": "Pork Cutlet Rice Bowl",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-021"
+      },
+      {
+       "name": "燒肉丼",
+       "en": "Grilled Pork Rice Bowl",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-022"
+      },
+      {
+       "name": "蒲燒鯛魚丼",
+       "en": "Teriyaki Sea Bream Rice Bowl",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-023"
+      },
+      {
+       "name": "唐揚雞丼",
+       "en": "Karaage Chicken Rice Bowl",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-024"
+      },
+      {
+       "name": "雞排丼",
+       "en": "Chicken Cutlet Rice Bowl",
+       "campus": 99,
+       "off": 109,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-025"
+      },
+      {
+       "name": "親子丼",
+       "en": "Oyakodon (Chicken & Egg Rice Bowl)",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-026"
+      },
+      {
+       "name": "脆雞丼",
+       "en": "Crispy Chicken Rice Bowl",
+       "campus": 90,
+       "off": 100,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-027"
+      }
+     ]
+    },
+    {
+     "id": "double",
+     "name": "雙拼無菜丼飯",
+     "en": "Double Protein Rice Bowl (No Vegetables)",
+     "items": [
+      {
+       "name": "燒肉＋雞柳＋滑蛋丼",
+       "en": "Grilled Pork & Chicken Strips with Soft-Scrambled Egg",
+       "campus": 110,
+       "off": 120,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-028"
+      },
+      {
+       "name": "豬排＋雞柳＋滑蛋丼",
+       "en": "Pork Cutlet & Chicken Strips with Soft-Scrambled Egg",
+       "campus": 110,
+       "off": 120,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-029"
+      },
+      {
+       "name": "燒肉＋豬排＋滑蛋丼",
+       "en": "Grilled Pork & Pork Cutlet with Soft-Scrambled Egg",
+       "campus": 110,
+       "off": 120,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-030"
+      },
+      {
+       "name": "燒肉＋燒牛＋滑蛋丼",
+       "en": "Grilled Pork & Grilled Beef with Soft-Scrambled Egg",
+       "campus": 120,
+       "off": 130,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-031"
+      },
+      {
+       "name": "雞柳＋燒牛＋滑蛋丼",
+       "en": "Chicken Strips & Grilled Beef with Soft-Scrambled Egg",
+       "campus": 120,
+       "off": 130,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-032"
+      },
+      {
+       "name": "豬排＋燒牛＋滑蛋丼",
+       "en": "Pork Cutlet & Grilled Beef with Soft-Scrambled Egg",
+       "campus": 120,
+       "off": 130,
+       "tags": [],
+       "addonGroup": "kyoto_add",
+       "id": "kyoto-033"
+      }
+     ]
+    },
+    {
+     "id": "extra",
+     "name": "單點",
+     "en": "Extras",
+     "items": [
+      {
+       "name": "豬排（一塊）",
+       "en": "Pork Cutlet",
+       "campus": 45,
+       "off": 50,
+       "tags": [],
+       "id": "kyoto-034"
+      },
+      {
+       "name": "黃金雞排（一塊）",
+       "en": "Golden Boneless Chicken Cutlet",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-035"
+      },
+      {
+       "name": "唐揚雞（一份）",
+       "en": "Karaage Chicken",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-036"
+      },
+      {
+       "name": "燒肉（一份）",
+       "en": "Grilled Pork",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-037"
+      },
+      {
+       "name": "梅花肉（一份）",
+       "en": "Pork Collar",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-038"
+      },
+      {
+       "name": "脆雞（一塊）",
+       "en": "Crispy Chicken",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-039"
+      },
+      {
+       "name": "本家醬煮豚排",
+       "en": "House Braised Pork Cutlet",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "kyoto-040"
+      },
+      {
+       "name": "日式炸蝦（二支）",
+       "en": "Japanese Fried Shrimp (2 pcs)",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "kyoto-041"
+      },
+      {
+       "name": "嫩雞柳（一份）",
+       "en": "Tender Chicken Strips",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-042"
+      },
+      {
+       "name": "蒲燒鯛魚（一塊）",
+       "en": "Teriyaki Sea Bream",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "id": "kyoto-043"
+      },
+      {
+       "name": "炙燒牛肉（一份）",
+       "en": "Seared Beef",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "id": "kyoto-044"
+      },
+      {
+       "name": "荷包蛋／滑蛋",
+       "en": "Fried Egg / Soft-Scrambled Egg",
+       "campus": 15,
+       "off": 20,
+       "tags": [],
+       "id": "kyoto-045"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "kyoto_add": {
+     "name": "加購",
+     "items": [
+      {
+       "name": "荷包蛋或滑蛋",
+       "en": "Fried Egg or Soft-Scrambled Egg",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "kyoto-a01"
+      },
+      {
+       "name": "升級咖哩飯",
+       "en": "Upgrade to Japanese Curry Rice",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "kyoto-a02"
+      },
+      {
+       "name": "加咖哩醬",
+       "en": "Add Japanese Curry Sauce",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "kyoto-a03"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "bafang",
+   "name": "八方雲集",
+   "en": "Dumplings / Noodles",
+   "area": "第二教學大樓餐廳（T2）",
+   "icon": "🥟",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 8,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認；鍋貼、水餃菜單以「每顆」計價，系統以 10 顆為一份；套餐固定不可更換，套餐湯只能搭 32 元湯品（魚丸湯 +5 元）",
+   "categories": [
+    {
+     "id": "combo",
+     "name": "鍋貼水餃套餐",
+     "en": "Dumpling Combo Meals",
+     "note": "湯品任選：酸辣湯、玉米湯、魚丸湯（寫在備註）",
+     "items": [
+      {
+       "name": "1號餐 招牌水餃10顆＋湯品任選",
+       "en": "Meal No.1: 10 Signature Dumplings + Soup",
+       "campus": 90,
+       "off": 105,
+       "tags": [],
+       "id": "bafang-001"
+      },
+      {
+       "name": "2號餐 韭菜水餃10顆＋湯品任選",
+       "en": "Meal No.2: 10 Chive Dumplings + Soup",
+       "campus": 90,
+       "off": 105,
+       "tags": [],
+       "id": "bafang-002"
+      },
+      {
+       "name": "3號餐 招牌鍋貼10顆＋湯品任選",
+       "en": "Meal No.3: 10 Signature Pan-Fried Dumplings + Soup",
+       "campus": 90,
+       "off": 105,
+       "tags": [],
+       "id": "bafang-003"
+      },
+      {
+       "name": "4號餐 韭菜鍋貼10顆＋湯品任選",
+       "en": "Meal No.4: 10 Chive Pan-Fried Dumplings + Soup",
+       "campus": 90,
+       "off": 105,
+       "tags": [],
+       "id": "bafang-004"
+      },
+      {
+       "name": "5號餐 酸辣麵＋5個鍋貼",
+       "en": "Meal No.5: Hot & Sour Noodles + 5 Pan-Fried Dumplings",
+       "campus": 90,
+       "off": 105,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-005"
+      },
+      {
+       "name": "6號餐 招牌鍋貼10顆＋豆漿",
+       "en": "Meal No.6: 10 Signature Pan-Fried Dumplings + Soy Milk",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "bafang-006"
+      },
+      {
+       "name": "7號餐 招牌水餃10顆＋豆漿",
+       "en": "Meal No.7: 10 Signature Dumplings + Soy Milk",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "bafang-007"
+      },
+      {
+       "name": "8號餐 韭菜水餃10顆＋豆漿",
+       "en": "Meal No.8: 10 Chive Dumplings + Soy Milk",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "bafang-008"
+      }
+     ]
+    },
+    {
+     "id": "potsticker",
+     "name": "鍋貼（10 顆）",
+     "en": "Potstickers (10 pcs)",
+     "note": "每顆 校內 6.5／校外 7 元",
+     "items": [
+      {
+       "name": "招牌鍋貼（10顆）",
+       "en": "Signature Pan-Fried Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-009"
+      },
+      {
+       "name": "韭菜鍋貼（10顆）",
+       "en": "Chive Pan-Fried Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-010"
+      },
+      {
+       "name": "韓式辣味鍋貼（10顆）",
+       "en": "Korean Spicy Pan-Fried Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-011"
+      }
+     ]
+    },
+    {
+     "id": "dumpling",
+     "name": "水餃（10 顆）",
+     "en": "Dumplings (10 pcs)",
+     "items": [
+      {
+       "name": "招牌水餃（10顆）",
+       "en": "Signature Boiled Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-012"
+      },
+      {
+       "name": "韭菜水餃（10顆）",
+       "en": "Chive Boiled Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-013"
+      },
+      {
+       "name": "韓式辣味水餃（10顆）",
+       "en": "Korean Spicy Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-014"
+      },
+      {
+       "name": "玉米水餃（10顆）",
+       "en": "Corn Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-015"
+      },
+      {
+       "name": "咖哩雞肉水餃（10顆）",
+       "en": "Curry Chicken Dumplings (10)",
+       "campus": 65,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-016"
+      },
+      {
+       "name": "新蔬食水餃（10顆）",
+       "en": "Vegetarian Dumplings (10)",
+       "campus": 70,
+       "off": 75,
+       "tags": [
+        "素"
+       ],
+       "id": "bafang-017"
+      },
+      {
+       "name": "鮮蝦水餃（10顆）",
+       "en": "Shrimp Dumplings (10)",
+       "campus": 100,
+       "off": 105,
+       "tags": [],
+       "id": "bafang-018"
+      }
+     ]
+    },
+    {
+     "id": "soupdumpling",
+     "name": "湯餃／餛飩",
+     "en": "Soup Dumplings & Wontons",
+     "items": [
+      {
+       "name": "酸辣湯餃",
+       "en": "Hot and Sour Soup Dumplings",
+       "campus": 81,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-019"
+      },
+      {
+       "name": "玉米湯餃",
+       "en": "Corn Soup Dumplings",
+       "campus": 81,
+       "off": 90,
+       "tags": [],
+       "id": "bafang-020"
+      },
+      {
+       "name": "菜肉大抄手（紅油／和風）",
+       "en": "Vegetable & Pork Wontons",
+       "campus": 70,
+       "off": 75,
+       "tags": [],
+       "id": "bafang-021"
+      }
+     ]
+    },
+    {
+     "id": "noodle",
+     "name": "麵類",
+     "en": "Noodles",
+     "items": [
+      {
+       "name": "古早味乾麵",
+       "en": "Traditional Dry Noodles",
+       "campus": 40,
+       "off": 45,
+       "tags": [],
+       "id": "bafang-022"
+      },
+      {
+       "name": "麻醬乾麵",
+       "en": "Sesame Sauce Dry Noodles",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "id": "bafang-023"
+      },
+      {
+       "name": "招牌乾麵",
+       "en": "Signature Dry Noodles",
+       "campus": 50,
+       "off": 55,
+       "tags": [],
+       "id": "bafang-024"
+      },
+      {
+       "name": "紹辣乾麵",
+       "en": "Shao-La Spicy Dry Noodles",
+       "campus": 55,
+       "off": 60,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-025"
+      },
+      {
+       "name": "古早味湯麵",
+       "en": "Traditional Soup Noodles",
+       "campus": 40,
+       "off": 45,
+       "tags": [],
+       "id": "bafang-026"
+      },
+      {
+       "name": "酸辣湯麵",
+       "en": "Hot and Sour Soup Noodles",
+       "campus": 63,
+       "off": 70,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-027"
+      },
+      {
+       "name": "菜肉大餛飩麵",
+       "en": "Vegetable & Pork Wonton Noodles",
+       "campus": 72,
+       "off": 80,
+       "tags": [],
+       "id": "bafang-028"
+      },
+      {
+       "name": "紹辣菜肉大餛飩麵",
+       "en": "Spicy Pickled Vegetable & Pork Wonton Noodles",
+       "campus": 72,
+       "off": 80,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-029"
+      }
+     ]
+    },
+    {
+     "id": "soup",
+     "name": "湯品",
+     "en": "Soups",
+     "items": [
+      {
+       "name": "酸辣湯",
+       "en": "Hot and Sour Soup",
+       "campus": 32,
+       "off": 35,
+       "tags": [
+        "辣"
+       ],
+       "id": "bafang-030"
+      },
+      {
+       "name": "玉米濃湯",
+       "en": "Creamy Corn Soup",
+       "campus": 32,
+       "off": 35,
+       "tags": [],
+       "id": "bafang-031"
+      },
+      {
+       "name": "旗魚花枝丸湯",
+       "en": "Marlin & Squid Ball Soup",
+       "campus": 36,
+       "off": 40,
+       "tags": [],
+       "id": "bafang-032"
+      },
+      {
+       "name": "菜肉大餛飩湯",
+       "en": "Vegetable & Pork Wonton Soup",
+       "campus": 55,
+       "off": 60,
+       "tags": [],
+       "id": "bafang-033"
+      }
+     ]
+    },
+    {
+     "id": "noodleset",
+     "name": "麵食套餐",
+     "en": "Noodle Combo Meals",
+     "note": "A～C 號餐校內外同價（店家確認）",
+     "items": [
+      {
+       "name": "A號餐 40元麵類＋豆漿",
+       "en": "Combo A: 40 NTD Noodles + Soy Milk",
+       "campus": 60,
+       "off": 60,
+       "tags": [],
+       "id": "bafang-034"
+      },
+      {
+       "name": "B號餐 40元麵類＋湯類",
+       "en": "Combo B: 40 NTD Noodles + Soup",
+       "campus": 70,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-035"
+      },
+      {
+       "name": "C號餐 50元麵類＋豆漿",
+       "en": "Combo C: 50 NTD Noodles + Soy Milk",
+       "campus": 70,
+       "off": 70,
+       "tags": [],
+       "id": "bafang-036"
+      },
+      {
+       "name": "D號餐 50元麵類＋湯類",
+       "en": "Combo D: 50 NTD Noodles + Soup",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "id": "bafang-037"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "jitong",
+   "name": "雞同ㄚ講",
+   "en": "Roast Food",
+   "area": "第二教學大樓餐廳（T2）",
+   "icon": "🍗",
+   "open": "10:30-14:00, 16:30-19:30",
+   "prepMin": 8,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，暫用 10:30–14:00、16:30–19:30，待店家確認",
+   "categories": [
+    {
+     "id": "rice",
+     "name": "便當",
+     "en": "Rice",
+     "note": "校外價＝校內價＋10 元（店家確認）；烤雞腿飯、油雞腿飯菜單印 120",
+     "items": [
+      {
+       "name": "筍絲控肉飯",
+       "en": "Braised Pork Belly with Bamboo Shoots Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-001"
+      },
+      {
+       "name": "蒜泥白肉飯",
+       "en": "Poached Pork with Garlic Sauce Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-002"
+      },
+      {
+       "name": "四菜飯",
+       "en": "Four-Vegetable Rice",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "id": "jitong-003"
+      },
+      {
+       "name": "滷肉飯",
+       "en": "Braised Pork Rice",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "id": "jitong-004"
+      },
+      {
+       "name": "炸無骨黑豬排飯",
+       "en": "Fried Boneless Black Pork Chop Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-005"
+      },
+      {
+       "name": "炸無骨蜜汁雞排飯",
+       "en": "Fried Boneless Honey-Glazed Chicken Cutlet Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-006"
+      },
+      {
+       "name": "三寶飯（叉燒、油雞、香腸）",
+       "en": "Three-Delicacy Rice",
+       "campus": 100,
+       "off": 110,
+       "tags": [],
+       "id": "jitong-007"
+      },
+      {
+       "name": "烤雞腿飯",
+       "en": "Grilled Chicken Leg Rice",
+       "campus": 105,
+       "off": 120,
+       "tags": [],
+       "id": "jitong-008"
+      },
+      {
+       "name": "油雞腿飯",
+       "en": "Soy Sauce Chicken Leg Rice",
+       "campus": 105,
+       "off": 120,
+       "tags": [],
+       "id": "jitong-009"
+      },
+      {
+       "name": "香腸飯",
+       "en": "Taiwanese Sausage Rice",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "id": "jitong-010"
+      },
+      {
+       "name": "叉燒飯",
+       "en": "BBQ Pork Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-011"
+      },
+      {
+       "name": "油雞飯",
+       "en": "Soy Sauce Chicken Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-012"
+      },
+      {
+       "name": "香腸叉燒飯",
+       "en": "Taiwanese Sausage & BBQ Pork Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-013"
+      },
+      {
+       "name": "叉燒油雞飯",
+       "en": "BBQ Pork & Soy Sauce Chicken Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-014"
+      },
+      {
+       "name": "香腸油雞飯",
+       "en": "Taiwanese Sausage & Soy Sauce Chicken Rice",
+       "campus": 95,
+       "off": 105,
+       "tags": [],
+       "id": "jitong-015"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tianjin",
+   "name": "天津蔥抓餅",
+   "en": "Scallion Pancake",
+   "area": "第二教學大樓餐廳（T2）",
+   "icon": "🫓",
+   "open": "07:00-14:00",
+   "prepMin": 6,
+   "slotCap": 15,
+   "note": "營業時間尚未取得，早餐店暫用 07:00–14:00，待店家確認",
+   "categories": [
+    {
+     "id": "pancake",
+     "name": "蔥抓餅",
+     "en": "Scallion Pancake",
+     "note": "可加配料（單一價格）",
+     "items": [
+      {
+       "name": "原味蔥抓餅",
+       "en": "Original Scallion Pancake",
+       "campus": 35,
+       "off": 45,
+       "tags": [],
+       "addonGroup": "tj_add",
+       "id": "tianjin-001"
+      },
+      {
+       "name": "蔥抓餅加蛋",
+       "en": "Scallion Pancake with Egg",
+       "campus": 45,
+       "off": 55,
+       "tags": [],
+       "addonGroup": "tj_add",
+       "id": "tianjin-002"
+      }
+     ]
+    },
+    {
+     "id": "set",
+     "name": "套餐（含紅茶）",
+     "en": "Sets with Black Tea",
+     "note": "飲料可五選一，更換紅茶以外飲料 +5 元",
+     "items": [
+      {
+       "name": "1號餐 抓餅＋薯餅＋紅茶",
+       "en": "Set 1: Scallion Pancake + Hash Brown + Black Tea",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-003"
+      },
+      {
+       "name": "2號餐 抓餅＋蔬菜蛋＋紅茶",
+       "en": "Set 2: Scallion Pancake + Vegetable Omelet + Black Tea",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-004"
+      },
+      {
+       "name": "3號餐 抓餅＋豬肉＋紅茶",
+       "en": "Set 3: Scallion Pancake + Pork Patty + Black Tea",
+       "campus": 55,
+       "off": 65,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-005"
+      },
+      {
+       "name": "4號餐 抓餅＋雙蛋起司＋紅茶",
+       "en": "Set 4: Scallion Pancake + Double Egg & Cheese + Black Tea",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-006"
+      },
+      {
+       "name": "5號餐 抓餅＋火腿＋紅茶",
+       "en": "Set 5: Scallion Pancake + Ham + Black Tea",
+       "campus": 50,
+       "off": 60,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-007"
+      },
+      {
+       "name": "6號餐 抓餅＋厚切牛肉＋紅茶",
+       "en": "Set 6: Scallion Pancake + Thick-Cut Beef + Black Tea",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-008"
+      },
+      {
+       "name": "7號餐 抓餅＋雙肉（香雞豬肉）＋紅茶",
+       "en": "Set 7: Scallion Pancake + Chicken & Pork + Black Tea",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-009"
+      },
+      {
+       "name": "8號餐 抓餅＋雞排＋紅茶",
+       "en": "Set 8: Scallion Pancake + Chicken Fillet + Black Tea",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-010"
+      },
+      {
+       "name": "9號餐 抓餅＋總匯（雞塊3、熱狗3、薯餅1）＋紅茶",
+       "en": "Set 9: Scallion Pancake + Combo Platter + Black Tea",
+       "campus": 110,
+       "off": 120,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-011"
+      },
+      {
+       "name": "10號餐 抓餅＋雞肉捲＋紅茶",
+       "en": "Set 10: Scallion Pancake + Chicken Wrap + Black Tea",
+       "campus": 85,
+       "off": 95,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-012"
+      },
+      {
+       "name": "11號餐 抓餅＋九層塔蛋培根＋紅茶",
+       "en": "Set 11: Scallion Pancake + Basil Egg & Bacon + Black Tea",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-013"
+      },
+      {
+       "name": "12A號餐 抓餅＋卡拉雞腿＋紅茶",
+       "en": "Set 12A: Scallion Pancake + Crispy Chicken Leg + Black Tea",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-014"
+      },
+      {
+       "name": "12B號餐 抓餅＋勁辣雞腿＋紅茶",
+       "en": "Set 12B: Scallion Pancake + Spicy Chicken Leg + Black Tea",
+       "campus": 80,
+       "off": 90,
+       "tags": [
+        "辣"
+       ],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-015"
+      },
+      {
+       "name": "13號餐 抓餅＋魚排＋紅茶",
+       "en": "Set 13: Scallion Pancake + Fish Fillet + Black Tea",
+       "campus": 80,
+       "off": 90,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-016"
+      },
+      {
+       "name": "14號餐 抓餅＋檸檬雞柳條＋紅茶",
+       "en": "Set 14: Scallion Pancake + Lemon Chicken Strips + Black Tea",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-017"
+      },
+      {
+       "name": "15號餐 抓餅＋豬排＋紅茶",
+       "en": "Set 15: Scallion Pancake + Pork Chop + Black Tea",
+       "campus": 60,
+       "off": 70,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-018"
+      },
+      {
+       "name": "16號餐 抓餅＋泡菜起司＋紅茶",
+       "en": "Set 16: Scallion Pancake + Kimchi & Cheese + Black Tea",
+       "campus": 70,
+       "off": 80,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-019"
+      },
+      {
+       "name": "17號餐 抓餅＋熱狗3＋紅茶",
+       "en": "Set 17: Scallion Pancake + 3 Mini Hot Dogs + Black Tea",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-020"
+      },
+      {
+       "name": "18號餐 抓餅＋三寶（火腿、香雞、豬排）＋紅茶",
+       "en": "Set 18: Scallion Pancake + Trio Combo + Black Tea",
+       "campus": 75,
+       "off": 85,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-021"
+      },
+      {
+       "name": "19號餐 抓餅＋炒泡麵＋紅茶",
+       "en": "Set 19: Scallion Pancake + Stir-Fried Instant Noodles + Black Tea",
+       "campus": 65,
+       "off": 75,
+       "tags": [],
+       "addonGroup": "tj_drink",
+       "id": "tianjin-022"
+      }
+     ]
+    },
+    {
+     "id": "drink",
+     "name": "飲料",
+     "en": "Drinks",
+     "note": "飲料只有單一價格",
+     "items": [
+      {
+       "name": "紅茶",
+       "en": "Black Tea",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "tianjin-023"
+      },
+      {
+       "name": "奶茶",
+       "en": "Milk Tea",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "tianjin-024"
+      },
+      {
+       "name": "豆奶茶",
+       "en": "Soy Milk Tea",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "tianjin-025"
+      },
+      {
+       "name": "洛神紅茶",
+       "en": "Roselle Black Tea",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "tianjin-026"
+      },
+      {
+       "name": "無糖豆漿",
+       "en": "Unsweetened Soy Milk",
+       "campus": 25,
+       "off": 25,
+       "tags": [],
+       "id": "tianjin-027"
+      }
+     ]
+    }
+   ],
+   "addonGroups": {
+    "tj_add": {
+     "name": "加配料",
+     "items": [
+      {
+       "name": "九層塔",
+       "en": "Basil",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "tianjin-tj_add-01"
+      },
+      {
+       "name": "火腿",
+       "en": "Ham",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "tianjin-tj_add-02"
+      },
+      {
+       "name": "起司",
+       "en": "Cheese",
+       "campus": 10,
+       "off": 10,
+       "tags": [],
+       "id": "tianjin-tj_add-03"
+      },
+      {
+       "name": "培根",
+       "en": "Bacon",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "tianjin-tj_add-04"
+      },
+      {
+       "name": "香雞",
+       "en": "Chicken Nugget",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "tianjin-tj_add-05"
+      },
+      {
+       "name": "豬肉",
+       "en": "Pork",
+       "campus": 15,
+       "off": 15,
+       "tags": [],
+       "id": "tianjin-tj_add-06"
+      },
+      {
+       "name": "薯餅",
+       "en": "Potato Cake",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "tianjin-tj_add-07"
+      },
+      {
+       "name": "泡菜",
+       "en": "Kimchi",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "tianjin-tj_add-08"
+      },
+      {
+       "name": "豬排",
+       "en": "Pork Chop",
+       "campus": 20,
+       "off": 20,
+       "tags": [],
+       "id": "tianjin-tj_add-09"
+      },
+      {
+       "name": "炸飯糰",
+       "en": "Fried Onigiri",
+       "campus": 35,
+       "off": 35,
+       "tags": [],
+       "id": "tianjin-tj_add-10"
+      },
+      {
+       "name": "雞排",
+       "en": "Chicken Chops",
+       "campus": 35,
+       "off": 35,
+       "tags": [],
+       "id": "tianjin-tj_add-11"
+      },
+      {
+       "name": "花枝排",
+       "en": "Flower Branch",
+       "campus": 35,
+       "off": 35,
+       "tags": [],
+       "id": "tianjin-tj_add-12"
+      },
+      {
+       "name": "魚排",
+       "en": "Fish Steak",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "tianjin-tj_add-13"
+      },
+      {
+       "name": "卡拉雞腿排",
+       "en": "Kara Chicken Leg",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "tianjin-tj_add-14"
+      },
+      {
+       "name": "厚切牛",
+       "en": "Thick Cut Beef",
+       "campus": 40,
+       "off": 40,
+       "tags": [],
+       "id": "tianjin-tj_add-15"
+      },
+      {
+       "name": "辣雞腿排",
+       "en": "Spicy Chicken Leg",
+       "campus": 45,
+       "off": 45,
+       "tags": [],
+       "id": "tianjin-tj_add-16"
+      },
+      {
+       "name": "韓式脆皮雞肉捲",
+       "en": "Korean Crispy Chicken Roll",
+       "campus": 45,
+       "off": 45,
+       "tags": [],
+       "id": "tianjin-tj_add-17"
+      },
+      {
+       "name": "檸檬雞柳（3個）",
+       "en": "Lemon Chicken Strips (3)",
+       "campus": 45,
+       "off": 45,
+       "tags": [],
+       "id": "tianjin-tj_add-18"
+      },
+      {
+       "name": "雞塊",
+       "en": "Chicken Pieces",
+       "campus": 50,
+       "off": 50,
+       "tags": [],
+       "id": "tianjin-tj_add-19"
+      }
+     ]
+    },
+    "tj_drink": {
+     "name": "換飲料",
+     "items": [
+      {
+       "name": "紅茶換其他飲料（奶茶／豆奶茶／洛神紅茶／無糖豆漿）",
+       "en": "Change Drink",
+       "campus": 5,
+       "off": 5,
+       "tags": [],
+       "id": "tianjin-tj_drink-01"
+      }
+     ]
+    }
+   }
   }
  ]
 }

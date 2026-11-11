@@ -407,7 +407,11 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const STORE_ICON={thai:'🍛',ramen:'🍜',mala:'🌶️',daka:'☕',daosui:'🥗'};
 const icon=sid=>{const s=storeById(sid); return (s&&s.icon)||STORE_ICON[sid]||'🍽️';};
-const bgc=sid=>({thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6'}[sid]||'#eef0f6');
+const bgc=sid=>({thai:'#fde9d9',ramen:'#f6efe0',mala:'#fde3e3',daka:'#efe7df',daosui:'#e4f3e6',wenzhou:'#fff1dc',opa:'#fdeccc',coldnoodle:'#e6f2fb',lightfood:'#e8f5e2',bear:'#fbe8d5',korean:'#fbe2e2'}[sid]||'#eef0f6');
+const AREA_INFO={'第一餐廳（學生活動中心）':{short:'第一餐廳',en:'Student Activity Center',emoji:'🏫'},'第二教學大樓餐廳（T2）':{short:'第二教學大樓餐廳',en:'T2 Cafeteria',emoji:'🏢'}};
+const AREA_OTHER='其他校內餐廳';
+const areaOf=s=>s.area||AREA_OTHER;
+function areaList(){const a=[]; stores.forEach(s=>{if(!a.includes(areaOf(s))) a.push(areaOf(s));}); return a.sort((x,y)=>(x===AREA_OTHER)-(y===AREA_OTHER));}
 const MENU_SIG=MENU.version+':'+MENU.stores.map(s=>s.id+s.categories.reduce((a,c)=>a+c.items.length,0)).join(',');
 let stores=[]; let allItems={};
 const storeById=id=>stores.find(s=>s.id===id);
@@ -445,7 +449,7 @@ function bookedCount(sid,t){return DB.orders.filter(o=>o.store===sid&&o.slot===t
 function rid(){const a=new Uint8Array(16); (crypto.getRandomValues?crypto.getRandomValues(a):a.forEach((_,i)=>a[i]=Math.random()*256|0)); return [...a].map(x=>x.toString(16).padStart(2,'0')).join('');}
 
 /* ================= 校園帳戶（儲值）================= */
-const WALLET_SEED={'m-B11201116':350,'m-M11407021':80,'m-T10234':500};
+const WALLET_SEED={'m-B11201116':350,'m-B11301122':300,'m-B11301107':300,'m-B11301112':300,'m-B11301110':300,'m-B11201002':300,'m-B11209015':300,'m-M11407021':80,'m-T10234':500};
 const stamp=()=>`${today()} ${hm(minOf(now()))}`;
 function wallet(uid){DB.wallets=DB.wallets||{}; if(!DB.wallets[uid]){const b=WALLET_SEED[uid]||0; DB.wallets[uid]={bal:b,tx:b?[{t:'校內儲值機儲值',amt:b,at:stamp()}]:[]};} return DB.wallets[uid];}
 function walletTx(uid,amt,label){const w=wallet(uid); w.bal+=amt; w.tx.unshift({t:label,amt,at:stamp()}); w.tx=w.tx.slice(0,30);}
@@ -558,14 +562,16 @@ function tabbar(items,cur,attr){return `<nav class="tabbar">${items.map(([k,i,l,
 function renderStudent(){
   if(!S.user) return renderLogin();
   let body='';
-  if(S.view==='home') body=renderHome();
+  if(S.view==='home'&&!S.area) S.view='hall';
+  if(S.view==='hall') body=renderHall();
+  else if(S.view==='home') body=renderHome();
   else if(S.view==='store') body=renderStore();
   else if(S.view==='cart') body=renderCart();
   else if(S.view==='checkout') body=renderCheckout();
   else if(S.view==='orders') body=renderOrders();
   else if(S.view==='me') body=renderMe();
   const myActive=DB.orders.filter(o=>o.user===S.user.id&&['SUBMITTED','ACCEPTED','READY'].includes(o.status)).length;
-  const tab=(v,i,l,b)=>`<button class="${S.view===v||(v==='home'&&S.view==='store')?'on':''}" data-go="${v}"><span class="i">${i}</span>${l}${b?`<span class="badge">${b}</span>`:''}</button>`;
+  const tab=(v,i,l,b)=>`<button class="${S.view===v||(v==='home'&&['store','hall'].includes(S.view))?'on':''}" data-go="${v}"><span class="i">${i}</span>${l}${b?`<span class="badge">${b}</span>`:''}</button>`;
   return body+(S.sheet?renderSheet():'')+`<nav class="tabbar">${tab('home','🏠',T('餐廳','Stores'))}${tab('cart','🛒',T('購物車','Cart'),cartCount()||'')}${tab('orders','🧾',T('我的訂單','Orders'),myActive||'')}${tab('me','👤',T('我','Me'))}</nav>`;
 }
 /* ---------- identity (學號解析、身分證驗證、模擬校務資料庫) ---------- */
@@ -575,6 +581,12 @@ const LEVEL={B:{name:'大學部',pre:'大'},M:{name:'碩士班',pre:'碩'},D:{na
 // 模擬校務系統資料（原型示範用，非真實資料）。正式系統改由校園 SSO 驗證，不在本系統儲存身分證字號。
 const DIRECTORY={
   'B11201116':{id:'B000000000',name:'陳庭瑜'},
+  'B11301122':{id:'B000000000',name:'吳佳恩'},
+  'B11301107':{id:'B000000000',name:'游廷楀'},
+  'B11301112':{id:'B000000000',name:'夏予珊'},
+  'B11301110':{id:'B000000000',name:'劉佩諭'},
+  'B11201002':{id:'B000000000',name:'許書堯'},
+  'B11209015':{id:'B000000000',name:'連儷芳'},
   'M11407021':{id:'F000000004',name:'林家豪'},
   'T10234':{id:'A000000009',name:'王美玲',unit:'總務處',title:'職員',admin:true}
 };
@@ -602,17 +614,21 @@ function renderLogin(){
   const err=S.loginErr?`<div class="cv-err">⚠ ${esc(S.loginErr)}</div>`:'';
   let rows='', lead='', forgot='';
   if(mode==='member'){
-    lead='校內學生與教職員請以<b>學號／教職員編號</b>及<b>身分證字號</b>登入，帳號與校務系統綁定，登入後享校內優惠價。';
+    lead='校內學生與教職員請以<b>學號／教職員編號</b>及<b>密碼</b>登入，<b>密碼為您的身分證字號</b>（英文字母請大寫，例如 A123456789）。帳號與校務系統綁定，登入後享校內優惠價。';
     rows=`<div class="cv-row"><label for="ssoNo">帳號</label><input id="ssoNo" placeholder="學號／教職員編號" autocomplete="username" autocapitalize="characters" maxlength="9" value="${esc(S.loginNo||'')}"></div>
-      <div class="cv-row"><label for="ssoId">身分證字號</label><input id="ssoId" type="password" placeholder="請輸入身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
+      <div class="cv-row"><label for="ssoId">密碼</label><input id="ssoId" type="password" placeholder="身分證字號" autocomplete="off" autocapitalize="characters" maxlength="10"></div>
       <div id="noHint" class="cv-hint">${S.loginNo?idHint(S.loginNo):''}</div>`;
     forgot='<button class="btn sec" data-act="forgot">忘記帳號或身分驗證失敗？</button>';
   } else if(mode==='visitor'){
     lead='校外人士（訪客、廠商）<b>不需登入</b>，直接開始點餐，所有品項以<b>校外販售價</b>計算；<b>付款時再輸入手機號碼</b>，以 LINE Pay 付款。';
     rows=`<div class="cv-hint"></div>`;
   } else {
-    lead='店家請選擇店名並輸入密碼，登入後進入接單畫面。';
-    rows=`<div class="cv-row"><label for="vSel">店家</label><select id="vSel">${stores.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>
+    lead='店家請先選餐廳、再選店名並輸入密碼，登入後進入接單畫面。';
+    {const halls=areaList(); if(!S.vHall||!halls.includes(S.vHall)) S.vHall=(S.vSel&&storeById(S.vSel)&&areaOf(storeById(S.vSel)))||halls[0];
+     const hs=stores.filter(x=>areaOf(x)===S.vHall); if(!hs.some(x=>x.id===S.vSel)) S.vSel=hs[0]&&hs[0].id;
+    rows=`<div class="cv-row"><label for="vHall">餐廳</label><select id="vHall">${halls.map(a=>`<option value="${esc(a)}" ${S.vHall===a?'selected':''}>${(AREA_INFO[a]||{}).emoji||'🍽️'} ${esc((AREA_INFO[a]||{short:a}).short)}</option>`).join('')}</select></div>
+    <div class="cv-row"><label for="vSel">店家</label><select id="vSel">${hs.map(x=>`<option value="${x.id}" ${S.vSel===x.id?'selected':''}>${icon(x.id)} ${esc(x.name)}</option>`).join('')}</select></div>`;}
+    rows+=`
       <div class="cv-row"><label for="vPw">密碼</label><input id="vPw" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="請輸入密碼"></div><div class="cv-hint"></div>`;
     forgot='<button class="btn sec" data-act="forgot">忘記密碼？</button>';
   }
@@ -627,7 +643,7 @@ function renderLogin(){
     ${rows}${err}
     <div class="cv-act"><button class="btn pri" data-act="${act}">${actLabel}</button>${forgot}</div>
     <div class="cv-more">
-      ${mode==='member'?`<details class="note"><summary>原型測試帳號</summary>學生 B11201116／B000000000（陳庭瑜）<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者）<br>以上皆為虛構資料；身分證字號只用於比對，不會被儲存。</details>`:''}
+      ${mode==='member'?`<details class="note"><summary>原型測試帳號</summary>密碼即身分證字號。<br>學生 B11201116／B000000000（陳庭瑜）<br>組員帳號 B11301122、B11301107、B11301112、B11301110、B11201002、B11209015，密碼皆為 B000000000<br>碩士生 M11407021／F000000004（林家豪）<br>教職員 T10234／A000000009（王美玲，總務處管理者）<br>密碼皆為虛構測試值；身分證字號只用於比對，不會被儲存。</details>`:''}
       ${mode==='vendor'?`<p class="note">原型：各店預設密碼 0000。</p>`:''}
       <details class="note"><summary>Demo 時鐘（測試用）</summary><div style="margin-top:8px">${clockCard()}</div></details>
       <details class="note"><summary>安裝成 App</summary><div style="margin-top:6px">${installCard()}</div></details>
@@ -646,31 +662,48 @@ function memberLogin(){
   let info=null;
   if(/^[BMD]/.test(no)){const p=parseStudentNo(no); if(p.err){S.loginErr=p.err; render(); return;} info=p;}
   else if(!/^T\d{5}$/.test(no)){S.loginErr='請輸入學號（B／M／D 開頭）或教職員編號'; render(); return;}
-  if(!validTwId(idn)){S.loginErr='身分證字號格式或檢查碼不正確'; render(); return;}
+  if(!validTwId(idn)){S.loginErr='密碼格式不正確：密碼為您的身分證字號（1 個英文字母＋9 位數字）'; render(); return;}
   const rec=DIRECTORY[no];
-  if(!rec||rec.id!==idn){S.loginErr='查無此帳號，或學號與身分證字號不符'; render(); return;}
+  if(!rec||rec.id!==idn){S.loginErr='帳號或密碼錯誤（密碼為身分證字號）'; render(); return;}
   const u={id:'m-'+no,type:'member',no,name:rec.name,...(DB.users['m-'+no]||{})};
   if(info){u.role='student'; u.dept=info.dept; u.levelName=info.levelName; u.entry=info.entry; u.gradeLabel=info.gradeLabel;}
   else {u.role='staff'; u.dept=rec.unit; u.gradeLabel=`${rec.unit} ${rec.title}`; u.admin=!!rec.admin;}
-  S.user=u; S.loginNo=''; S.loginMode=null; S.view='home'; S.editMode=false; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）${u.admin?' · 右上角可開啟編輯模式':' · 校內價'}`,'ok',3500);
+  S.user=u; S.loginNo=''; S.loginMode=null; S.area=null; S.view='hall'; S.editMode=false; render(); toast(`歡迎，${u.name}（${u.gradeLabel}）${u.admin?' · 右上角可開啟編輯模式':' · 校內價'}`,'ok',3500);
 }
 function earliestLabel(s){const sl=slotsFor(s.id).find(x=>!x.full); return sl?hm(sl.t):'今日已無時段';}
+function renderHall(){
+  const pt=priceType();
+  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('要去哪個餐廳？','Which cafeteria?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
+    ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
+  <div class="scroll">
+    ${blockBanner()}
+    <div class="hello">${hm(minOf(now()))} · ${T('先選餐廳，再選店家；購物車可以跨店、跨餐廳一起結帳','Pick a cafeteria, then a store')}</div>
+    ${areaList().map(a=>{const ss=stores.filter(s=>areaOf(s)===a); const info=AREA_INFO[a]||{short:a,en:'',emoji:'🍽️'}; const openN=ss.filter(x=>isOpen(x)).length;
+      return `<button class="storecard hallcard" data-hall="${esc(a)}" style="align-items:flex-start;padding:16px">
+        <div class="em" style="background:var(--peach);font-size:30px;width:64px;height:64px">${info.emoji}</div>
+        <div style="flex:1;min-width:0"><h3 style="font-size:18px">${esc(info.short)}</h3><div class="en">${esc(info.en)}</div>
+        <div class="meta"><span class="chip">🏪 ${ss.length} ${T('家店','stores')}</span><span class="chip"><span class="dot" style="background:${openN?'var(--ok)':'#bbb'}"></span>${openN} ${T('家營業中','open')}</span></div>
+        <div class="note" style="margin-top:8px;line-height:1.6">${ss.map(x=>icon(x.id)+' '+esc(x.name)).join('　')}</div></div></button>`;}).join('')}
+  </div>`;
+}
 function renderHome(){
   const pt=priceType();
-  return `<div class="appbar"><img class="applogo" src="${LOGO}" alt=""><div><h1>${T('今天吃什麼？','What to eat?')}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
+  const info=AREA_INFO[S.area]||{short:S.area||''};
+  return `<div class="appbar"><button class="iconbtn" data-go="hall" title="切換餐廳">←</button><div><h1>${esc(info.short)}</h1><div class="sub">${esc(S.user.name)}${S.user.gradeLabel?' · '+esc(S.user.gradeLabel):''} · ${pt==='campus'?'校內優惠價':'校外販售價'}${S.user.type==='member'?` · 💳 餘額 <b>${money(wallet(S.user.id).bal)}</b>`:''}</div></div>
     ${S.user.admin?`<button class="pill" style="margin-left:auto" data-act="editmode">🛠 編輯模式</button>`:''}<button class="iconbtn" style="${S.user.admin?'':'margin-left:auto'}" data-act="lang" title="中文／English">${S.lang==='zh'?'EN':'中'}</button></div>
   <div class="scroll">
     ${blockBanner()}
     <div class="hello">${hm(minOf(now()))} · ${T('選一家店開始點餐，可以跨店一起結帳','Pick a store — you can check out from several stores at once')}</div>
-    ${stores.map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
+    <button class="pill" data-go="hall" style="margin:2px 0 8px;background:#fff;color:var(--brand);border:1px solid var(--peach-d)">🔁 ${T('切換餐廳','Switch cafeteria')}</button>
+    ${[S.area].map(a=>stores.filter(s=>areaOf(s)===a).map(s=>{const open=isOpen(s); const q=DB.orders.filter(o=>o.store===s.id&&o.day===today()&&['SUBMITTED','ACCEPTED'].includes(o.status)).length;
       return `<button class="storecard" data-store="${s.id}">
         <div class="em" style="background:${bgc(s.id)}">${icon(s.id)}</div>
         <div style="flex:1;min-width:0"><h3>${esc(s.name)}</h3><div class="en">${esc(s.en)}</div>
         <div class="meta"><span class="chip"><span class="dot" style="background:${open?'var(--ok)':'#bbb'}"></span>${open?T('營業中','Open'):T('休息中','Closed')}</span>
-        <span class="chip">⏱ ${T('最早','Earliest')} ${earliestLabel(s)}</span><span class="chip">🧑‍🍳 ${T('排隊','Queue')} ${q}</span></div></div></button>`;}).join('')}
+        <span class="chip">⏱ ${T('最早','Earliest')} ${earliestLabel(s)}</span><span class="chip">🧑‍🍳 ${T('排隊','Queue')} ${q}</span></div></div></button>`;}).join('')).join('')}
     <div class="sect-h">${T('營業時間','Opening hours')}</div>
-    ${stores.map(s=>`<div class="note">${icon(s.id)} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
-    ${storeById('daka').offline?`<p class="note">※ ${esc(storeById('daka').offline[0])}（I-21）</p>`:''}
+    ${stores.filter(s=>areaOf(s)===S.area).map(s=>`<div class="note">${icon(s.id)} ${esc(s.name)}：${esc(s.open)}</div>`).join('')}
+    ${S.area===areaOf(storeById('daka'))&&storeById('daka').offline?`<p class="note">※ ${esc(storeById('daka').offline[0])}（I-21）</p>`:''}
   </div>`;
 }
 function tagHtml(t){const cls=/VEGAN|素/.test(t)?'veg':/辣/.test(t)?'hot':/限定/.test(t)?'lim':''; return `<span class="tg ${cls}">${esc(t)}</span>`;}
@@ -681,7 +714,7 @@ function renderStore(){
   <div class="cats">${s.categories.filter(c=>c.items.length).map(c=>`<button data-jump="${c.id}">${esc(T(c.name,c.en))}</button>`).join('')}</div>
   <div class="scroll" id="menuScroll">
     ${s.builder?`<button class="builder-cta" data-act="bowl"><span class="em">🥣</span><div><b>${T('組合我的麻辣燙','Build my Mala bowl')}</b><span>${T('選湯底 → 火鍋料任選 4 個 → 加肉、加菜、加主食','Broth → any 4 hot-pot items → add meat, veg, noodles')}</span></div><span style="margin-left:auto;font-size:22px">›</span></button>`:''}
-    ${s.singlePrice?`<div class="cat-note">此店校內外同價（菜單只有一種價格）${s.note?'；'+esc(s.note):''}</div>`:''}
+    ${s.singlePrice?`<div class="cat-note">此店校內外同價（菜單只有一種價格）${s.note?'；'+esc(s.note):''}</div>`:(s.note?`<div class="cat-note">${esc(s.note)}</div>`:'')}
     ${promos.map(p=>{const [h,mm]=p.before.split(':').map(Number); const live=m<h*60+mm; return `<div class="promo">🎁 <div><b>${esc(p.name)}</b><br>${live?'現在適用，結帳時自動附贈':'今日已過 '+p.before+'，明天早上再來'}</div></div>`;}).join('')}
     ${s.categories.filter(c=>c.items.length).map(c=>`<div class="cat-h" id="cat-${c.id}"><h4>${esc(T(c.name,c.en))}</h4><span>${esc(S.lang==='zh'?c.en:c.name)}</span></div>
       ${c.note?`<div class="cat-note">${esc(c.note)}</div>`:''}
@@ -762,7 +795,7 @@ function renderSheet(){
 /* ---------- cart ---------- */
 function renderCart(){
   const g=cartByStore(); const sids=Object.keys(g);
-  if(!sids.length) return `<div class="appbar"><h1>${T('購物車','Cart')}</h1></div><div class="scroll"><div class="empty"><div class="big">🛒</div><p>購物車是空的</p><button class="btn sec" data-go="home">去逛逛四家店</button></div></div>`;
+  if(!sids.length) return `<div class="appbar"><h1>${T('購物車','Cart')}</h1></div><div class="scroll"><div class="empty"><div class="big">🛒</div><p>購物車是空的</p><button class="btn sec" data-go="hall">去選餐廳</button></div></div>`;
   let total=0;
   const html=sids.map(sid=>{const s=storeById(sid); const lines=g[sid]; const sub=lines.reduce((a,l)=>a+linePrice(l),0); total+=sub;
     const promos=promosFor(sid,lines);
@@ -1114,6 +1147,7 @@ document.addEventListener('click',e=>{
   if(d.mode!==undefined&&t.hasAttribute('data-mode')){S.loginMode=d.mode||'member'; S.loginErr=''; render(); return;}
   if(d.clock){ if(d.clock==='real'){DB.clockOffsetMin=null;} else {const [h,m]=d.clock.split(':').map(Number); DB.clockOffsetMin=h*60+m;} save(); render(); return; }
   if(d.go){S.view=d.go; S.sheet=null; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
+  if(d.hall){S.area=d.hall; S.view='home'; render(); $('#phone .scroll')&&($('#phone .scroll').scrollTop=0); return;}
   if(d.store){S.storeId=d.store; S.view='store'; render(); return;}
   if(d.jump){const el=document.getElementById('cat-'+d.jump); const sc=$('#menuScroll'); if(el&&sc) sc.scrollTo({top:el.offsetTop-sc.offsetTop-6,behavior:'smooth'}); document.querySelectorAll('.cats button').forEach(b=>b.classList.toggle('on',b===t)); return;}
   if(d.item){openItem(d.item); return;}
@@ -1137,8 +1171,8 @@ document.addEventListener('click',e=>{
   }
   switch(d.act){
     case 'sso': memberLogin(); break;
-    case 'visitor':{S.loginErr=''; S.loginMode=null; S.user={id:'v-'+rid().slice(0,10),type:'visitor',name:'訪客'}; S.view='home'; render(); toast('以訪客身分點餐：校外價；付款時再輸入手機號碼','ok',3500); break;}
-    case 'logout': S.pay=null; S.payPhone=''; S.note=''; S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
+    case 'visitor':{S.loginErr=''; S.loginMode=null; S.user={id:'v-'+rid().slice(0,10),type:'visitor',name:'訪客'}; S.area=null; S.view='hall'; render(); toast('以訪客身分點餐：校外價；付款時再輸入手機號碼','ok',3500); break;}
+    case 'logout': S.area=null; S.pay=null; S.payPhone=''; S.note=''; S.user=null; S.cart=[]; S.view='home'; S.editMode=false; S.loginMode=null; render(); break;
     case 'editmode': S.editMode=!S.editMode; S.view='home'; S.mTab=S.mTab||'stores'; render(); toast(S.editMode?'已開啟編輯模式':'已關閉編輯模式，回到點餐畫面'); break;
     case 'addStore': addStore(); break;
     case 'toggleAdd': S.showAdd=!S.showAdd; render(); break;
@@ -1165,6 +1199,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='ssoNo'){const h=document.getElementById('noHint'); if(h) h.innerHTML=idHint(e.target.value.trim());}});
 document.addEventListener('change',e=>{
   const t=e.target;
+  if(t.id==='vHall'){S.vHall=t.value; S.vSel=null; render(); return;}
   if(t.id==='vSel'){S.vSel=t.value; return;}
   if(t.id==='mStore'){S.mStore=t.value; render(); return;}
   if(t.dataset.sf){const st=storeById(t.dataset.sf), k=t.dataset.k, v=t.value.trim();

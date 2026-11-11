@@ -74,12 +74,12 @@
 
 ---
 
-## 4. 需求變更流程（CR-01～CR-08）
+## 4. 需求變更流程（CR-01～CR-09）
 
 每次需求方看完 Demo 提出修改，都照同一流程：
 
 1. 寫 `docs/change-requests/CR-xx-*.md`：背景、變更內容、**建議修改的需求編號**、**待決定事項**（與原需求衝突的地方標 ⚠）
-2. 在看板建立對應 Story（US-17～US-24，label `change-request`）
+2. 在看板建立對應 Story（US-17～US-25，label `change-request`）
 3. 開分支 `feature/<名稱>` 實作 → 測試 → PR，描述貼 CR 內容
 4. 組員審查並決定「待決定事項」→ 把結論寫回 SRS 的變更紀錄
 
@@ -93,6 +93,7 @@
 | CR-06 | feature/online-payment | US-22 | 只能線上付款（LINE Pay／校園帳戶）、餘額顯示、校外人士付款時填電話 |
 | CR-07 | feature/student-complete | US-23 | 學生按完成訂單、未完成不能點下一餐 |
 | CR-08 | feature/noshow-correction | US-24 | 店家可更正「未取餐」 |
+| CR-09 | feature/first-restaurant | US-25 | 登入後選餐廳；新增兩個餐廳 12 家店 |
 
 **PR 合併順序：** PR 是「疊起來」的（每個分支建立在前一個上），請**由上往下依序合併**；合併一個後，下一個 PR 的 base 會自動改成 main。
 
