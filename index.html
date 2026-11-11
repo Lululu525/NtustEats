@@ -2750,7 +2750,7 @@ const PAY_LABEL={wallet:'校園帳戶扣款',linepay:'LINE Pay'};
 /* ================= CR-10 帳務：校內儲值機 → 學校代收 → 撥款給店家 ================= */
 // 校園帳戶由學校（總務處出納）代收保管；學生在儲值機投現金，餘額記在學校帳務系統。
 // 付款時錢先進「學校代收」，訂單完成後轉「待撥款」，總務處定期結算匯入店家登記的銀行帳戶。
-const KIOSKS={K01:'第一餐廳（學生活動中心）儲值機',K02:'第二教學大樓餐廳儲值機',K03:'圖書館 1F 儲值機'};
+const KIOSKS={K01:'行政大樓儲值機',K02:'圖書館儲值機'};   // 學校目前只有 2 台儲值機
 const SETTLE_FEE=0;   // 撥款手續費率：待確認（SRS Q-13），先以 0% 計
 function ledger(){DB.ledger=DB.ledger||[]; return DB.ledger;}
 function logLedger(e){ledger().unshift({id:rid().slice(0,8),at:stamp(),day:today(),...e}); if(DB.ledger.length>800) DB.ledger.length=800;}
@@ -2782,7 +2782,7 @@ function walletCard(compact){
   return `<div class="card wallet"><div class="wl-top"><div><small>校園帳戶餘額</small><b>${money(w.bal)}</b></div><span class="wl-ic">💳</span></div>
     ${compact?'':`<p class="note" style="margin:6px 0 10px">可至校內儲值機以現金儲值；點餐時可直接扣款。</p>
     <div class="sect-h" style="margin-top:4px">模擬校內儲值機（插學生證、投現金）</div>
-    <div class="kchips">${Object.entries(KIOSKS).map(([k,n])=>`<button class="${(S.kiosk||'K01')===k?'on':''}" data-kiosk="${k}">${k} ${esc(n.replace('儲值機',''))}</button>`).join('')}</div>
+    <div class="kchips">${Object.entries(KIOSKS).map(([k,n])=>`<button class="${(KIOSKS[S.kiosk]?S.kiosk:'K01')===k?'on':''}" data-kiosk="${k}">${k} ${esc(n.replace('儲值機',''))}</button>`).join('')}</div>
     <div class="vtool" style="margin:0 0 6px"><button class="btn sec sm" data-topup="100">投 $100</button><button class="btn sec sm" data-topup="500">投 $500</button><button class="btn sec sm" data-topup="1000">投 $1000</button></div>
     <div class="sect-h" style="margin-top:10px">最近交易</div>
     ${w.tx.length?w.tx.slice(0,8).map(x=>`<div class="txrow"><div><b>${esc(x.t)}</b><small>${esc(x.at)}</small></div><span class="${x.amt>=0?'in':'out'}">${x.amt>=0?'+':'−'}${money(Math.abs(x.amt))}</span></div>`).join(''):'<p class="note">尚無交易</p>'}`}
@@ -3502,7 +3502,7 @@ document.addEventListener('click',e=>{
   if(d.handover){handOver(d.handover); toast('已標記交付，等學生在 App 按完成'); return;}
   if(d.pay){if(t.classList.contains('dis')){toast('校園帳戶餘額不足，請至校內儲值機儲值或改用 LINE Pay','bad',4000); return;} S.note=($('#note')||{}).value||S.note; if($('#payPhone')) S.payPhone=$('#payPhone').value; S.pay=d.pay; render(); return;}
   if(d.kiosk){S.kiosk=d.kiosk; render(); return;}
-  if(d.topup){const k=S.kiosk||'K01'; const no=kioskTopup(S.user.id,Number(d.topup),k); save(); render(); toast(`${k} 儲值成功 ${money(Number(d.topup))}（儲值單號 ${no}），已存入校園帳戶`,'ok',4000); return;}
+  if(d.topup){const k=KIOSKS[S.kiosk]?S.kiosk:'K01'; const no=kioskTopup(S.user.id,Number(d.topup),k); save(); render(); toast(`${k} 儲值成功 ${money(Number(d.topup))}（儲值單號 ${no}），已存入校園帳戶`,'ok',4000); return;}
   if(d.editmenu){S.mStore=d.editmenu; S.mTab='menu'; render(); return;}
   if(d.resetpw){DB.storePw=DB.storePw||{}; DB.storePw[d.resetpw]='0000'; save(); render(); toast('已重設為 0000'); return;}
   if(d.delitem){if(S.delArm!=='i'+d.delitem){S.delArm='i'+d.delitem; render(); return;} const f=findCatalogItem(d.delitem); if(f){f.c.items=f.c.items.filter(x=>x.id!==d.delitem); delete DB.overrides[d.delitem]; save();} S.delArm=null; render(); toast('已刪除品項'); return;}
