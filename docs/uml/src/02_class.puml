@@ -20,8 +20,8 @@ class Admin
 class Store {
   name: String
   openHours: TimeRange[]
-  prepMinutes: int
-  slotCapacity: int
+  prepMinutes: int = 10
+  slotCapacity: int = 15
 }
 class MenuCategory {
   name: String
