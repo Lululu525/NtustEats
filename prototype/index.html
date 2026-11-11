@@ -365,6 +365,11 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 .txrow{display:flex;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.18)}
 .txrow div{flex:1}.txrow b{display:block;font-size:13px;font-weight:600}.txrow small{font-size:11px;opacity:.8}
 .txrow .in{color:#b8f5cf;font-weight:700}.txrow .out{color:#fff;font-weight:700}
+.lgrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line,#e6ebf1);font-size:13px}.lgrow:first-of-type{border-top:0}
+.lgrow .x{flex:1;min-width:0}.lgrow .x b{display:block;font-weight:600}.lgrow .x small{color:var(--ink2);font-size:11px}
+.lgrow .pos{color:var(--ok);font-weight:700}.lgrow .neg{color:var(--bad);font-weight:700}
+.flow{margin:0;padding-left:20px;line-height:1.75;font-size:14px;color:var(--ink2)}
+.kchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.kchips button{font-size:12px;padding:5px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.4);color:#fff;background:transparent}.kchips button.on{background:#fff;color:var(--brand)}
 .payopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;margin-top:8px}
 .payopt.on{border-color:var(--brand);background:#eef5fc}
 .payopt.on .box{background:var(--brand);border-color:var(--brand)}
@@ -2739,14 +2744,46 @@ function rid(){const a=new Uint8Array(16); (crypto.getRandomValues?crypto.getRan
 /* ================= 校園帳戶（儲值）================= */
 const WALLET_SEED={'m-B11201116':350,'m-B11301122':300,'m-B11301107':300,'m-B11301112':300,'m-B11301110':300,'m-B11201002':300,'m-B11209015':300,'m-M11407021':80,'m-T10234':500};
 const stamp=()=>`${today()} ${hm(minOf(now()))}`;
-function wallet(uid){DB.wallets=DB.wallets||{}; if(!DB.wallets[uid]){const b=WALLET_SEED[uid]||0; DB.wallets[uid]={bal:b,tx:b?[{t:'校內儲值機儲值',amt:b,at:stamp()}]:[]};} return DB.wallets[uid];}
+function wallet(uid){DB.wallets=DB.wallets||{}; if(!DB.wallets[uid]){const b=WALLET_SEED[uid]||0; DB.wallets[uid]={bal:b,tx:b?[{t:'校內儲值機儲值（K01）',amt:b,at:stamp()}]:[]}; if(b) logLedger({type:'TOPUP',uid,amt:b,kiosk:'K01',ref:'期初儲值',seed:true});} return DB.wallets[uid];}
 function walletTx(uid,amt,label){const w=wallet(uid); w.bal+=amt; w.tx.unshift({t:label,amt,at:stamp()}); w.tx=w.tx.slice(0,30);}
 const PAY_LABEL={wallet:'校園帳戶扣款',linepay:'LINE Pay'};
+/* ================= CR-10 帳務：校內儲值機 → 學校代收 → 撥款給店家 ================= */
+// 校園帳戶由學校（總務處出納）代收保管；學生在儲值機投現金，餘額記在學校帳務系統。
+// 付款時錢先進「學校代收」，訂單完成後轉「待撥款」，總務處定期結算匯入店家登記的銀行帳戶。
+const KIOSKS={K01:'行政大樓儲值機',K02:'圖書館儲值機'};   // 學校目前只有 2 台儲值機
+const SETTLE_FEE=0;   // 撥款手續費率：待確認（SRS Q-13），先以 0% 計
+function ledger(){DB.ledger=DB.ledger||[]; return DB.ledger;}
+function logLedger(e){ledger().unshift({id:rid().slice(0,8),at:stamp(),day:today(),...e}); if(DB.ledger.length>800) DB.ledger.length=800;}
+function kioskTopup(uid,amt,kid){const no='KT'+rid().slice(0,8).toUpperCase(); walletTx(uid,amt,`校內儲值機儲值（${kid}）`); logLedger({type:'TOPUP',uid,amt,kiosk:kid,ref:no}); return no;}
+function bankOf(sid){DB.banks=DB.banks||{}; if(!DB.banks[sid]){let h=0; for(const c of sid) h=(h*31+c.charCodeAt(0))%10000; DB.banks[sid]=`（示範）店家登記帳戶 ****${String(h).padStart(4,'0')}`;} return DB.banks[sid];}
+function fundsOf(sid){
+  const paid=DB.orders.filter(o=>o.store===sid&&o.payment&&!o.refunded);
+  const holding=paid.filter(o=>['SUBMITTED','ACCEPTED','READY'].includes(o.status));
+  const ready=paid.filter(o=>['PICKED_UP','NO_SHOW'].includes(o.status)&&!o.settledId);
+  const settled=(DB.settlements||[]).filter(p=>p.store===sid);
+  const sum=a=>a.reduce((x,o)=>x+o.total,0);
+  return {holding,ready,settled,holdAmt:sum(holding),readyAmt:sum(ready),settledAmt:settled.reduce((x,p)=>x+p.net,0)};
+}
+function runSettlement(){
+  DB.settlements=DB.settlements||[]; let n=0,tot=0;
+  stores.forEach(s=>{const f=fundsOf(s.id); if(!f.readyAmt) return;
+    const fee=Math.round(f.readyAmt*SETTLE_FEE);
+    const p={id:'P'+today().replace(/-/g,'')+'-'+String(DB.settlements.length+1).padStart(3,'0'),store:s.id,gross:f.readyAmt,fee,net:f.readyAmt-fee,orders:f.ready.map(o=>o.no),at:stamp(),bank:bankOf(s.id)};
+    f.ready.forEach(o=>o.settledId=p.id); DB.settlements.unshift(p); logLedger({type:'SETTLE',store:s.id,amt:p.net,ref:p.id}); n++; tot+=p.net;});
+  return {n,tot};
+}
+const LG_LABEL={TOPUP:'儲值',PAY:'點餐付款',REFUND:'退款',SETTLE:'撥款給店家'};
+function lgRow(e){const who=e.store?esc(storeById(e.store)?.name||e.store):''; const sign=e.type==='TOPUP'||e.type==='REFUND'?'+':e.type==='PAY'?'−':'→';
+  const sub=e.type==='TOPUP'?`${KIOSKS[e.kiosk]||e.kiosk} · ${esc(e.ref)}`:e.type==='SETTLE'?`撥款單 ${esc(e.ref)} · ${who}`:`${who} · 訂單 ${esc(e.ref)} · ${PAY_LABEL[e.method]||''}`;
+  return `<div class="lgrow"><div class="x"><b>${LG_LABEL[e.type]}${e.uid?' · '+esc(e.uid.replace(/^m-/,'')):''}</b><small>${e.at} · ${sub}</small></div><span class="${e.type==='PAY'?'neg':'pos'}">${sign}${money(e.amt)}</span></div>`;}
+
 function walletCard(compact){
   const w=wallet(S.user.id);
   return `<div class="card wallet"><div class="wl-top"><div><small>校園帳戶餘額</small><b>${money(w.bal)}</b></div><span class="wl-ic">💳</span></div>
     ${compact?'':`<p class="note" style="margin:6px 0 10px">可至校內儲值機以現金儲值；點餐時可直接扣款。</p>
-    <div class="vtool" style="margin:0 0 6px"><span class="note">模擬校內儲值機：</span><button class="btn sec sm" data-topup="100">＋$100</button><button class="btn sec sm" data-topup="500">＋$500</button></div>
+    <div class="sect-h" style="margin-top:4px">模擬校內儲值機（插學生證、投現金）</div>
+    <div class="kchips">${Object.entries(KIOSKS).map(([k,n])=>`<button class="${(KIOSKS[S.kiosk]?S.kiosk:'K01')===k?'on':''}" data-kiosk="${k}">${k} ${esc(n.replace('儲值機',''))}</button>`).join('')}</div>
+    <div class="vtool" style="margin:0 0 6px"><button class="btn sec sm" data-topup="100">投 $100</button><button class="btn sec sm" data-topup="500">投 $500</button><button class="btn sec sm" data-topup="1000">投 $1000</button></div>
     <div class="sect-h" style="margin-top:10px">最近交易</div>
     ${w.tx.length?w.tx.slice(0,8).map(x=>`<div class="txrow"><div><b>${esc(x.t)}</b><small>${esc(x.at)}</small></div><span class="${x.amt>=0?'in':'out'}">${x.amt>=0?'+':'−'}${money(Math.abs(x.amt))}</span></div>`).join(''):'<p class="note">尚無交易</p>'}`}
   </div>`;
@@ -3179,6 +3216,7 @@ function submitOrders(){
     const o={id:rid(),no:prefix+String(DB.seq).slice(-3),token:rid(),store:sid,user:S.user.id,userName:S.user.name,priceType:priceType(),
       lines,gifts,total:lines.reduce((a,l)=>a+l.price,0),slot:S.pick[sid],day:today(),status:'SUBMITTED',note,submittedAt:at.toISOString(),payment:{method:S.pay,txn,paidAt:stamp()},phone:isMember()?undefined:S.payPhone,history:[{s:'SUBMITTED',at:hm(minOf(at))}]};
     DB.orders.push(o); created.push(o);
+    logLedger({type:'PAY',uid:S.user.id,store:sid,amt:o.total,method:S.pay,ref:o.no});
   });
   if(S.pay==='wallet') walletTx(S.user.id,-grand,`點餐扣款 ${created.map(o=>o.no).join('、')}`);
   if(!isMember()) S.user.phone=S.payPhone;
@@ -3231,10 +3269,10 @@ function renderMe(){
 function renderVendor(){
   const sid=S.vendorStore, s=storeById(sid); S.vendorTab=S.vendorTab||'queue';
   const newN=DB.orders.filter(o=>o.store===sid&&o.day===today()&&o.status==='SUBMITTED').length;
-  const title={queue:'訂單',menu:'菜單與售完',settings:'設定'}[S.vendorTab];
+  const title={queue:'訂單',menu:'菜單與售完',money:'帳務與撥款',settings:'設定'}[S.vendorTab];
   return `<div class="appbar"><span style="font-size:26px">${icon(sid)}</span><div><h1>${esc(s.name)} · ${title}</h1><div class="sub">${esc(s.open)} · 現在 ${hm(minOf(now()))} · ${isOpen(s)?'營業中':'休息中'}</div></div></div>
-  <div class="scroll">${S.vendorTab==='queue'?renderQueue(sid):S.vendorTab==='menu'?renderMenuAdmin(sid):renderSettings(sid)}</div>
-  ${tabbar([['queue','🧾','訂單',newN||''],['menu','📋','菜單'],['settings','⚙️','設定']],S.vendorTab,'vtab')}`;
+  <div class="scroll">${S.vendorTab==='queue'?renderQueue(sid):S.vendorTab==='menu'?renderMenuAdmin(sid):S.vendorTab==='money'?renderVendorMoney(sid):renderSettings(sid)}</div>
+  ${tabbar([['queue','🧾','訂單',newN||''],['menu','📋','菜單'],['money','💰','帳務'],['settings','⚙️','設定']],S.vendorTab,'vtab')}`;
 }
 function renderQueue(sid){
   const os=DB.orders.filter(o=>o.store===sid&&o.day===today()).sort((a,b)=>a.slot-b.slot||a.submittedAt.localeCompare(b.submittedAt));
@@ -3280,6 +3318,24 @@ function renderSettings(sid){
   ${clockCard()}
   <button class="btn sec" style="width:100%" data-act="logout">登出店家</button>`;
 }
+
+function renderVendorMoney(sid){
+  const f=fundsOf(sid), os=DB.orders.filter(o=>o.store===sid&&o.day===today()&&o.payment);
+  const ok=os.filter(o=>!o.refunded), by=m=>ok.filter(o=>o.payment.method===m).reduce((a,o)=>a+o.total,0);
+  const st=o=>o.refunded?'已退款':o.settledId?`已撥款（${o.settledId}）`:['PICKED_UP','NO_SHOW'].includes(o.status)?'待撥款':'代收中';
+  return `<div class="cards3"><div class="stat"><b>${money(by('wallet')+by('linepay'))}</b><span>今日線上收款（校園帳戶 ${money(by('wallet'))}／LINE Pay ${money(by('linepay'))}）</span></div>
+    <div class="stat"><b>${money(f.holdAmt)}</b><span>學校代收中（訂單未完成）</span></div>
+    <div class="stat"><b>${money(f.readyAmt)}</b><span>待撥款（已完成，等總務處結算）</span></div>
+    <div class="stat"><b>${money(f.settledAmt)}</b><span>已撥款累計</span></div></div>
+  <div class="card"><h4>錢怎麼進到店家</h4><ol class="flow">
+    <li>學生在<b>校內儲值機</b>插學生證、投現金 → 存進學校代收的「校園帳戶」</li>
+    <li>學生點餐用校園帳戶或 LINE Pay 付款 → 錢先由<b>學校代收</b>（代收中）</li>
+    <li>學生按「完成訂單」或店家標記未取餐 → 轉為<b>待撥款</b>；取消／拒絕自動退回學生</li>
+    <li><b>總務處定期結算</b>，把待撥款匯入店家登記的銀行帳戶，並產生撥款單</li></ol>
+    <p class="note" style="margin:8px 0 0">撥款帳戶：${esc(bankOf(sid))}　手續費：${SETTLE_FEE*100}%（待確認）</p></div>
+  <div class="card"><h4>今日收款明細</h4>${os.length?os.map(o=>`<div class="lgrow"><div class="x"><b>${o.no} · ${PAY_LABEL[o.payment.method]}</b><small>${o.payment.paidAt} · ${ST_LABEL[o.status]} · ${st(o)}</small></div><span class="${o.refunded?'neg':'pos'}">${o.refunded?'−':''}${money(o.total)}</span></div>`).join(''):'<p class="note">今日尚無收款</p>'}</div>
+  <div class="card"><h4>撥款紀錄</h4>${f.settled.length?f.settled.map(p=>`<div class="lgrow"><div class="x"><b>${p.id}</b><small>${p.at} · ${p.orders.length} 筆訂單 · 匯入 ${esc(p.bank)}</small></div><span class="pos">${money(p.net)}</span></div>`).join(''):'<p class="note">尚無撥款。總務處執行結算後會出現在這裡。</p>'}</div>`;
+}
 /* ================= admin ================= */
 function renderReport(){
   const os=DB.orders.filter(o=>o.day===today());
@@ -3297,6 +3353,28 @@ function renderReport(){
       :'<div class="empty">今日尚無訂單。關閉編輯模式下幾筆單，或請店家接單後再回來看。</div>'}
     <div class="sect-h">已取餐營業額（參考）</div><div class="stat"><b>${money(rev)}</b><span>已取餐訂單金額（線上付款）</span></div>
   </div><div style="height:12px"></div>${clockCard()}`;
+}
+
+function renderAdminMoney(){
+  const L=ledger(), td=L.filter(e=>e.day===today());
+  const topK=k=>td.filter(e=>e.type==='TOPUP'&&e.kiosk===k&&!e.seed).reduce((a,e)=>a+e.amt,0);
+  const walletsSum=Object.values(DB.wallets||{}).reduce((a,w)=>a+w.bal,0);
+  const sumT=(t,m)=>L.filter(e=>e.type===t&&(!m||e.method===m)).reduce((a,e)=>a+e.amt,0);
+  const expect=sumT('TOPUP')-sumT('PAY','wallet')+sumT('REFUND','wallet');
+  const rows=stores.map(s=>({s,f:fundsOf(s.id)})).filter(r=>r.f.holdAmt||r.f.readyAmt||r.f.settledAmt);
+  const totalReady=rows.reduce((a,r)=>a+r.f.readyAmt,0);
+  return `<div class="cards3">
+    <div class="stat"><b>${money(Object.keys(KIOSKS).reduce((a,k)=>a+topK(k),0))}</b><span>今日儲值機收現</span></div>
+    <div class="stat"><b>${money(walletsSum)}</b><span>學生校園帳戶餘額合計（學校代管）</span></div>
+    <div class="stat"><b>${money(rows.reduce((a,r)=>a+r.f.holdAmt,0))}</b><span>代收中（訂單未完成）</span></div>
+    <div class="stat"><b>${money(totalReady)}</b><span>待撥款給店家</span></div></div>
+  <div class="card"><h4>各儲值機今日收現</h4>${Object.entries(KIOSKS).map(([k,n])=>`<div class="lgrow"><div class="x"><b>${k} ${esc(n)}</b><small>出納每日收回現金、存入學校代收帳戶</small></div><span class="pos">${money(topK(k))}</span></div>`).join('')}</div>
+  <div class="card"><h4>各店帳務<button class="btn pri sm" style="margin-left:auto" data-act="settle" ${totalReady?'':'disabled'}>執行撥款（結算 ${money(totalReady)}）</button></h4>
+    ${rows.length?`<div class="xscroll"><table class="t"><tr><th>店家</th><th>代收中</th><th>待撥款</th><th>已撥款</th><th>撥款帳戶</th></tr>
+    ${rows.map(({s,f})=>`<tr><td>${icon(s.id)} ${esc(s.name)}</td><td class="c">${money(f.holdAmt)}</td><td class="c"><b>${money(f.readyAmt)}</b></td><td class="c">${money(f.settledAmt)}</td><td>${esc(bankOf(s.id))}</td></tr>`).join('')}</table></div>`:'<p class="note">尚無付款資料。學生下單、店家完成訂單後再來看。</p>'}
+    <p class="note" style="margin:8px 0 0">只有「已完成」或「未取餐」的訂單會撥款；取消／拒絕的訂單已自動退款，不會撥給店家。手續費率待確認（Q-13），目前 ${SETTLE_FEE*100}%。</p></div>
+  <div class="card"><h4>對帳</h4><div class="lgrow"><div class="x"><b>儲值總額 − 校園帳戶付款 ＋ 退款</b><small>應等於學生餘額合計</small></div><span>${money(expect)} ${expect===walletsSum?'<span class="pos">✓ 相符</span>':'<span class="neg">≠ '+money(walletsSum)+'（含 CR-10 前的舊資料）</span>'}</span></div></div>
+  <div class="card"><h4>最近帳務紀錄</h4>${L.filter(e=>!e.seed).slice(0,15).map(lgRow).join('')||'<p class="note">尚無紀錄</p>'}</div>`;
 }
 function exportCsv(){
   const rows=[['day','order_no','store','slot','status','price_type','total','submitted_at']].concat(DB.orders.map(o=>[o.day,o.no,storeById(o.store).name,hm(o.slot),o.status,o.priceType,o.total,o.submittedAt]));
@@ -3317,10 +3395,10 @@ function renderWho(){
 const OPEN_RE=/^\s*\d{2}:\d{2}-\d{2}:\d{2}(\s*,\s*\d{2}:\d{2}-\d{2}:\d{2})*\s*$/;
 function renderManage(){
   S.mTab=S.mTab||'stores';
-  const title={stores:'店家管理',menu:'菜單設定',report:'訂單報表'}[S.mTab];
+  const title={stores:'店家管理',menu:'菜單設定',report:'訂單報表',money:'帳務與撥款'}[S.mTab];
   return `<div class="appbar"><span style="font-size:26px">🛠️</span><div><h1>${title}</h1><div class="sub">編輯模式 · ${esc(S.user.name)}</div></div><button class="pill" style="margin-left:auto" data-act="editmode">✓ 完成編輯</button></div>
-  <div class="scroll">${S.mTab==='stores'?renderStoreAdmin():S.mTab==='menu'?renderMenuEditor():renderReport()}</div>
-  ${tabbar([['stores','🏪','店家'],['menu','📋','菜單'],['report','📊','報表']],S.mTab,'mtab')}`;
+  <div class="scroll">${S.mTab==='stores'?renderStoreAdmin():S.mTab==='menu'?renderMenuEditor():S.mTab==='money'?renderAdminMoney():renderReport()}</div>
+  ${tabbar([['stores','🏪','店家'],['menu','📋','菜單'],['report','📊','報表'],['money','💰','帳務']],S.mTab,'mtab')}`;
 }
 function renderStoreAdmin(){
   const pw=DB.storePw||{};
@@ -3390,7 +3468,7 @@ function addStore(){
 function setStatus(id,to,extra={}){
   DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o) return;
   o.status=to; Object.assign(o,extra); (o.history=o.history||[]).push({s:to,at:hm(minOf(now()))});
-  if((to==='CANCELLED'||to==='REJECTED')&&o.payment&&!o.refunded){o.refunded=true; if(o.payment.method==='wallet') walletTx(o.user,o.total,`退款 ${o.no}（${to==='CANCELLED'?'取消':'店家拒絕'}）`);}
+  if((to==='CANCELLED'||to==='REJECTED')&&o.payment&&!o.refunded){o.refunded=true; if(o.payment.method==='wallet') walletTx(o.user,o.total,`退款 ${o.no}（${to==='CANCELLED'?'取消':'店家拒絕'}）`); logLedger({type:'REFUND',uid:o.user,store:o.store,amt:o.total,method:o.payment.method,ref:o.no});}
   if(to==='NO_SHOW') applyNoShow(o.user);
   save(); render();
 }
@@ -3423,7 +3501,8 @@ document.addEventListener('click',e=>{
   if(d.unnoshow){if(S.unArm!==d.unnoshow){S.unArm=d.unnoshow; render(); return;} S.unArm=null; correctNoShow(d.unnoshow); toast('已更正為「已交付」，放鳥紀錄已撤銷；學生按完成即可','ok',4000); return;}
   if(d.handover){handOver(d.handover); toast('已標記交付，等學生在 App 按完成'); return;}
   if(d.pay){if(t.classList.contains('dis')){toast('校園帳戶餘額不足，請至校內儲值機儲值或改用 LINE Pay','bad',4000); return;} S.note=($('#note')||{}).value||S.note; if($('#payPhone')) S.payPhone=$('#payPhone').value; S.pay=d.pay; render(); return;}
-  if(d.topup){walletTx(S.user.id,Number(d.topup),'校內儲值機儲值'); save(); render(); toast(`已儲值 ${money(Number(d.topup))}`,'ok'); return;}
+  if(d.kiosk){S.kiosk=d.kiosk; render(); return;}
+  if(d.topup){const k=KIOSKS[S.kiosk]?S.kiosk:'K01'; const no=kioskTopup(S.user.id,Number(d.topup),k); save(); render(); toast(`${k} 儲值成功 ${money(Number(d.topup))}（儲值單號 ${no}），已存入校園帳戶`,'ok',4000); return;}
   if(d.editmenu){S.mStore=d.editmenu; S.mTab='menu'; render(); return;}
   if(d.resetpw){DB.storePw=DB.storePw||{}; DB.storePw[d.resetpw]='0000'; save(); render(); toast('已重設為 0000'); return;}
   if(d.delitem){if(S.delArm!=='i'+d.delitem){S.delArm='i'+d.delitem; render(); return;} const f=findCatalogItem(d.delitem); if(f){f.c.items=f.c.items.filter(x=>x.id!==d.delitem); delete DB.overrides[d.delitem]; save();} S.delArm=null; render(); toast('已刪除品項'); return;}
@@ -3482,6 +3561,7 @@ document.addEventListener('click',e=>{
     case 'noshowcheck': noShowCheck(); break;
     case 'saveCfg':{const p=parseInt($('#cfgPrep').value,10), c=parseInt($('#cfgCap').value,10); if(!(p>=0&&p<=60&&c>=1&&c<=99)){toast('數值不合理','bad');return;} DB.storeCfg[S.vendorStore]={prepMin:p,slotCap:c}; save(); render(); toast('已儲存','ok'); break;}
     case 'csv': exportCsv(); break;
+    case 'settle': {DB=load()||DB; const r=runSettlement(); save(); render(); toast(r.n?`已產生 ${r.n} 張撥款單，共撥款 ${money(r.tot)} 給店家`:'目前沒有待撥款的訂單','ok',4000); break;}
   }
 });
 document.addEventListener('input',e=>{if(e.target.id==='ssoNo'){const h=document.getElementById('noHint'); if(h) h.innerHTML=idHint(e.target.value.trim());}});
