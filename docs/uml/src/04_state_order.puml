@@ -1,14 +1,16 @@
 @startuml
 !include _style.iuml
 title NTUST Eats — State Machine: Order
-[*] --> SUBMITTED : 送出
+[*] --> SUBMITTED : 送出 / 佔用時段名額
+SUBMITTED --> CANCELLED : 學生取消 / 釋放名額
+SUBMITTED --> REJECTED : 店家拒絕(原因) / 釋放名額、通知
 SUBMITTED --> ACCEPTED : 店家接單
-SUBMITTED --> REJECTED : 店家拒絕
-SUBMITTED --> CANCELLED : 學生取消
-ACCEPTED --> CANCELLED : 學生取消
-ACCEPTED --> READY : 製作完成 / 通知學生
-READY --> PICKED_UP : 取餐
+ACCEPTED --> READY : 製作完成 / 推播學生 (≤10 s)
+READY --> PICKED_UP : 掃碼或輸入號碼核對
+READY --> NO_SHOW : 排程器 [now > 時段結束 + 30 分]
+NO_SHOW : entry / 30 天內第 2 次 → 停權 14 天
 PICKED_UP --> [*]
 CANCELLED --> [*]
 REJECTED --> [*]
+NO_SHOW --> [*]
 @enduml
