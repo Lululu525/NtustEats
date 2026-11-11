@@ -8,6 +8,8 @@ abstract class Customer {
   name: String
   email: String
   priceType: PriceType
+  suspendedUntil: DateTime
+  +canOrder(): bool
 }
 class Member {
   studentNo: String
@@ -34,6 +36,22 @@ class MenuItem {
   tags: Set<Tag>
   soldOut: bool
   +priceFor(PriceType): int
+  +validatePrice(): Warning[]
+}
+class AddOnRule {
+  allowedParents: MenuItem[]
+}
+class BowlBuilder {
+  broth: Broth  {必選 1}
+  pick4: MenuItem[4]
+  extras: MenuItem[]
+  +isValid(): bool
+}
+class Promotion {
+  before: Time = 10:00
+  trigger: ItemMatcher
+  reward: Reward
+  +applies(order, time): bool
 }
 class Cart {
   +splitByStore(): Order[]
@@ -58,22 +76,13 @@ class PickupSlot {
   booked: int
   +hasRoom(): bool
 }
+class Suspension {
+  noShowCount30d: int
+  until: DateTime
+}
 class Report {
   +byStoreAndSlot()
   +exportCsv(): File
-}
-class Payment {
-  method: PayMethod
-  amount: int
-  +charge()
-  +refund()
-}
-class Delivery {
-  address: String
-  fee: int
-}
-class Recommendation {
-  +suggest(customer): MenuItem[]
 }
 enum OrderStatus {
   SUBMITTED
@@ -82,6 +91,7 @@ enum OrderStatus {
   PICKED_UP
   CANCELLED
   REJECTED
+  NO_SHOW
 }
 enum PriceType {
   CAMPUS
@@ -91,16 +101,17 @@ Customer <|-- Member
 Customer <|-- Visitor
 Store "1" *-- "1..*" MenuCategory
 MenuCategory "1" *-- "1..*" MenuItem
+MenuItem "1" -- "0..1" AddOnRule : 加購限制
+Store "1" o-- "0..*" Promotion
 Store "1" o-- "1..*" VendorStaff
 Store "1" *-- "0..*" PickupSlot
 Customer "1" -- "1" Cart
 Cart "1" *-- "0..*" CartLine
 CartLine --> MenuItem
+CartLine "0..1" -- "0..1" BowlBuilder
 Customer "1" -- "0..*" Order : places
 Order "0..*" --> "1" Store
 Order "0..*" --> "1" PickupSlot
-Order "1" -- "0..1" Payment
-Order "1" -- "0..1" Delivery
-Recommendation ..> MenuItem
+Customer "1" -- "0..1" Suspension
 Admin ..> Report
 @enduml
