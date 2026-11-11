@@ -1,0 +1,52 @@
+name: Sync PO acceptance label
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  sync-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update labels for accepted User Story
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const params = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            };
+
+            // 讀取最新內容，避免使用過期的勾選狀態。
+            const { data: issue } = await github.rest.issues.get(params);
+
+            // 只處理 User Story，不處理 PR 或子任務。
+            if (issue.pull_request) return;
+            if (!/^US-\d+\b/i.test(issue.title)) return;
+
+            const accepted =
+              /^\s*-\s+\[[xX]\]\s*PO\s*接受/m.test(issue.body || "");
+
+            if (!accepted) return;
+
+            const labels = issue.labels.map(label =>
+              typeof label === "string" ? label : label.name
+            );
+
+            if (!labels.includes("po-accepted")) {
+              await github.rest.issues.addLabels({
+                ...params,
+                labels: ["po-accepted"]
+              });
+            }
+
+            if (labels.includes("ai-proposed")) {
+              await github.rest.issues.removeLabel({
+                ...params,
+                name: "ai-proposed"
+              });
+            }
