@@ -2,6 +2,7 @@
 
 > 本表每一列都來自 repo 的真實紀錄（commit、Issue、Pull Request、GitHub Projects 看板），時間為台灣時間。
 > 看板：[NTUST Eats — Agile](https://github.com/users/Lululu525/projects/3)
+> 任務拆解與 Sprint 分類：[`docs/agile/sprint-backlog.md`](../agile/sprint-backlog.md)
 > 站立會議紀錄：[`docs/agile/daily-log.md`](../agile/daily-log.md)；正式會議紀錄：[`docs/meetings/`](../meetings/)
 
 ## Sprint 一覽
