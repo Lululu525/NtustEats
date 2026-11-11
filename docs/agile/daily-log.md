@@ -18,3 +18,12 @@ AI 摘要是否修改：是／否（改了什麼）
 ---
 
 <!-- 從下面開始，每次站立會議新增一筆，最新的放最上面 -->
+
+
+### 2026-11-11（Sprint 2，US-16）— 紀錄人：xu06.wx
+| 成員 | 昨天完成 | 今天要做 | 阻礙 |
+|---|---|---|---|
+| xu06.wx | 無（今天開始參與） | 已完成：clone repo、閱讀 docs/agile、發現 US-16 缺驗收條件並補上 AC1～AC4（commit 7cd4c83）、開 PR #46。<br>待辦：等非作者組員 Approve 與 PO 決定 AC4；整理 US-02 與 SRS FR-02 的衝突提給 PO | push 曾回 403（權限不足），已解決；PR #46 等待審查 |
+Board：Todo 24 / In Progress 1 / In Review 0 / Done 0（剩餘 pts：待 Scrum Master 計算）
+連結：#28、PR #46、commit 7cd4c83
+AI 摘要是否修改：AI（Claude）依我提供的事實起草，xu06.wx 核對後提交
