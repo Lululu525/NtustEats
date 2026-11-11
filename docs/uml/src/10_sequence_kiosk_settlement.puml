@@ -1,0 +1,36 @@
+@startuml
+!include _style.iuml
+title NTUST Eats — Sequence: 儲值機儲值 → 點餐付款 → 撥款給店家 (CR-10)
+autonumber
+actor 學生 as S
+participant "校內儲值機" as K
+participant "NTUST Eats\n帳務模組" as A
+database "學校代收帳戶\n(校園帳戶餘額)" as W
+actor 店家 as V
+actor "總務處" as G
+participant "銀行" as B
+
+== 儲值 ==
+S -> K : 刷學生證、投入現金
+K -> A : POST /topup {學號, 金額, 機台, 單號}
+A -> W : 餘額 + 金額，記錄 TOPUP
+A --> K : 儲值成功
+K --> S : 顯示餘額、儲值單號
+
+== 點餐付款 ==
+S -> A : 結帳（校園帳戶）
+A -> W : 餘額 − 金額，記錄 PAY（店家、訂單）
+note right of A : 錢由學校代收，\n狀態「代收中」
+alt 取消或店家拒絕
+  A -> W : 退款 + 金額，記錄 REFUND
+else 學生按完成訂單／店家標記未取餐
+  A -> A : 訂單轉「待撥款」
+end
+
+== 結算撥款 ==
+G -> A : 執行撥款
+A -> A : 加總各店待撥款，扣手續費（Q-13）
+A -> B : 匯款到店家登記帳戶
+A -> A : 產生撥款單 P日期-序號，記錄 SETTLE
+A --> V : 帳務頁顯示撥款紀錄
+@enduml
