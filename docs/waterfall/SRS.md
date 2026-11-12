@@ -6,7 +6,7 @@
 | 依循標準 | ISO/IEC/IEEE 29148:2018（精簡版） |
 | 開發方法 | Waterfall + AI（本文件涵蓋至 Requirement Analysis 階段） |
 | 需求來源 | `docs/interview-notes.md`（I-01 ～ I-21）、`data/menu.json`（四家店菜單） |
-| 狀態 | 待簽核（見第 8 節） |
+| 狀態 | 已簽核 |
 
 ---
 
