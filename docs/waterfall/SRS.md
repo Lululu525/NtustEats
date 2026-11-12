@@ -212,12 +212,12 @@ NTUST Eats 為獨立系統，與校園 SSO（身分驗證，決定校內價資�
 | FR-21 | I-13 | UC-12 | US-14 | Class: Suspension | 邊界值測試 |
 | FR-22 | I-18 | UC-11 報表 | US-16 | Class: Report | 功能測試 |
 | FR-23 | I-18 | UC-11 | US-16 | — | 功能測試 |
-| FR-24 | 團隊新增 | UC-13 校園儲值 | 待建立 | Class: Wallet / WalletTransaction | 功能測試、重複入帳測試 |
-| FR-25 | 團隊新增 | UC-14 查詢儲值卡 | 待建立 | Class: Wallet / WalletTransaction | 功能測試 |
-| FR-26 | 團隊新增 | UC-15 儲值卡付款 | 待建立 | Class: Wallet / Payment | 餘額邊界值測試、重複扣款測試 |
-| FR-27 | 團隊新增 | UC-15 儲值卡付款 | 待建立 | Seq: wallet_payment（待建立） | 餘額不足測試 |
-| FR-28 | 團隊新增 | UC-13 校園儲值 | 待建立 | Seq: wallet_topup（待建立） | 儲值失敗、逾時測試 |
-| FR-29 | 團隊新增 | UC-04 下單（待更新） | 待建立 | Seq: checkout（待更新） | 付款成功、失敗、逾時測試 |
+| FR-24 | 團隊新增 | UC-13 校園儲值 | US-27 | Class: Wallet / WalletTransaction | 功能測試、重複入帳測試 |
+| FR-25 | 團隊新增 | UC-14 查詢儲值卡 | US-28 | Class: Wallet / WalletTransaction | 功能測試 |
+| FR-26 | 團隊新增 | UC-15 儲值卡付款 | US-29 | Class: Wallet / Payment | 餘額邊界值測試、重複扣款測試 |
+| FR-27 | 團隊新增 | UC-15 儲值卡付款 | US-30 | Seq: wallet_payment（待建立） | 餘額不足測試 |
+| FR-28 | 團隊新增 | UC-13 校園儲值 | US-31 | Seq: wallet_topup（待建立） | 儲值失敗、逾時測試 |
+| FR-29 | 團隊新增 | UC-04 下單（待更新） | US-32 | Seq: checkout（待更新） | 付款成功、失敗、逾時測試 |
 | NFR-01 | I-20 | — | 各 Story DoD | Deployment | 負載測試 |
 | NFR-02 | I-09 | UC-04 | US-07 | Seq: checkout | 並行測試 |
 
