@@ -5,7 +5,8 @@ root = pathlib.Path(__file__).resolve().parent.parent
 src = (root / 'prototype/src/app.html').read_text(encoding='utf-8')
 menu = json.loads((root / 'data/menu.json').read_text(encoding='utf-8'))
 qr = (root / 'prototype/src/qrcode.js').read_text(encoding='utf-8').split('(function (factory) {')[0]  # qrcode-generator (MIT, Kazuhiko Arase)
-out = src.replace('/*__MENU__*/', json.dumps(menu, ensure_ascii=False, separators=(',', ':'))).replace('/*__QR__*/', qr)
+jsqr = (root / 'prototype/src/jsqr.min.js').read_text(encoding='utf-8')  # jsQR 1.4.0 (Apache-2.0) — 店家掃描取餐 QR Code
+out = src.replace('/*__JSQR__*/', jsqr).replace('/*__MENU__*/', json.dumps(menu, ensure_ascii=False, separators=(',', ':'))).replace('/*__QR__*/', qr)
 import base64
 def data_url(rel):
     return 'data:image/png;base64,' + base64.b64encode((root / rel).read_bytes()).decode()
