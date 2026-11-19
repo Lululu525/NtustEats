@@ -152,6 +152,11 @@ details.note summary{cursor:pointer;color:var(--brand)}
 @keyframes up{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
 .sheet .hd{padding:16px 18px 8px;display:flex;gap:10px;align-items:flex-start}
 .sheet .hd h3{margin:0;font-size:18px;line-height:1.35}
+.sheet .hd .iconbtn{margin-left:auto}
+.scanbox{position:relative;width:100%;max-width:340px;aspect-ratio:1;margin:4px auto 0;border-radius:18px;overflow:hidden;background:#0b1626}
+.scanbox video{width:100%;height:100%;object-fit:cover;display:block}
+.scanres{padding:26px 10px 10px}.scanres .big{font-size:64px;line-height:1}.scanres .t{font-size:20px;font-weight:800;margin-top:12px}.scanres.ok .t{color:var(--ok)}.scanres.bad .t{color:var(--bad)}.scanres .m{margin-top:8px;color:var(--ink);font-size:15px;line-height:1.6}
+.scanframe{position:absolute;inset:14%;border:3px solid rgba(255,255,255,.9);border-radius:14px;box-shadow:0 0 0 999px rgba(0,0,0,.28)}
 .sheet .bd{padding:4px 18px 14px;overflow:auto}
 .sheet .ft{padding:12px 18px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
 .grp{margin:14px 0 6px;display:flex;justify-content:space-between;align-items:baseline}
@@ -385,6 +390,7 @@ table.t input.p{width:64px;padding:5px 6px;border:1px solid var(--line);border-r
 
 
 <script>/*__QR__*/</script>
+<script>/*__JSQR__*/</script>
 <script>
 const MENU = /*__MENU__*/;
 const LOGO='__LOGO_DATA__', EMBLEM_W='__EMBLEM_WHITE_DATA__';
@@ -546,11 +552,11 @@ function notifyChanges(before){
   if(S.role!=='student'||!S.user) return;
   DB.orders.filter(o=>o.user===S.user.id).forEach(o=>{
     if(before[o.id]&&before[o.id]!==o.status){
-      if(o.status==='READY') toast(`🔔 訂單 ${o.no}（${storeById(o.store).name}）可取餐了！取餐後記得按「完成訂單」`,'ok',5000);
+      if(o.status==='READY') toast(`🔔 訂單 ${o.no}（${storeById(o.store).name}）可取餐了！請到櫃台出示 QR Code 或報號碼取餐`,'ok',5000);
       else if(o.status==='ACCEPTED') toast(`訂單 ${o.no} 店家已接單，製作中`);
       else if(o.status==='REJECTED') toast(`訂單 ${o.no} 被店家拒絕：${o.rejectReason||''}`,'bad',5000);
       else if(o.status==='NO_SHOW') toast(`訂單 ${o.no} 已標記為未取餐`,'bad');
-      else if(o.status==='READY'&&before[o.id]==='NO_SHOW') toast(`店家已更正訂單 ${o.no} 為已交付，請按「完成訂單」`,'ok',5000);
+      else if(o.status==='READY'&&before[o.id]==='NO_SHOW') toast(`店家已更正訂單 ${o.no} 的放鳥紀錄，請出示 QR Code 或報號碼取餐`,'ok',5000);
     }
   });
 }
@@ -685,7 +691,7 @@ function renderLogin(){
       <details class="note"><summary>Demo 時鐘（測試用）</summary><div style="margin-top:8px">${clockCard()}</div></details>
       <details class="note"><summary>安裝成 App</summary><div style="margin-top:6px">${installCard()}</div></details>
     </div>
-    <div class="cv-foot"><a data-act="privacy">隱私權保護政策 Privacy Policy</a><br>台灣科技大學學生餐廳 NTUST Eats APP Ver.0.5.0（課程專案原型）<br>臺北市大安區基隆路四段43號<br>Copyright © 2026 NTUST Eats 專案小組</div>
+    <div class="cv-foot"><a data-act="privacy">隱私權保護政策 Privacy Policy</a><br>台灣科技大學學生餐廳 NTUST Eats APP Ver.0.6.0（課程專案原型）<br>臺北市大安區基隆路四段43號<br>Copyright © 2026 NTUST Eats 專案小組</div>
   </div>`;
 }
 function idHint(no){
@@ -883,7 +889,7 @@ function renderCheckout(){
   </div>`;
 }
 function openOrders(){return S.user?DB.orders.filter(o=>o.user===S.user.id&&['SUBMITTED','ACCEPTED','READY'].includes(o.status)):[];}
-function blockBanner(){const op=openOrders(); if(!op.length) return ''; return `<div class="promo" style="background:#e8f2fc;color:var(--brand-d)">🔒 <div>你還有未完成的訂單 <b>${op.map(o=>o.no).join('、')}</b>。取餐後請在「我的訂單」按 <b>完成訂單</b>，才能再點下一餐。<br><button class="btn pri sm" style="margin-top:6px" data-go="orders">前往我的訂單</button></div></div>`;}
+function blockBanner(){const op=openOrders(); if(!op.length) return ''; return `<div class="promo" style="background:#e8f2fc;color:var(--brand-d)">🔒 <div>你還有未完成的訂單 <b>${op.map(o=>o.no).join('、')}</b>。取餐時請出示 QR Code 或報號碼給店家核對，<b>店家核對後訂單即完成</b>，才能再點下一餐。<br><button class="btn pri sm" style="margin-top:6px" data-go="orders">前往我的訂單</button></div></div>`;}
 function isMember(){return S.user&&S.user.type==='member';}
 function payBlock(total){
   const mem=isMember(); const bal=mem?wallet(S.user.id).bal:0, short=mem&&bal<total;
@@ -957,7 +963,8 @@ function renderOrders(){
       ${o.refunded?`<div class="promo" style="background:var(--ok-bg);color:var(--ok)">已退款 ${money(o.total)} 至${o.payment.method==='wallet'?'校園帳戶':' LINE Pay'}</div>`:''}
       ${o.status==='SUBMITTED'?`<button class="btn bad sm" style="margin-top:10px" data-cancel="${o.id}">取消訂單（店家接單前可取消並全額退款）</button>`:''}
       ${o.status==='ACCEPTED'?`<p class="note">店家已接單，無法線上取消；如有需要請直接聯絡店家（FR-19）。</p>`:''}
-      ${o.status==='READY'?`<div class="promo" style="background:${o.handedOver?'var(--ok-bg)':'#e8f2fc'};color:${o.handedOver?'var(--ok)':'var(--brand-d)'};margin-top:10px">${o.handedOver?(o.corrected?'✅ 店家已更正：你有來取餐，請按下方「完成訂單」':'✅ 店家已交付餐點，請按下方「完成訂單」'):'🔔 餐點已完成，請到櫃台出示 QR Code 取餐；拿到餐點後按「完成訂單」'}</div><button class="btn pri" style="width:100%;margin-top:8px" data-done="${o.id}">✓ 我已取餐，完成訂單</button>`:''}
+      ${o.status==='READY'?`<div class="promo" style="background:#e8f2fc;color:var(--brand-d);margin-top:10px">🔔 <div>${o.corrected?'店家已更正放鳥紀錄。':'餐點已完成！'}請到櫃台出示上方 QR Code（或報訂單號碼 <b>${o.no}</b>），<b>店家核對後即完成取餐</b>。</div></div>`:''}
+      ${o.status==='PICKED_UP'&&o.scannedAt?`<div class="promo" style="background:var(--ok-bg);color:var(--ok);margin-top:10px">✅ <div>店家已於 ${esc(o.scannedAt)} ${o.pickupMethod==='NO'?'核對訂單號碼':'掃描 QR Code'}，取餐完成</div></div>`:''}
     </div>`;}).join('')}</div>`;
 }
 function userSusp(){const u=(DB.users||{})[S.user.id]||{}; return u.suspendedUntil&&new Date(u.suspendedUntil)>now()?u.suspendedUntil:null;}
@@ -983,6 +990,7 @@ function renderVendor(){
   const newN=DB.orders.filter(o=>o.store===sid&&o.day===today()&&o.status==='SUBMITTED').length;
   const title={queue:'訂單',menu:'菜單與售完',money:'帳務與撥款',settings:'設定'}[S.vendorTab];
   return `<div class="appbar"><span style="font-size:26px">${icon(sid)}</span><div><h1>${esc(s.name)} · ${title}</h1><div class="sub">${esc(s.open)} · 現在 ${hm(minOf(now()))} · ${isOpen(s)?'營業中':'休息中'}</div></div></div>
+  ${S.sheet&&S.sheet.type==='scan'?renderScan(sid):''}
   <div class="scroll">${S.vendorTab==='queue'?renderQueue(sid):S.vendorTab==='menu'?renderMenuAdmin(sid):S.vendorTab==='money'?renderVendorMoney(sid):renderSettings(sid)}</div>
   ${tabbar([['queue','🧾','訂單',newN||''],['menu','📋','菜單'],['money','💰','帳務'],['settings','⚙️','設定']],S.vendorTab,'vtab')}`;
 }
@@ -996,15 +1004,15 @@ function renderQueue(sid){
       <div class="act">${acts(o)}</div></div>`).join('')||'<div class="note">（無）</div>'}</div>`;};
   const done=os.filter(o=>['PICKED_UP','CANCELLED','REJECTED','NO_SHOW'].includes(o.status));
   S.qSeg=S.qSeg||'SUBMITTED'; const n=st=>os.filter(o=>o.status===st).length;
-  return `<div class="vtool" style="margin-top:4px"><input id="findNo" placeholder="輸入號碼，如 M101" maxlength="5" style="flex:1;min-width:0"><button class="btn pri sm" data-act="find">🔍 核對取餐</button></div>
+  return `<div class="vtool" style="margin-top:4px"><input id="findNo" placeholder="輸入號碼，如 M101" maxlength="5" style="flex:1;min-width:0"><button class="btn pri sm" data-act="find">🔍 核對取餐</button><button class="btn pri sm" data-act="scan">📷 掃描 QR</button></div>
   <div class="qseg">${[['SUBMITTED','新訂單'],['ACCEPTED','製作中'],['READY','可取餐']].map(([k,l])=>`<button class="${S.qSeg===k?'on':''}" data-qseg="${k}">${l}${n(k)?`<span class="n">${n(k)}</span>`:''}</button>`).join('')}</div>
   <div class="kcols">
     ${col('SUBMITTED','🆕 新訂單',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="ACCEPTED">接單</button><button class="btn bad sm" data-reject="${o.id}" data-r="售完">拒絕：售完</button><button class="btn bad sm" data-reject="${o.id}" data-r="店內忙不過來">拒絕：忙不過來</button>`)}
     ${col('ACCEPTED','🔥 製作中',o=>`<button class="btn ok sm" data-vs="${o.id}" data-to="READY">完成，通知取餐</button>`)}
-    ${col('READY','✅ 可取餐',o=>o.handedOver?`<span class="chip" style="background:var(--ok-bg);color:var(--ok)">已交付，等學生按完成</span>`:`<button class="btn pri sm" data-handover="${o.id}">交付餐點</button><button class="btn bad sm" data-vs="${o.id}" data-to="NO_SHOW">未取餐</button>`)}
+    ${col('READY','✅ 可取餐',o=>`<button class="btn pri sm" data-act="scan">📷 掃描取餐</button><button class="btn bad sm" data-vs="${o.id}" data-to="NO_SHOW">未取餐</button>`)}
   </div>
   ${done.length?`<div class="sect-h">今日已結束（${done.length}）</div>${done.map(o=>`<div class="mrow" style="flex-wrap:wrap"><div class="x"><b>${o.no} · ${hm(o.slot)}</b><small>${esc(o.lines.map(l=>l.name).join('、'))}${o.corrected?' · 已更正':''}</small></div><span class="stbadge ${o.status}">${ST_LABEL[o.status]}</span><b>${money(o.total)}</b>
-      ${o.status==='NO_SHOW'?`<div style="flex-basis:100%;display:flex;gap:8px;align-items:center;margin-top:6px"><span class="note" style="flex:1">學生晚到但有來拿？</span><button class="btn sec sm" data-unnoshow="${o.id}">${S.unArm===o.id?'確定更正（取消放鳥紀錄）':'更正為已交付'}</button></div>`:''}</div>`).join('')}`:''}
+      ${o.status==='NO_SHOW'?`<div style="flex-basis:100%;display:flex;gap:8px;align-items:center;margin-top:6px"><span class="note" style="flex:1">學生晚到但有來拿？</span><button class="btn sec sm" data-unnoshow="${o.id}">${S.unArm===o.id?'確定更正（取消放鳥紀錄）':'更正放鳥，改回可取餐'}</button></div>`:''}</div>`).join('')}`:''}
   <button class="btn sec sm" style="width:100%;margin-top:10px" data-act="noshowcheck">⏰ 執行放鳥檢查（排程器模擬）</button>`;
 }
 const maskName=n=>!n?'':n.length<=1?n:n.length===2?n[0]+'○':n[0]+'○'.repeat(n.length-2)+n[n.length-1];
@@ -1042,7 +1050,7 @@ function renderVendorMoney(sid){
   <div class="card"><h4>錢怎麼進到店家</h4><ol class="flow">
     <li>學生在<b>校內儲值機</b>插學生證、投現金 → 存進學校代收的「校園帳戶」</li>
     <li>學生點餐用校園帳戶或 LINE Pay 付款 → 錢先由<b>學校代收</b>（代收中）</li>
-    <li>學生按「完成訂單」或店家標記未取餐 → 轉為<b>待撥款</b>；取消／拒絕自動退回學生</li>
+    <li>店家核對（掃描 QR Code 或輸入號碼）完成取餐，或標記未取餐 → 轉為<b>待撥款</b>；取消／拒絕自動退回學生</li>
     <li><b>總務處定期結算</b>，把待撥款匯入店家登記的銀行帳戶，並產生撥款單</li></ol>
     <p class="note" style="margin:8px 0 0">撥款帳戶：${esc(bankOf(sid))}　手續費：${SETTLE_FEE*100}%（待確認）</p></div>
   <div class="card"><h4>今日收款明細</h4>${os.length?os.map(o=>`<div class="lgrow"><div class="x"><b>${o.no} · ${PAY_LABEL[o.payment.method]}</b><small>${o.payment.paidAt} · ${ST_LABEL[o.status]} · ${st(o)}</small></div><span class="${o.refunded?'neg':'pos'}">${o.refunded?'−':''}${money(o.total)}</span></div>`).join(''):'<p class="note">今日尚無收款</p>'}</div>
@@ -1190,11 +1198,59 @@ function applyNoShow(uid){
 }
 function correctNoShow(id){
   DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o||o.status!=='NO_SHOW') return;
-  o.status='READY'; o.handedOver=true; o.corrected=true; (o.history=o.history||[]).push({s:'NO_SHOW_CORRECTED',at:hm(minOf(now()))});
+  o.status='READY'; o.corrected=true; (o.history=o.history||[]).push({s:'NO_SHOW_CORRECTED',at:hm(minOf(now()))});
   // 重新計算停權：撤銷因這筆放鳥造成的停權
   const u=DB.users[o.user]; const n=DB.orders.filter(x=>x.user===o.user&&x.status==='NO_SHOW').length;
   if(u&&n<2&&u.suspendedUntil){delete u.suspendedUntil;}
   save(); render();
+}
+/* ---------- QR 掃描取餐（CR-11）：店家掃描學生訂單 QR Code 才算取餐完成 ---------- */
+let scanStream=null, scanTimer=null;
+function renderScan(sid){
+  const r=S.sheet.result;
+  return `<div class="overlay"><div class="sheet ${S.anim?'anim':''}" data-stop>
+    <div class="hd"><h3>📷 掃描學生 QR Code</h3><button class="iconbtn" data-act="closeScan">✕</button></div>
+    <div class="bd" style="text-align:center">
+      ${r?`<div class="scanres ${r.ok?'ok':'bad'}"><div class="big">${r.ok?'✅':'⚠️'}</div><div class="t">${r.ok?'掃描成功，取餐完成':'無法完成取餐'}</div><div class="m">${r.msg}</div></div>`
+         :`<div class="scanbox"><video id="scanVid" playsinline muted autoplay></video><div class="scanframe"></div></div>
+      <p class="note" id="scanMsg" style="margin-top:10px">請學生打開「我的訂單」，把 QR Code 對準框內</p>`}
+    </div>
+    <div class="ft">${r?`<button class="btn sec" style="flex:1" data-act="closeScan">完成</button><button class="btn pri" style="flex:1" data-act="scanAgain">繼續掃描</button>`:`<button class="btn sec" style="flex:1" data-act="closeScan">取消</button>`}</div>
+  </div></div>`;
+}
+async function startScan(){
+  stopScan(); S.sheet={type:'scan'}; render();
+  const msg=t=>{const m=$('#scanMsg'); if(m) m.textContent=t;};
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){msg('此裝置無法開啟相機（需使用 HTTPS 並允許相機權限）'); return;}
+  try{ scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false}); }
+  catch(e){ msg('無法開啟相機：請允許相機權限後再試一次'); return; }
+  const cv=document.createElement('canvas'), cx=cv.getContext('2d',{willReadFrequently:true});
+  const tick=()=>{
+    if(!S.sheet||S.sheet.type!=='scan'||S.sheet.result){stopScan(); return;}
+    const v=$('#scanVid'); if(v&&v.srcObject!==scanStream){v.srcObject=scanStream; v.play().catch(()=>{});}
+    if(v&&v.readyState>=2&&v.videoWidth){
+      cv.width=v.videoWidth; cv.height=v.videoHeight; cx.drawImage(v,0,0);
+      const code=window.jsQR?jsQR(cx.getImageData(0,0,cv.width,cv.height).data,cv.width,cv.height,{inversionAttempts:'dontInvert'}):null;
+      if(code&&code.data){ onScan(code.data); return; }
+    }
+    scanTimer=setTimeout(tick,150);
+  };
+  tick();
+}
+function stopScan(){clearTimeout(scanTimer); if(scanStream){scanStream.getTracks().forEach(t=>t.stop()); scanStream=null;}}
+function onScan(text){
+  stopScan(); DB=load()||DB;
+  const m=/^NTUSTEATS:(.+)$/.exec(text||''); let r;
+  if(!m) r={ok:false,msg:'這不是台科學餐的訂單 QR Code'};
+  else{
+    const o=DB.orders.find(x=>x.token===m[1]);
+    if(!o) r={ok:false,msg:'查無此訂單'};
+    else if(o.store!==S.vendorStore) r={ok:false,msg:`訂單 ${o.no} 不是本店的訂單（${esc(storeById(o.store).name)}）`};
+    else if(o.status==='READY'){ const at=hm(minOf(now())); setStatus(o.id,'PICKED_UP',{scannedAt:at,pickupMethod:'QR'}); r={ok:true,msg:`<b>${o.no}</b> 掃描成功，取餐完成（${o.lines.map(l=>esc(l.name)+'×'+l.qty).join('、')}）`}; }
+    else if(o.status==='PICKED_UP') r={ok:false,msg:`訂單 ${o.no} 已經取過餐了`};
+    else r={ok:false,msg:`訂單 ${o.no} 目前是「${ST_LABEL[o.status]}」，還不能取餐`};
+  }
+  S.sheet={type:'scan',result:r}; render();
 }
 function handOver(id){DB=load()||DB; const o=DB.orders.find(x=>x.id===id); if(!o) return; o.handedOver=true; (o.history=o.history||[]).push({s:'HANDED_OVER',at:hm(minOf(now()))}); save(); render();}
 function noShowCheck(){
@@ -1210,7 +1266,7 @@ document.addEventListener('click',e=>{
   if(d.mtab){S.mTab=d.mtab; render(); return;}
   if(d.qseg){S.qSeg=d.qseg; render(); return;}
   if(d.done){const o=DB.orders.find(x=>x.id===d.done); if(o&&o.status==='READY'){setStatus(o.id,'PICKED_UP'); toast(`訂單 ${o.no} 已完成，可以點下一餐了`,'ok');} return;}
-  if(d.unnoshow){if(S.unArm!==d.unnoshow){S.unArm=d.unnoshow; render(); return;} S.unArm=null; correctNoShow(d.unnoshow); toast('已更正為「已交付」，放鳥紀錄已撤銷；學生按完成即可','ok',4000); return;}
+  if(d.unnoshow){if(S.unArm!==d.unnoshow){S.unArm=d.unnoshow; render(); return;} S.unArm=null; correctNoShow(d.unnoshow); toast('放鳥紀錄已撤銷，訂單改回「可取餐」；核對學生 QR Code 或號碼後即完成取餐','ok',4500); return;}
   if(d.handover){handOver(d.handover); toast('已標記交付，等學生在 App 按完成'); return;}
   if(d.pay){if(t.classList.contains('dis')){toast('校園帳戶餘額不足，請至校內儲值機儲值或改用 LINE Pay','bad',4000); return;} S.note=($('#note')||{}).value||S.note; if($('#payPhone')) S.payPhone=$('#payPhone').value; S.pay=d.pay; render(); return;}
   if(d.kiosk){S.kiosk=d.kiosk; render(); return;}
@@ -1263,13 +1319,16 @@ document.addEventListener('click',e=>{
     case 'lang': S.lang=S.lang==='zh'?'en':'zh'; render(); break;
     case 'reset': if(!S.resetArm){S.resetArm=true; render(); setTimeout(()=>{S.resetArm=false;},4000);} else {S.resetArm=false; DB=fresh(); save(); S.cart=[]; render(); toast('已清除');} break;
     case 'close': S.sheet=null; render(); break;
+    case 'scan': startScan(); break;
+    case 'scanAgain': startScan(); break;
+    case 'closeScan': stopScan(); S.sheet=null; render(); break;
     case 'bowl': openBowl(); break;
     case 'togglePick4': sh.usePick4=!sh.usePick4; if(!sh.usePick4) sh.pick4=[]; render(); break;
     case 'addItem':{const it=item(sh.id); S.cart.push({key:rid().slice(0,8),store:it.store,kind:'item',id:sh.id,qty:sh.qty,addons:[...sh.addons],choice:sh.choice,broth:sh.broth||undefined}); S.sheet=null; render(); toast(`已加入：${it.name}`,'ok'); break;}
     case 'addBowl': S.cart.push({key:rid().slice(0,8),store:'mala',kind:'bowl',qty:sh.qty,broth:sh.broth,pick4:sh.usePick4?[...sh.pick4]:[],extras:{...sh.extras}}); S.sheet=null; render(); toast('已加入組合麻辣燙','ok'); break;
     case 'submit': startPayment(); break;
     case 'lpConfirm': submitOrders(); break;
-    case 'find':{const no=($('#findNo').value||'').trim().toUpperCase(); const o=DB.orders.find(x=>x.no===no&&x.store===S.vendorStore&&x.day===today()); if(!o) toast('找不到這個號碼（或不是本店訂單）','bad'); else if(o.status==='READY'){handOver(o.id); toast(`${o.no} 核對成功（已線上付款），請交付餐點；學生會在 App 按完成`,'ok',4500);} else toast(`${o.no} 目前狀態：${ST_LABEL[o.status]}`); break;}
+    case 'find':{const no=($('#findNo').value||'').trim().toUpperCase(); const o=DB.orders.find(x=>x.no===no&&x.store===S.vendorStore&&x.day===today()); if(!o) toast('找不到這個號碼（或不是本店訂單）','bad'); else if(o.status==='READY'){setStatus(o.id,'PICKED_UP',{scannedAt:hm(minOf(now())),pickupMethod:'NO'}); toast(`${o.no} 核對成功，取餐完成`,'ok',3500);} else if(o.status==='PICKED_UP') toast(`${o.no} 已經取過餐了`); else toast(`${o.no} 目前狀態：${ST_LABEL[o.status]}，還不能取餐`); break;}
     case 'noshowcheck': noShowCheck(); break;
     case 'saveCfg':{const p=parseInt($('#cfgPrep').value,10), c=parseInt($('#cfgCap').value,10); if(!(p>=0&&p<=60&&c>=1&&c<=99)){toast('數值不合理','bad');return;} DB.storeCfg[S.vendorStore]={prepMin:p,slotCap:c}; save(); render(); toast('已儲存','ok'); break;}
     case 'csv': exportCsv(); break;
